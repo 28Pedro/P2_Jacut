@@ -17,7 +17,7 @@ public class UserController {
     }
 
     public String getUserAttribute(String userName, String attributeName)
-    throws UsuarioNaoCadastrado{
+    throws UsuarioNaoCadastrado, AtributoNaoPreenchido{
 
         return userService.getUserAttribute(userName,attributeName);
     }
@@ -25,6 +25,12 @@ public class UserController {
     public String openSession(String userName, String password) throws
             LoginOuSenhaInvalidos{
         return userService.openSession(userName,password);
+    }
+
+    public void editProfile(String UserId, String attribute,
+                            String attributeValue) throws UsuarioNaoCadastrado{
+
+        userService.editProfile(UserId,attribute,attributeValue);
     }
 
     public void saveData() throws SaveError{

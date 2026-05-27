@@ -36,4 +36,10 @@ public class UserRepository extends AbstractRepository<User> {
         return userByUserName.get(userName);
     }
 
+    @Override
+    public void resetData(){
+        super.resetData();
+        userByUserName.clear();
+    }
+
 }

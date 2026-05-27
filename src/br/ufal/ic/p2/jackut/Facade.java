@@ -2,7 +2,7 @@ package br.ufal.ic.p2.jackut;
 
 import br.ufal.ic.p2.jackut.controllers.UserController;
 import br.ufal.ic.p2.jackut.exceptions.*;
-import easyaccept.EasyAccept;
+
 
 public class Facade {
 
@@ -24,12 +24,17 @@ public class Facade {
      }
 
      public String getAtributoUsuario(String username, String attributeName)
-     throws UsuarioNaoCadastrado{
+     throws UsuarioNaoCadastrado,AtributoNaoPreenchido{
         return userController.getUserAttribute(username,attributeName);
      }
 
      public String abrirSessao(String userName, String password) throws LoginOuSenhaInvalidos{
         return userController.openSession(userName,password);
+     }
+
+     public void editarPerfil (String userId, String attribute, String attributeValue)
+     throws UsuarioNaoCadastrado{
+        userController.editProfile(userId,attribute, attributeValue);
      }
 
 }

@@ -1,5 +1,9 @@
 package br.ufal.ic.p2.jackut.models;
 
+import br.ufal.ic.p2.jackut.exceptions.AtributoNaoPreenchido;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 public class User {
@@ -8,9 +12,10 @@ public class User {
     private String userName;
     private String password;
     private String id;
+    private Map<String,String> profileAttributes;
 
     public User(){
-
+        this.profileAttributes = new HashMap<>();
     }
 
     public User(String username, String password, String name, String id) {
@@ -18,13 +23,26 @@ public class User {
         userName = username;
         this.password = password;
         this.id = id;
+
+        this.profileAttributes = new HashMap<>();
     }
 
-    public String getUserAttribute(String attribute){
+    public String getUserAttribute(String attribute) throws AtributoNaoPreenchido{
         return switch (attribute){
             case "nome" -> getName();
-            default -> null;
+            default -> {
+                if(profileAttributes.containsKey(attribute)){
+                    yield profileAttributes.get(attribute);
+                }
+                else{
+                    throw new AtributoNaoPreenchido();
+                }
+            }
         };
+    }
+
+    public void addAttribute(String AttributeName, String AttributeValue){
+        this.profileAttributes.put(AttributeName,AttributeValue);
     }
 
     public Optional<String> validateSection(String password){
@@ -61,5 +79,13 @@ public class User {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public Map<String, String> getProfileAttributes() {
+        return profileAttributes;
+    }
+
+    public void setProfileAttributes(Map<String, String> profileAttributes) {
+        this.profileAttributes = profileAttributes;
     }
 }

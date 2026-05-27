@@ -4,6 +4,7 @@ import br.ufal.ic.p2.jackut.exceptions.*;
 import br.ufal.ic.p2.jackut.models.User;
 import br.ufal.ic.p2.jackut.repositories.UserRepository;
 
+import java.util.Optional;
 import java.util.UUID;
 
 public class UserService {
@@ -38,7 +39,7 @@ public class UserService {
     }
 
     public String getUserAttribute(String userName, String attributeName)
-    throws UsuarioNaoCadastrado{
+    throws UsuarioNaoCadastrado, AtributoNaoPreenchido{
 
         if(!userRepository.UserNameExists(userName)){
             throw new UsuarioNaoCadastrado();
@@ -64,6 +65,21 @@ public class UserService {
 
         return user.validateSection(password)
                 .orElseThrow(LoginOuSenhaInvalidos::new);
+    }
+
+    public void editProfile(String UserId, String attribute,
+                String attributeValue) throws UsuarioNaoCadastrado{
+
+        Optional<User> UserO = userRepository.getObject(UserId);
+
+        if(UserO.isEmpty()){
+            throw new UsuarioNaoCadastrado();
+        }
+
+        User user = UserO.get();
+
+        user.addAttribute(attribute,attributeValue);
+
     }
 
     public void saveData() throws SaveError{

@@ -41,5 +41,6 @@ public abstract class AbstractRepository<T> {
 
     public void resetData(){
         xmlController.resetFiles(fileName);
+        entityMap.clear();
     }
 }
