@@ -13,7 +13,7 @@ public class UserController {
 
     public UserController() throws SaveError, FileError {
         this.userService = new UserService();
-        this.userService = new UserService();
+        this.profileService = new ProfileService();
         this.friendshipService = new FriendshipService();
     }
 
