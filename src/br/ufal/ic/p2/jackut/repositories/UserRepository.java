@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class UserRepository extends AbstractRepository<User> {
 
-    private Map<String, User> userByUserName;
+    private Map<String, String> userByUserName;
     private static UserRepository instance;
 
     private UserRepository() throws FileError,SaveError {
@@ -20,7 +20,7 @@ public class UserRepository extends AbstractRepository<User> {
 
         if(!entityMap.isEmpty()){
             entityMap.forEach((id,user) -> {
-                userByUserName.put(user.getUserName(),user);
+                userByUserName.put(user.getUserName(),user.getId());
             } );
         }
     }
@@ -33,7 +33,7 @@ public class UserRepository extends AbstractRepository<User> {
     }
 
     public void saveUser(User user, String id){
-        userByUserName.put(user.getUserName(), user);
+        userByUserName.put(user.getUserName(), user.getId());
         addObject(id, user);
     }
 
@@ -46,8 +46,9 @@ public class UserRepository extends AbstractRepository<User> {
         return userByUserName.containsKey(userName);
     }
 
-    public User getUserByName(String userName){
-        return userByUserName.get(userName);
+    public User getUserByName(String userName) throws UsuarioNaoCadastrado{
+
+        return findUserOrThrow(userByUserName.get(userName));
     }
 
     @Override

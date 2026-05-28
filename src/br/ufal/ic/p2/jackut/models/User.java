@@ -1,7 +1,6 @@
 package br.ufal.ic.p2.jackut.models;
 
 import br.ufal.ic.p2.jackut.enums.FriendshipStates;
-import br.ufal.ic.p2.jackut.exceptions.AtributoNaoPreenchido;
 
 import java.util.*;
 
@@ -12,15 +11,15 @@ public class User {
     private String password;
     private String id;
     private Map<String,String> profileAttributes;
-    private List<Set<String>> friendshipList;
+    private Map<FriendshipStates, List<String>> friendshipStates;
 
     public User(){
         this.profileAttributes = new HashMap<>();
-        this.friendshipList = new ArrayList<>();
+        this.friendshipStates = new HashMap<>();
 
-        for (int i = 0; i < 3; i++) {
-            friendshipList.add(new HashSet<>());
-        }
+        friendshipStates.put(FriendshipStates.CURRENT,new ArrayList<>());
+        friendshipStates.put(FriendshipStates.SENT,new ArrayList<>());
+        friendshipStates.put(FriendshipStates.REQUESTED,new ArrayList<>());
     }
 
     public User(String username, String password, String name, String id) {
@@ -32,40 +31,49 @@ public class User {
 
     }
 
-    public String getUserAttribute(String attribute) throws AtributoNaoPreenchido{
-        return switch (attribute){
-            case "nome" -> getName();
-            default -> {
-                if(profileAttributes.containsKey(attribute)){
-                    yield profileAttributes.get(attribute);
-                }
-                else{
-                    throw new AtributoNaoPreenchido();
+    public Optional<String> getUserAttribute(String attribute){
+        if(attribute.equals("nome")) {
+            return Optional.of(getName());
+
+        }else {
+
+            if(profileAttributes.containsKey(attribute)){
+                return Optional.of(profileAttributes.get(attribute));
+
+            } else{
+                return Optional.empty();
+
                 }
             }
-        };
-    }
+
+        }
 
     public void addAttribute(String AttributeName, String AttributeValue){
         this.profileAttributes.put(AttributeName,AttributeValue);
     }
 
     public boolean friendshipListContainsUser(String userName, FriendshipStates order){
-        Set<String> currentList = friendshipList.get(order.ordinal());
+        List<String> currentList = friendshipStates.get(order);
 
         return currentList.contains(userName);
     }
 
-    public void addFriendshipOrder(String userName, FriendshipStates order) {
-        Set<String> currentList = friendshipList.get(order.ordinal());
+    public void addFriendshipState(String userName, FriendshipStates state) {
+        List<String> currentList = friendshipStates.get(state);
 
         currentList.add(userName);
+
     }
 
-    public void removeFridShipOrder(String userName, FriendshipStates order){
-        Set<String> currentList = friendshipList.get(order.ordinal());
+    public void removeFridShipState(String userName, FriendshipStates state){
+        List<String> currentList = friendshipStates.get(state);
 
         currentList.remove(userName);
+    }
+
+    public List<String> getFriendShipSateList(FriendshipStates state){
+
+        return List.copyOf(friendshipStates.get(state));
     }
 
     public Optional<String> validateSection(String password){
@@ -112,11 +120,11 @@ public class User {
         this.profileAttributes = profileAttributes;
     }
 
-    public List<Set<String>> getFriendshipList() {
-        return friendshipList;
+    public Map<FriendshipStates, List<String>> getFriendshipStates() {
+        return friendshipStates;
     }
 
-    public void setFriendshipList(List<Set<String>> friendshipList) {
-        this.friendshipList = friendshipList;
+    public void setFriendshipStates(Map<FriendshipStates, List<String>> friendshipStates) {
+        this.friendshipStates = friendshipStates;
     }
 }

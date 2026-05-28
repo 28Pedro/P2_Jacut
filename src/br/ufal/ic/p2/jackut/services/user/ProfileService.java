@@ -1,4 +1,4 @@
-package br.ufal.ic.p2.jackut.services;
+package br.ufal.ic.p2.jackut.services.user;
 
 import br.ufal.ic.p2.jackut.exceptions.AtributoNaoPreenchido;
 import br.ufal.ic.p2.jackut.exceptions.FileError;
@@ -9,7 +9,7 @@ import br.ufal.ic.p2.jackut.repositories.UserRepository;
 
 public class ProfileService {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public ProfileService() throws FileError, SaveError {
         this.userRepository = UserRepository.getInstance();
@@ -18,13 +18,10 @@ public class ProfileService {
     public String getUserAttribute(String userName, String attributeName)
             throws UsuarioNaoCadastrado, AtributoNaoPreenchido {
 
-        if(!userRepository.UserNameExists(userName)){
-            throw new UsuarioNaoCadastrado();
-        }
-
         User user = userRepository.getUserByName(userName);
 
-        return user.getUserAttribute(attributeName);
+        return user.getUserAttribute(attributeName).
+                orElseThrow(AtributoNaoPreenchido::new);
     }
 
     public void editProfile(String userId, String attribute,

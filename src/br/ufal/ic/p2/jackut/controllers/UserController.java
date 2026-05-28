@@ -1,9 +1,9 @@
 package br.ufal.ic.p2.jackut.controllers;
 
 import br.ufal.ic.p2.jackut.exceptions.*;
-import br.ufal.ic.p2.jackut.services.FriendshipService;
-import br.ufal.ic.p2.jackut.services.ProfileService;
-import br.ufal.ic.p2.jackut.services.UserService;
+import br.ufal.ic.p2.jackut.services.user.FriendshipService;
+import br.ufal.ic.p2.jackut.services.user.ProfileService;
+import br.ufal.ic.p2.jackut.services.user.UserService;
 
 public class UserController {
 
@@ -37,6 +37,23 @@ public class UserController {
                             String attributeValue) throws UsuarioNaoCadastrado{
 
         profileService.editProfile(UserId,attribute,attributeValue);
+    }
+
+    public void addFriendship(String userId, String friendUserName)
+            throws UsuarioNaoCadastrado, AdicionarASiMesmoAmigo,
+            UsuarioJaAdicionadoAmigo, EsperandoAceitacaoAmigo{
+
+        friendshipService.addFriendship(userId,friendUserName);
+    }
+
+    public boolean isFriend(String userName, String friendUsername) throws
+            UsuarioNaoCadastrado{
+
+         return friendshipService.isFriend(userName,friendUsername);
+    }
+
+    public String getFriends(String userName) throws UsuarioNaoCadastrado{
+        return friendshipService.getFriends(userName);
     }
 
     public void saveData() throws SaveError{

@@ -37,4 +37,22 @@ public class Facade {
         userController.editProfile(userId,attribute, attributeValue);
      }
 
+    public void adicionarAmigo(String userId, String friendUserName)
+            throws UsuarioNaoCadastrado, AdicionarASiMesmoAmigo,
+            UsuarioJaAdicionadoAmigo, EsperandoAceitacaoAmigo{
+
+        userController.addFriendship(userId,friendUserName);
+    }
+
+    public boolean ehAmigo(String userName, String friendUsername) throws
+            UsuarioNaoCadastrado{
+
+        return userController.isFriend(userName,friendUsername);
+    }
+
+    public String getAmigos(String userName) throws UsuarioNaoCadastrado{
+        return userController.getFriends(userName);
+    }
+
+
 }
