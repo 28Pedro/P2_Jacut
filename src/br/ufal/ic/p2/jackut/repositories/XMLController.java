@@ -33,7 +33,6 @@ public class XMLController {
 
     private void createDirectoryIfNotExists() throws SaveError {
         try {
-            // Files.createDirectories cria a pasta "data" caso ela ainda não exista
             if (!Files.exists(dataFolderPath)) {
                 Files.createDirectories(dataFolderPath);
             }
@@ -42,15 +41,14 @@ public class XMLController {
         }
     }
 
-    // 3. Agora passamos apenas o nome do arquivo (ex: "clientes.xml"), o Controller cuida do caminho
     public <K, V> void saveMapToXML(Map<K, V> map, String fileName) throws SaveError {
-        createDirectoryIfNotExists(); // Garantia extra de que a pasta existe antes de salvar
+        createDirectoryIfNotExists();
         String fullPath = FILE_PATH + fileName;
 
         try (XMLEncoder encoder = new XMLEncoder(new BufferedOutputStream(new FileOutputStream(fullPath)))) {
             encoder.writeObject(map);
         } catch (FileNotFoundException e) {
-            throw new SaveError(); // Assegure-se de que essa classe existe no pacote exceptions
+            throw new SaveError();
         }
     }
 

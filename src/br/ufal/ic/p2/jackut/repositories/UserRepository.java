@@ -2,6 +2,7 @@ package br.ufal.ic.p2.jackut.repositories;
 
 import br.ufal.ic.p2.jackut.exceptions.FileError;
 import br.ufal.ic.p2.jackut.exceptions.SaveError;
+import br.ufal.ic.p2.jackut.exceptions.UsuarioNaoCadastrado;
 import br.ufal.ic.p2.jackut.models.User;
 
 import java.util.HashMap;
@@ -10,8 +11,9 @@ import java.util.Map;
 public class UserRepository extends AbstractRepository<User> {
 
     private Map<String, User> userByUserName;
+    private static UserRepository instance;
 
-    public UserRepository() throws FileError,SaveError {
+    private UserRepository() throws FileError,SaveError {
         super(XMLController.getInstance(),"user.xml");
 
         userByUserName = new HashMap<>();
@@ -23,9 +25,21 @@ public class UserRepository extends AbstractRepository<User> {
         }
     }
 
+    public static UserRepository getInstance() throws SaveError,FileError{
+        if(instance == null){
+            instance = new UserRepository();
+        }
+        return instance;
+    }
+
     public void saveUser(User user, String id){
         userByUserName.put(user.getUserName(), user);
         addObject(id, user);
+    }
+
+    public User findUserOrThrow(String userId) throws UsuarioNaoCadastrado {
+        return getObject(userId)
+                .orElseThrow(UsuarioNaoCadastrado::new);
     }
 
     public boolean UserNameExists(String userName){

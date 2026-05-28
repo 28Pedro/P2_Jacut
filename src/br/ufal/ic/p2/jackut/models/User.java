@@ -1,10 +1,9 @@
 package br.ufal.ic.p2.jackut.models;
 
+import br.ufal.ic.p2.jackut.enums.FriendshipStates;
 import br.ufal.ic.p2.jackut.exceptions.AtributoNaoPreenchido;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class User {
 
@@ -13,18 +12,24 @@ public class User {
     private String password;
     private String id;
     private Map<String,String> profileAttributes;
+    private List<Set<String>> friendshipList;
 
     public User(){
         this.profileAttributes = new HashMap<>();
+        this.friendshipList = new ArrayList<>();
+
+        for (int i = 0; i < 3; i++) {
+            friendshipList.add(new HashSet<>());
+        }
     }
 
     public User(String username, String password, String name, String id) {
+        this();
         this.name = name;
         userName = username;
         this.password = password;
         this.id = id;
 
-        this.profileAttributes = new HashMap<>();
     }
 
     public String getUserAttribute(String attribute) throws AtributoNaoPreenchido{
@@ -43,6 +48,24 @@ public class User {
 
     public void addAttribute(String AttributeName, String AttributeValue){
         this.profileAttributes.put(AttributeName,AttributeValue);
+    }
+
+    public boolean friendshipListContainsUser(String userName, FriendshipStates order){
+        Set<String> currentList = friendshipList.get(order.ordinal());
+
+        return currentList.contains(userName);
+    }
+
+    public void addFriendshipOrder(String userName, FriendshipStates order) {
+        Set<String> currentList = friendshipList.get(order.ordinal());
+
+        currentList.add(userName);
+    }
+
+    public void removeFridShipOrder(String userName, FriendshipStates order){
+        Set<String> currentList = friendshipList.get(order.ordinal());
+
+        currentList.remove(userName);
     }
 
     public Optional<String> validateSection(String password){
@@ -87,5 +110,13 @@ public class User {
 
     public void setProfileAttributes(Map<String, String> profileAttributes) {
         this.profileAttributes = profileAttributes;
+    }
+
+    public List<Set<String>> getFriendshipList() {
+        return friendshipList;
+    }
+
+    public void setFriendshipList(List<Set<String>> friendshipList) {
+        this.friendshipList = friendshipList;
     }
 }

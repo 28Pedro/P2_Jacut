@@ -4,7 +4,6 @@ import br.ufal.ic.p2.jackut.exceptions.*;
 import br.ufal.ic.p2.jackut.models.User;
 import br.ufal.ic.p2.jackut.repositories.UserRepository;
 
-import java.util.Optional;
 import java.util.UUID;
 
 public class UserService {
@@ -12,7 +11,7 @@ public class UserService {
     private UserRepository userRepository;
 
     public UserService() throws FileError,SaveError {
-        this.userRepository = new UserRepository();
+        this.userRepository = UserRepository.getInstance();
     }
 
   public String CreateUser(String userName, String password, String name)
@@ -38,18 +37,6 @@ public class UserService {
         return id;
     }
 
-    public String getUserAttribute(String userName, String attributeName)
-    throws UsuarioNaoCadastrado, AtributoNaoPreenchido{
-
-        if(!userRepository.UserNameExists(userName)){
-            throw new UsuarioNaoCadastrado();
-        }
-
-        User user = userRepository.getUserByName(userName);
-
-        return user.getUserAttribute(attributeName);
-    }
-
     public String openSession(String userName, String password) throws
             LoginOuSenhaInvalidos{
 
@@ -67,21 +54,6 @@ public class UserService {
                 .orElseThrow(LoginOuSenhaInvalidos::new);
     }
 
-    public void editProfile(String UserId, String attribute,
-                String attributeValue) throws UsuarioNaoCadastrado{
-
-        Optional<User> UserO = userRepository.getObject(UserId);
-
-        if(UserO.isEmpty()){
-            throw new UsuarioNaoCadastrado();
-        }
-
-        User user = UserO.get();
-
-        user.addAttribute(attribute,attributeValue);
-
-    }
-
     public void saveData() throws SaveError{
         userRepository.saveData();
     }
@@ -93,4 +65,5 @@ public class UserService {
     private boolean fieldIsEmpty(String field){
         return field == null || field.isBlank();
     }
+
 }
