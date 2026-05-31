@@ -1,4 +1,4 @@
-package br.ufal.ic.p2.jackut.models;
+package br.ufal.ic.p2.jackut.models.user;
 
 import br.ufal.ic.p2.jackut.enums.FriendshipStates;
 
@@ -12,10 +12,12 @@ public class User {
     private String id;
     private Map<String,String> profileAttributes;
     private Map<FriendshipStates, List<String>> friendshipStates;
+    private Queue<String> messengerNotifications;
 
     public User(){
         this.profileAttributes = new HashMap<>();
         this.friendshipStates = new HashMap<>();
+        this.messengerNotifications = new ArrayDeque<>();
 
         friendshipStates.put(FriendshipStates.CURRENT,new ArrayList<>());
         friendshipStates.put(FriendshipStates.SENT,new ArrayList<>());
@@ -29,6 +31,14 @@ public class User {
         this.password = password;
         this.id = id;
 
+    }
+
+    public void addNotification(String chatMessengerId){
+        messengerNotifications.add(chatMessengerId);
+    }
+
+    public Optional<String> popNotification(){
+        return Optional.ofNullable(messengerNotifications.poll());
     }
 
     public Optional<String> getUserAttribute(String attribute){
@@ -118,6 +128,14 @@ public class User {
 
     public void setProfileAttributes(Map<String, String> profileAttributes) {
         this.profileAttributes = profileAttributes;
+    }
+
+    public Queue<String> getMessengerNotifications() {
+        return messengerNotifications;
+    }
+
+    public void setMessengerNotifications(Queue<String> messengerNotifications) {
+        this.messengerNotifications = messengerNotifications;
     }
 
     public Map<FriendshipStates, List<String>> getFriendshipStates() {

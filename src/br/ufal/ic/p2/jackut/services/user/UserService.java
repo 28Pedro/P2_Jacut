@@ -1,7 +1,7 @@
 package br.ufal.ic.p2.jackut.services.user;
 
 import br.ufal.ic.p2.jackut.exceptions.*;
-import br.ufal.ic.p2.jackut.models.User;
+import br.ufal.ic.p2.jackut.models.user.User;
 import br.ufal.ic.p2.jackut.repositories.UserRepository;
 
 import java.util.UUID;
