@@ -5,7 +5,7 @@ import br.ufal.ic.p2.jackut.exceptions.NaoHaRecados;
 import br.ufal.ic.p2.jackut.exceptions.SaveError;
 import br.ufal.ic.p2.jackut.models.chatmessenger.ChatMessenger;
 import br.ufal.ic.p2.jackut.models.chatmessenger.ChatParticipantsKey;
-import br.ufal.ic.p2.jackut.repositories.ChatMessengerRepository;
+import br.ufal.ic.p2.jackut.repositories.chatMessager.ChatMessengerRepository;
 import br.ufal.ic.p2.jackut.wrappers.DoubleClassReturn;
 
 import java.util.*;
@@ -18,21 +18,14 @@ public class ChatMessengerService {
         this.chatMessengerRepository = ChatMessengerRepository.getInstance();
     }
 
-    public DoubleClassReturn<List<String>, String>
-    SendMessenger(String messenger, String senderId, String receiverId){
+    public List<String> SendMessenger(String messageId, String senderId, ChatMessenger chatMessenger){
 
-        ChatParticipantsKey chatParticipantsKey =
-                new ChatParticipantsKey(senderId,receiverId);
+        chatMessenger.sendMessenger(messageId, senderId);
 
-        Optional<ChatMessenger> chatMessengerO =
-                chatMessengerRepository.getChatByUserIds(chatParticipantsKey);
-
-        ChatMessenger chatMessenger = getOrBuild(chatMessengerO,chatParticipantsKey);
-
-        chatMessenger.sendMessenger(messenger, senderId);
-
-        return new DoubleClassReturn<List<String>,String>
-                ( chatParticipantsKey.getUserList(),chatMessenger.getId());
+        return chatMessenger.getUsersId().getUserList()
+                .stream()
+                .filter(userId -> !userId.equals(senderId))
+                .toList();
     }
 
     public String receiveMessenger(String chatMessengerId, String receiverId)
@@ -53,8 +46,14 @@ public class ChatMessengerService {
         chatMessengerRepository.resetData();
     }
 
-    private ChatMessenger getOrBuild(Optional<ChatMessenger> chatMessengerO,
-                                     ChatParticipantsKey chatParticipantsKey ){
+    public ChatMessenger getOrBuild(String senderId, String receiverId ){
+
+        ChatParticipantsKey chatParticipantsKey =
+                new ChatParticipantsKey(senderId,receiverId);
+
+        Optional<ChatMessenger> chatMessengerO =
+                chatMessengerRepository.getChatByUserIds(chatParticipantsKey);
+
         if(chatMessengerO.isEmpty()){
 
             String id = UUID.randomUUID().toString();
