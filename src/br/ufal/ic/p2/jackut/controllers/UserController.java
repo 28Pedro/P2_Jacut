@@ -3,6 +3,7 @@ package br.ufal.ic.p2.jackut.controllers;
 import br.ufal.ic.p2.jackut.exceptions.*;
 import br.ufal.ic.p2.jackut.services.user.FriendshipService;
 import br.ufal.ic.p2.jackut.services.user.ProfileService;
+import br.ufal.ic.p2.jackut.services.user.UserIntegrator;
 import br.ufal.ic.p2.jackut.services.user.UserService;
 
 public class UserController {
@@ -10,22 +11,29 @@ public class UserController {
     UserService userService;
     ProfileService profileService;
     FriendshipService friendshipService;
+    UserIntegrator userIntegrator;
 
     public UserController() throws SaveError, FileError {
         this.userService = new UserService();
         this.profileService = new ProfileService();
         this.friendshipService = new FriendshipService();
+        this.userIntegrator = new UserIntegrator();
     }
 
     public String CreateUser(String userName, String password, String name)
     throws LoginInvalido, SenhaInvalida, ContaComEsseNomeJaExiste {
-         return userService.CreateUser(userName,password,name);
+
+         String userId = userService.CreateUser(userName,password);
+         profileService.createProfile(userId,name);
+
+         return userId;
     }
 
     public String getUserAttribute(String userName, String attributeName)
     throws UsuarioNaoCadastrado, AtributoNaoPreenchido{
 
-        return profileService.getUserAttribute(userName,attributeName);
+        String userId = userIntegrator.getUserByName(userName);
+        return profileService.getUserAttribute(userId,attributeName);
     }
 
     public String openSession(String userName, String password) throws
@@ -58,9 +66,11 @@ public class UserController {
 
     public void saveData() throws SaveError{
         userService.saveData();
+        profileService.saveData();
     }
 
     public void resetData(){
         userService.resetData();
+        profileService.resetData();
     }
 }

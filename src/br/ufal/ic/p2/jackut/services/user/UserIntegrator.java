@@ -4,7 +4,7 @@ import br.ufal.ic.p2.jackut.exceptions.FileError;
 import br.ufal.ic.p2.jackut.exceptions.SaveError;
 import br.ufal.ic.p2.jackut.exceptions.UsuarioNaoCadastrado;
 import br.ufal.ic.p2.jackut.models.user.User;
-import br.ufal.ic.p2.jackut.repositories.UserRepository;
+import br.ufal.ic.p2.jackut.repositories.users.UserRepository;
 
 import java.util.Optional;
 

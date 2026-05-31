@@ -4,30 +4,51 @@ import br.ufal.ic.p2.jackut.exceptions.AtributoNaoPreenchido;
 import br.ufal.ic.p2.jackut.exceptions.FileError;
 import br.ufal.ic.p2.jackut.exceptions.SaveError;
 import br.ufal.ic.p2.jackut.exceptions.UsuarioNaoCadastrado;
+import br.ufal.ic.p2.jackut.models.user.Profile;
 import br.ufal.ic.p2.jackut.models.user.User;
-import br.ufal.ic.p2.jackut.repositories.UserRepository;
+import br.ufal.ic.p2.jackut.repositories.users.ProfileRepository;
+
+import java.util.UUID;
 
 public class ProfileService {
 
-    private final UserRepository userRepository;
+    private final ProfileRepository profileRepository;
 
     public ProfileService() throws FileError, SaveError {
-        this.userRepository = UserRepository.getInstance();
+        this.profileRepository = ProfileRepository.getInstance();
     }
 
-    public String getUserAttribute(String userName, String attributeName)
+    public void createProfile(String userId, String name){
+        Profile profile = new Profile(userId, UUID.randomUUID().toString());
+
+        if(name != null){
+            profile.addAttribute("nome",name);
+        }
+
+        profileRepository.saveProfile(profile);
+    }
+
+    public String getUserAttribute(String userId, String attributeName)
             throws UsuarioNaoCadastrado, AtributoNaoPreenchido {
 
-        User user = userRepository.getUserByName(userName);
+       Profile profile = profileRepository.profileById(userId);
 
-        return user.getUserAttribute(attributeName).
-                orElseThrow(AtributoNaoPreenchido::new);
+       return profile.getUserAttribute(attributeName).orElseThrow
+               (AtributoNaoPreenchido::new);
     }
 
     public void editProfile(String userId, String attribute,
                             String attributeValue) throws UsuarioNaoCadastrado{
 
-        User user = userRepository.findUserOrThrow(userId);
-        user.addAttribute(attribute,attributeValue);
+        Profile profile = profileRepository.profileById(userId);
+        profile.addAttribute(attribute,attributeValue);
+    }
+
+    public void saveData() throws SaveError{
+        profileRepository.saveData();
+    }
+
+    public void resetData(){
+        profileRepository.resetData();
     }
 }
