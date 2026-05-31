@@ -2,8 +2,9 @@ package br.ufal.ic.p2.jackut.services.user;
 
 import br.ufal.ic.p2.jackut.exceptions.*;
 import br.ufal.ic.p2.jackut.models.user.User;
-import br.ufal.ic.p2.jackut.repositories.UserRepository;
+import br.ufal.ic.p2.jackut.repositories.users.UserRepository;
 
+import java.util.List;
 import java.util.UUID;
 
 public class UserService {
@@ -14,7 +15,7 @@ public class UserService {
         this.userRepository = UserRepository.getInstance();
     }
 
-  public String CreateUser(String userName, String password, String name)
+  public String CreateUser(String userName, String password)
   throws LoginInvalido, SenhaInvalida, ContaComEsseNomeJaExiste {
 
         if(fieldIsEmpty(userName)){
@@ -30,7 +31,7 @@ public class UserService {
         }
 
         String id = UUID.randomUUID().toString();
-        User user = new User(userName, password, name, id);
+        User user = new User(userName, password, id);
 
         userRepository.saveUser(user,id);
 
@@ -52,6 +53,28 @@ public class UserService {
         } catch (UsuarioNaoCadastrado e) {
             throw new LoginOuSenhaInvalidos();
         }
+    }
+
+    public String buildUsernameListById(List<String> userIds)
+    throws UsuarioNaoCadastrado{
+
+        StringBuilder str = new StringBuilder();
+        str.append('{');
+
+        for (int i = 0; i < userIds.size(); i++) {
+
+            User user = userRepository.findUserOrThrow(userIds.get(i));
+
+            str.append(user.getUserName());
+
+            if(i < userIds.size() - 1){
+                str.append(',');
+            }
+        }
+
+        str.append('}');
+
+        return str.toString();
     }
 
     public void saveData() throws SaveError{

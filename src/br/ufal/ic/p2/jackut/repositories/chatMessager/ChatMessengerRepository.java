@@ -1,9 +1,11 @@
-package br.ufal.ic.p2.jackut.repositories;
+package br.ufal.ic.p2.jackut.repositories.chatMessager;
 
 import br.ufal.ic.p2.jackut.exceptions.FileError;
 import br.ufal.ic.p2.jackut.exceptions.SaveError;
 import br.ufal.ic.p2.jackut.models.chatmessenger.ChatMessenger;
 import br.ufal.ic.p2.jackut.models.chatmessenger.ChatParticipantsKey;
+import br.ufal.ic.p2.jackut.repositories.AbstractRepository;
+import br.ufal.ic.p2.jackut.repositories.XMLController;
 
 import java.util.HashMap;
 import java.util.Map;
