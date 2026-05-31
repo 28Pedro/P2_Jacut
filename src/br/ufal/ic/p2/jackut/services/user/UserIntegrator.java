@@ -10,10 +10,22 @@ import java.util.Optional;
 
 public class UserIntegrator {
 
+
+   private static UserIntegrator instance;
    private final UserRepository userRepository;
 
-   public UserIntegrator() throws FileError, SaveError {
+
+   private UserIntegrator() throws FileError, SaveError {
        this.userRepository = UserRepository.getInstance();
+   }
+
+   public static UserIntegrator getInstance() throws SaveError, FileError{
+
+       if(instance == null){
+           instance = new UserIntegrator();
+       }
+
+       return instance;
    }
 
     public String getUserByName(String userName) throws UsuarioNaoCadastrado {

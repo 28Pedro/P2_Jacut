@@ -14,7 +14,7 @@ public class ChatMessengerController {
     private final ChatMessengerService chatMessengerService;
 
     public ChatMessengerController() throws SaveError, FileError {
-        this.userIntegrator = new UserIntegrator();
+        this.userIntegrator = UserIntegrator.getInstance();
         this.chatMessengerService = new ChatMessengerService();
     }
 

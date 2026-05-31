@@ -17,7 +17,7 @@ public class UserController {
         this.userService = new UserService();
         this.profileService = new ProfileService();
         this.friendshipService = new FriendshipService();
-        this.userIntegrator = new UserIntegrator();
+        this.userIntegrator = UserIntegrator.getInstance();
     }
 
     public String CreateUser(String userName, String password, String name)
