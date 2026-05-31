@@ -31,7 +31,9 @@ public class ChatMessengerController {
                 chatMessengerService.SendMessenger(messenger,senderId,receiverId);
 
         for(String userId : pair.getFirst()){
-            userIntegrator.notifyUser(userId,pair.getSecond());
+            if(!userId.equals(senderId)) {
+                userIntegrator.notifyUser(userId, pair.getSecond());
+            }
         }
 
     }
