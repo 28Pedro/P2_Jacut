@@ -25,6 +25,7 @@ public class UserController {
 
          String userId = userService.CreateUser(userName,password);
          profileService.createProfile(userId,name);
+         friendshipService.buildFriendshipObject(userId);
 
          return userId;
     }
@@ -51,26 +52,43 @@ public class UserController {
             throws UsuarioNaoCadastrado, AdicionarASiMesmoAmigo,
             UsuarioJaAdicionadoAmigo, EsperandoAceitacaoAmigo{
 
-        friendshipService.addFriendship(userId,friendUserName);
+        String friendUserId = userIntegrator.getUserByName(friendUserName);
+
+        if(userId.equals(friendUserId)){
+            throw new AdicionarASiMesmoAmigo();
+        }
+
+        friendshipService.addFriendship(userId,friendUserId);
     }
 
     public boolean isFriend(String userName, String friendUsername) throws
             UsuarioNaoCadastrado{
 
-         return friendshipService.isFriend(userName,friendUsername);
+        String friendId = userIntegrator.getUserByName(friendUsername);
+        String userId = userIntegrator.getUserByName(userName);
+
+         return friendshipService.isFriend(userId,friendId);
     }
 
     public String getFriends(String userName) throws UsuarioNaoCadastrado{
-        return friendshipService.getFriends(userName);
+
+        String userId = userIntegrator.getUserByName(userName);
+
+        return userService.buildUsernameListById(
+                friendshipService.getFriends(userId)
+        );
+
     }
 
     public void saveData() throws SaveError{
         userService.saveData();
         profileService.saveData();
+        friendshipService.saveData();
     }
 
     public void resetData(){
         userService.resetData();
         profileService.resetData();
+        friendshipService.resetData();
     }
 }

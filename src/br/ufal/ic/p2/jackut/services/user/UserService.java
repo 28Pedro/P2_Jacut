@@ -4,6 +4,7 @@ import br.ufal.ic.p2.jackut.exceptions.*;
 import br.ufal.ic.p2.jackut.models.user.User;
 import br.ufal.ic.p2.jackut.repositories.users.UserRepository;
 
+import java.util.List;
 import java.util.UUID;
 
 public class UserService {
@@ -52,6 +53,28 @@ public class UserService {
         } catch (UsuarioNaoCadastrado e) {
             throw new LoginOuSenhaInvalidos();
         }
+    }
+
+    public String buildUsernameListById(List<String> userIds)
+    throws UsuarioNaoCadastrado{
+
+        StringBuilder str = new StringBuilder();
+        str.append('{');
+
+        for (int i = 0; i < userIds.size(); i++) {
+
+            User user = userRepository.findUserOrThrow(userIds.get(i));
+
+            str.append(user.getUserName());
+
+            if(i < userIds.size() - 1){
+                str.append(',');
+            }
+        }
+
+        str.append('}');
+
+        return str.toString();
     }
 
     public void saveData() throws SaveError{
