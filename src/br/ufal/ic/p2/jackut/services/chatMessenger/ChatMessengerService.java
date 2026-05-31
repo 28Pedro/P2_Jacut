@@ -6,7 +6,6 @@ import br.ufal.ic.p2.jackut.exceptions.SaveError;
 import br.ufal.ic.p2.jackut.models.chatmessenger.ChatMessenger;
 import br.ufal.ic.p2.jackut.models.chatmessenger.ChatParticipantsKey;
 import br.ufal.ic.p2.jackut.repositories.chatMessager.ChatMessengerRepository;
-import br.ufal.ic.p2.jackut.wrappers.DoubleClassReturn;
 
 import java.util.*;
 
