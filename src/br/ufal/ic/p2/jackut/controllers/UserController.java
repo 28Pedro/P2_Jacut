@@ -1,10 +1,7 @@
 package br.ufal.ic.p2.jackut.controllers;
 
 import br.ufal.ic.p2.jackut.exceptions.*;
-import br.ufal.ic.p2.jackut.services.user.FriendshipService;
-import br.ufal.ic.p2.jackut.services.user.ProfileService;
-import br.ufal.ic.p2.jackut.services.user.UserIntegrator;
-import br.ufal.ic.p2.jackut.services.user.UserService;
+import br.ufal.ic.p2.jackut.services.user.*;
 
 public class UserController {
 
@@ -12,12 +9,14 @@ public class UserController {
     ProfileService profileService;
     FriendshipService friendshipService;
     UserIntegrator userIntegrator;
+    MessageBoxService messageBoxService;
 
     public UserController() throws SaveError, FileError {
         this.userService = new UserService();
         this.profileService = new ProfileService();
         this.friendshipService = new FriendshipService();
         this.userIntegrator = UserIntegrator.getInstance();
+        this.messageBoxService = MessageBoxService.getInstance();
     }
 
     public String CreateUser(String userName, String password, String name)
@@ -26,6 +25,7 @@ public class UserController {
          String userId = userService.CreateUser(userName,password);
          profileService.createProfile(userId,name);
          friendshipService.buildFriendshipObject(userId);
+         messageBoxService.buildMessageBoxObject(userId);
 
          return userId;
     }
@@ -84,11 +84,13 @@ public class UserController {
         userService.saveData();
         profileService.saveData();
         friendshipService.saveData();
+        messageBoxService.saveData();
     }
 
     public void resetData(){
         userService.resetData();
         profileService.resetData();
         friendshipService.resetData();
+        messageBoxService.resetData();
     }
 }

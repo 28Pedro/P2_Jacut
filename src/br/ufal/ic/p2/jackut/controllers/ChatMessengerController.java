@@ -2,6 +2,7 @@ package br.ufal.ic.p2.jackut.controllers;
 
 import br.ufal.ic.p2.jackut.exceptions.*;
 import br.ufal.ic.p2.jackut.services.chatMessenger.ChatMessengerService;
+import br.ufal.ic.p2.jackut.services.user.MessageBoxService;
 import br.ufal.ic.p2.jackut.services.user.UserIntegrator;
 import br.ufal.ic.p2.jackut.wrappers.DoubleClassReturn;
 
@@ -11,11 +12,13 @@ import java.util.Optional;
 public class ChatMessengerController {
 
     private final UserIntegrator userIntegrator;
+    private final MessageBoxService messageBoxService;
     private final ChatMessengerService chatMessengerService;
 
     public ChatMessengerController() throws SaveError, FileError {
         this.userIntegrator = UserIntegrator.getInstance();
         this.chatMessengerService = new ChatMessengerService();
+        this.messageBoxService = MessageBoxService.getInstance();
     }
 
     public void SendMessenger(String messenger, String senderId, String receiverUserName) throws
@@ -32,7 +35,7 @@ public class ChatMessengerController {
 
         for(String userId : pair.getFirst()){
             if(!userId.equals(senderId)) {
-                userIntegrator.notifyUser(userId, pair.getSecond());
+                messageBoxService.notifyUser(userId, pair.getSecond());
             }
         }
 
@@ -41,7 +44,7 @@ public class ChatMessengerController {
     public String readMessenger(String userId)
             throws UsuarioNaoCadastrado,NaoHaRecados{
 
-        Optional<String> chatIdO = userIntegrator.getNotificationUser(userId);
+        Optional<String> chatIdO = messageBoxService.getNotificationUser(userId);
         String chatId = chatIdO.orElseThrow(NaoHaRecados::new);
 
         return chatMessengerService.receiveMessenger(chatId,userId);

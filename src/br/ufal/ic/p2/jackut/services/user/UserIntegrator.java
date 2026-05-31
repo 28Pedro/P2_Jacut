@@ -32,16 +32,4 @@ public class UserIntegrator {
        User user = userRepository.getUserByName(userName);
         return user.getId();
     }
-
-    public void notifyUser(String userId,String chatMessengerId) throws UsuarioNaoCadastrado{
-       User user = userRepository.findUserOrThrow(userId);
-       user.addNotification(chatMessengerId);
-    }
-
-    public Optional<String> getNotificationUser(String userId)
-    throws UsuarioNaoCadastrado{
-       User user = userRepository.findUserOrThrow(userId);
-       return user.popNotification();
-    }
-
 }
