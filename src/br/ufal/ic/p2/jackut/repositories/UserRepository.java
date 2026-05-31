@@ -3,7 +3,7 @@ package br.ufal.ic.p2.jackut.repositories;
 import br.ufal.ic.p2.jackut.exceptions.FileError;
 import br.ufal.ic.p2.jackut.exceptions.SaveError;
 import br.ufal.ic.p2.jackut.exceptions.UsuarioNaoCadastrado;
-import br.ufal.ic.p2.jackut.models.User;
+import br.ufal.ic.p2.jackut.models.user.User;
 
 import java.util.HashMap;
 import java.util.Map;

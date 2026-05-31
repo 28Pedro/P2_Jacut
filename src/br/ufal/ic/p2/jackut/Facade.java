@@ -1,5 +1,6 @@
 package br.ufal.ic.p2.jackut;
 
+import br.ufal.ic.p2.jackut.controllers.ChatMessengerController;
 import br.ufal.ic.p2.jackut.controllers.UserController;
 import br.ufal.ic.p2.jackut.exceptions.*;
 
@@ -7,15 +8,19 @@ import br.ufal.ic.p2.jackut.exceptions.*;
 public class Facade {
 
     UserController userController;
+    ChatMessengerController chatMessengerController;
 
     public Facade() throws SaveError, FileError {
         this.userController = new UserController();
+        this.chatMessengerController = new ChatMessengerController();
     }
     public void zerarSistema(){
         userController.resetData();
+        chatMessengerController.resetData();
     }
     public void encerrarSistema() throws SaveError{
         userController.saveData();
+        chatMessengerController.saveData();
     }
 
      public String criarUsuario(String userName, String passWorld, String name)
@@ -52,6 +57,16 @@ public class Facade {
 
     public String getAmigos(String userName) throws UsuarioNaoCadastrado{
         return userController.getFriends(userName);
+    }
+
+    public void enviarRecado(String senderId, String receiverUserName, String messenger) throws
+            UsuarioNaoCadastrado,EnviarRecadoParaSiMesmo {
+        chatMessengerController.SendMessenger(messenger,senderId,receiverUserName);
+    }
+
+    public String lerRecado(String userId)
+            throws UsuarioNaoCadastrado,NaoHaRecados{
+        return chatMessengerController.readMessenger(userId);
     }
 
 
