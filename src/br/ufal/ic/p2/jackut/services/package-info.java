@@ -1,7 +1,7 @@
 /**
- * ContÃ©m os pacotes de serviÃ§os da aplicaÃ§Ã£o.
+ * Contém os pacotes de serviços da aplicação.
  *
- * <p>Os serviÃ§os representam a camada responsÃ¡vel por regras de negÃ³cio,
- * validaÃ§Ãµes e coordenaÃ§Ã£o entre entidades e repositÃ³rios.</p>
+ * <p>Os serviços representam a camada responsável por regras de negócio,
+ * validações e coordenação entre entidades e repositórios.</p>
  */
 package br.ufal.ic.p2.jackut.services;

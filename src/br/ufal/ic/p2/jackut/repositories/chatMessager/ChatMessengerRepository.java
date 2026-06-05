@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * RepositÃ³rio responsÃ¡vel por persistir e recuperar chats.
+ * Repositório responsável por persistir e recuperar chats.
  */
 public class ChatMessengerRepository extends AbstractRepository<ChatMessenger> {
 
@@ -20,10 +20,10 @@ public class ChatMessengerRepository extends AbstractRepository<ChatMessenger> {
     private Map<ChatParticipantsKey,String> chatMessengerList;
 
     /**
-     * Cria o repositÃ³rio de chats e reconstrÃ³i o Ã­ndice por participantes.
+     * Cria o repositório de chats e reconstrói o índice por participantes.
      *
      * @throws FileError se ocorrer falha ao carregar chats persistidos.
-     * @throws SaveError se a infraestrutura de persistÃªncia nÃ£o puder ser preparada.
+     * @throws SaveError se a infraestrutura de persistência não puder ser preparada.
      */
     private ChatMessengerRepository() throws FileError, SaveError {
         super(XMLController.getInstance(),"chat.xml");
@@ -41,10 +41,10 @@ public class ChatMessengerRepository extends AbstractRepository<ChatMessenger> {
     }
 
     /**
-     * Retorna a instÃ¢ncia Ãºnica do repositÃ³rio de chats.
+     * Retorna a instância única do repositório de chats.
      *
-     * @return instÃ¢ncia compartilhada do repositÃ³rio.
-     * @throws SaveError se a infraestrutura de persistÃªncia nÃ£o puder ser preparada.
+     * @return instância compartilhada do repositório.
+     * @throws SaveError se a infraestrutura de persistência não puder ser preparada.
      * @throws FileError se ocorrer falha ao carregar chats persistidos.
      */
     public static ChatMessengerRepository getInstance() throws SaveError,FileError{
@@ -55,7 +55,7 @@ public class ChatMessengerRepository extends AbstractRepository<ChatMessenger> {
     }
 
     /**
-     * Salva um chat e atualiza o Ã­ndice por participantes.
+     * Salva um chat e atualiza o índice por participantes.
      *
      * @param chatMessenger chat a ser salvo.
      */
@@ -69,7 +69,7 @@ public class ChatMessengerRepository extends AbstractRepository<ChatMessenger> {
      * Recupera um chat pela chave de participantes.
      *
      * @param chatParticipantsKey chave formada pelos participantes do chat.
-     * @return chat encontrado, ou vazio se nÃ£o existir.
+     * @return chat encontrado, ou vazio se não existir.
      */
     public Optional<ChatMessenger> getChatByUserIds(ChatParticipantsKey chatParticipantsKey){
         return Optional.ofNullable(
@@ -80,7 +80,7 @@ public class ChatMessengerRepository extends AbstractRepository<ChatMessenger> {
     }
 
     /**
-     * Limpa chats e Ã­ndice por participantes.
+     * Limpa chats e índice por participantes.
      */
     @Override
     public void resetData(){

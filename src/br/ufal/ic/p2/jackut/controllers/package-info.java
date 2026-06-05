@@ -1,8 +1,8 @@
 /**
- * ContÃ©m os controladores responsÃ¡veis por orquestrar os casos de uso.
+ * Contém os controladores responsáveis por orquestrar os casos de uso.
  *
- * <p>Os controladores recebem chamadas da fachada, coordenam serviÃ§os de
- * domÃ­nio e mantÃªm a entrada da aplicaÃ§Ã£o desacoplada das regras internas de
- * negÃ³cio.</p>
+ * <p>Os controladores recebem chamadas da fachada, coordenam serviços de
+ * domínio e mantêm a entrada da aplicação desacoplada das regras internas de
+ * negócio.</p>
  */
 package br.ufal.ic.p2.jackut.controllers;

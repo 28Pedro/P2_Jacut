@@ -1,8 +1,8 @@
 /**
- * Contém a fachada pública da aplicação Jackut.
+ * Contem a fachada publica da aplicacao Jackut.
  *
  * <p>Este pacote concentra a classe de entrada utilizada pelos testes de
- * aceitação, mantendo a interface pública do sistema separada das camadas de
- * controle, serviço, domínio e persistência.</p>
+ * aceitacao, mantendo a interface publica do sistema separada das camadas de
+ * controle, servico, dominio e persistencia.</p>
  */
 package br.ufal.ic.p2.jackut;

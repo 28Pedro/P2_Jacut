@@ -1,8 +1,8 @@
 /**
- * ContÃ©m os serviÃ§os associados ao domÃ­nio de usuÃ¡rios.
+ * Contém os serviços associados ao domínio de usuários.
  *
- * <p>Este pacote agrupa operaÃ§Ãµes de conta, perfil, amizade, caixas de
- * mensagens e integraÃ§Ã£o para recuperaÃ§Ã£o de usuÃ¡rios por identificadores de
- * domÃ­nio.</p>
+ * <p>Este pacote agrupa operações de conta, perfil, amizade, caixas de
+ * mensagens e integração para recuperação de usuários por identificadores de
+ * domínio.</p>
  */
 package br.ufal.ic.p2.jackut.services.user;

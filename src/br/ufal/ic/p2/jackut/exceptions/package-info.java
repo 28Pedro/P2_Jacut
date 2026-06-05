@@ -1,7 +1,7 @@
 /**
- * ContÃ©m exceÃ§Ãµes de domÃ­nio e infraestrutura usadas pelo Jackut.
+ * Contém exceções de domínio e infraestrutura usadas pelo Jackut.
  *
- * <p>As exceÃ§Ãµes encapsulam erros esperados pelos testes de aceitaÃ§Ã£o,
- * fornecendo mensagens especÃ­ficas para cada regra violada.</p>
+ * <p>As exceções encapsulam erros esperados pelos testes de aceitação,
+ * fornecendo mensagens específicas para cada regra violada.</p>
  */
 package br.ufal.ic.p2.jackut.exceptions;
