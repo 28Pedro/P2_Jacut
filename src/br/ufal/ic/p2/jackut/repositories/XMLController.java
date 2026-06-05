@@ -13,6 +13,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 
+/**
+ * Controlador de persistência XML da aplicação.
+ */
 public class XMLController {
 
     private static XMLController instance;
@@ -20,10 +23,21 @@ public class XMLController {
     private final Path dataFolderPath = Paths.get(System.getProperty("user.dir"), "data");
     private final String FILE_PATH = dataFolderPath.toString() + File.separator;
 
+    /**
+     * Cria o controlador XML e garante a existência da pasta de dados.
+     *
+     * @throws SaveError se a pasta de dados não puder ser criada.
+     */
     private XMLController() throws SaveError {
         createDirectoryIfNotExists();
     }
 
+    /**
+     * Retorna a instância única do controlador XML.
+     *
+     * @return instância compartilhada do controlador XML.
+     * @throws SaveError se a pasta de dados não puder ser criada.
+     */
     public static XMLController getInstance() throws SaveError{
         if(instance == null){
             instance = new XMLController();
@@ -41,6 +55,15 @@ public class XMLController {
         }
     }
 
+    /**
+     * Salva um mapa em arquivo XML.
+     *
+     * @param map mapa a ser persistido.
+     * @param fileName nome do arquivo XML.
+     * @param <K> tipo da chave do mapa.
+     * @param <V> tipo do valor do mapa.
+     * @throws SaveError se ocorrer falha durante a escrita do arquivo.
+     */
     public <K, V> void saveMapToXML(Map<K, V> map, String fileName) throws SaveError {
         createDirectoryIfNotExists();
         String fullPath = FILE_PATH + fileName;
@@ -52,6 +75,15 @@ public class XMLController {
         }
     }
 
+    /**
+     * Carrega um mapa previamente salvo em XML.
+     *
+     * @param fileName nome do arquivo XML.
+     * @param <K> tipo da chave do mapa.
+     * @param <V> tipo do valor do mapa.
+     * @return mapa carregado ou mapa vazio se o arquivo não existir.
+     * @throws FileError se ocorrer falha durante a leitura ou decodificação.
+     */
     @SuppressWarnings("unchecked")
     public <K, V> Map<K, V> loadMapFromXML(String fileName) throws FileError {
         String fullPath = FILE_PATH + fileName;
@@ -69,6 +101,11 @@ public class XMLController {
         }
     }
 
+    /**
+     * Remove arquivos de persistência.
+     *
+     * @param fileNames nomes dos arquivos a serem removidos.
+     */
     public void resetFiles(String... fileNames) {
         for (String fileName : fileNames) {
             File file = new File(FILE_PATH + fileName);
@@ -78,6 +115,11 @@ public class XMLController {
         }
     }
 
+    /**
+     * Retorna o caminho base dos arquivos de dados.
+     *
+     * @return caminho da pasta de dados com separador final.
+     */
     public String getFILE_PATH(){
         return FILE_PATH;
     }
