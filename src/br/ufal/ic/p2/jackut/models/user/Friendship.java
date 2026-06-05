@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Representa a estrutura de relacionamentos de amizade de um usu√°rio.
+ * Representa a estrutura de relacionamentos de amizade de um usu·rio.
  */
 public class Friendship {
 
@@ -17,7 +17,7 @@ public class Friendship {
     private String id;
 
     /**
-     * Cria uma estrutura de amizade vazia para uso por mecanismos de serializa√ß√£o.
+     * Cria uma estrutura de amizade vazia para uso por mecanismos de serializaÁ„o.
      */
     public Friendship() {
 
@@ -29,10 +29,10 @@ public class Friendship {
     }
 
     /**
-     * Cria uma estrutura de amizade para um usu√°rio.
+     * Cria uma estrutura de amizade para um usu·rio.
      *
-     * @param userId identificador do usu√°rio dono da estrutura.
-     * @param id identificador √∫nico da estrutura de amizade.
+     * @param userId identificador do usu·rio dono da estrutura.
+     * @param id identificador ˙nico da estrutura de amizade.
      */
     public Friendship(String userId,String id){
         this();
@@ -41,11 +41,11 @@ public class Friendship {
     }
 
     /**
-     * Verifica se uma lista de estado cont√©m determinado usu√°rio ou amizade.
+     * Verifica se uma lista de estado contÈm determinado usu·rio ou amizade.
      *
      * @param userName identificador consultado na lista de estado.
      * @param order estado de amizade a ser consultado.
-     * @return {@code true} se o identificador estiver na lista; {@code false} caso contr√°rio.
+     * @return {@code true} se o identificador estiver na lista; {@code false} caso contr·rio.
      */
     public boolean friendshipListContainsUser(String userName, FriendshipStates order){
         List<String> currentList = friendshipStates.get(order);
@@ -54,10 +54,10 @@ public class Friendship {
     }
 
     /**
-     * Adiciona um identificador √† lista de um estado de amizade.
+     * Adiciona um identificador ‡ lista de um estado de amizade.
      *
      * @param userName identificador a ser adicionado.
-     * @param state estado em que o identificador ser√° inclu√≠do.
+     * @param state estado em que o identificador ser· incluÌdo.
      */
     public void addFriendshipState(String userName, FriendshipStates state) {
         List<String> currentList = friendshipStates.get(state);
@@ -70,7 +70,7 @@ public class Friendship {
      * Remove um identificador da lista de um estado de amizade.
      *
      * @param userName identificador a ser removido.
-     * @param state estado de onde o identificador ser√° removido.
+     * @param state estado de onde o identificador ser· removido.
      */
     public void removeFridShipState(String userName, FriendshipStates state){
         List<String> currentList = friendshipStates.get(state);
@@ -79,10 +79,10 @@ public class Friendship {
     }
 
     /**
-     * Retorna uma c√≥pia da lista de identificadores de um estado.
+     * Retorna uma cÛpia da lista de identificadores de um estado.
      *
      * @param state estado de amizade consultado.
-     * @return c√≥pia imut√°vel da lista associada ao estado.
+     * @return cÛpia imut·vel da lista associada ao estado.
      */
     public List<String> getFriendShipSateList(FriendshipStates state){
 
@@ -108,25 +108,25 @@ public class Friendship {
     }
 
     /**
-     * Retorna o identificador do usu√°rio dono da estrutura.
+     * Retorna o identificador do usu·rio dono da estrutura.
      *
-     * @return identificador do usu√°rio.
+     * @return identificador do usu·rio.
      */
     public String getUserId() {
         return userId;
     }
 
     /**
-     * Define o identificador do usu√°rio dono da estrutura.
+     * Define o identificador do usu·rio dono da estrutura.
      *
-     * @param userId identificador do usu√°rio.
+     * @param userId identificador do usu·rio.
      */
     public void setUserId(String userId) {
         this.userId = userId;
     }
 
     /**
-     * Retorna o identificador √∫nico da estrutura de amizade.
+     * Retorna o identificador ˙nico da estrutura de amizade.
      *
      * @return identificador da estrutura.
      */
@@ -135,7 +135,7 @@ public class Friendship {
     }
 
     /**
-     * Define o identificador √∫nico da estrutura de amizade.
+     * Define o identificador ˙nico da estrutura de amizade.
      *
      * @param id identificador da estrutura.
      */

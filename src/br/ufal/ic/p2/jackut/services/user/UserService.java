@@ -8,31 +8,31 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Servi√ßo respons√°vel pelas regras de neg√≥cio de contas de usu√°rio.
+ * ServiÁo respons·vel pelas regras de negÛcio de contas de usu·rio.
  */
 public class UserService {
 
     private final UserRepository userRepository;
 
     /**
-     * Cria o servi√ßo de usu√°rios.
+     * Cria o serviÁo de usu·rios.
      *
-     * @throws FileError se ocorrer falha ao carregar os dados de usu√°rios.
-     * @throws SaveError se a infraestrutura de persist√™ncia n√£o puder ser preparada.
+     * @throws FileError se ocorrer falha ao carregar os dados de usu·rios.
+     * @throws SaveError se a infraestrutura de persistÍncia n„o puder ser preparada.
      */
     public UserService() throws FileError,SaveError {
         this.userRepository = UserRepository.getInstance();
     }
 
     /**
-     * Cria uma conta de usu√°rio.
+     * Cria uma conta de usu·rio.
      *
-     * @param userName login √∫nico do usu√°rio.
-     * @param password senha do usu√°rio.
-     * @return identificador √∫nico do usu√°rio criado.
-     * @throws LoginInvalido se o login estiver vazio ou inv√°lido.
-     * @throws SenhaInvalida se a senha estiver vazia ou inv√°lida.
-     * @throws ContaComEsseNomeJaExiste se j√° existir usu√°rio com o login informado.
+     * @param userName login ˙nico do usu·rio.
+     * @param password senha do usu·rio.
+     * @return identificador ˙nico do usu·rio criado.
+     * @throws LoginInvalido se o login estiver vazio ou inv·lido.
+     * @throws SenhaInvalida se a senha estiver vazia ou inv·lida.
+     * @throws ContaComEsseNomeJaExiste se j· existir usu·rio com o login informado.
      */
   public String CreateUser(String userName, String password)
   throws LoginInvalido, SenhaInvalida, ContaComEsseNomeJaExiste {
@@ -58,12 +58,12 @@ public class UserService {
     }
 
     /**
-     * Autentica um usu√°rio e abre uma sess√£o.
+     * Autentica um usu·rio e abre uma sess„o.
      *
-     * @param userName login do usu√°rio.
-     * @param password senha do usu√°rio.
-     * @return identificador do usu√°rio autenticado.
-     * @throws LoginOuSenhaInvalidos se login ou senha forem inv√°lidos.
+     * @param userName login do usu·rio.
+     * @param password senha do usu·rio.
+     * @return identificador do usu·rio autenticado.
+     * @throws LoginOuSenhaInvalidos se login ou senha forem inv·lidos.
      */
     public String openSession(String userName, String password) throws
             LoginOuSenhaInvalidos{
@@ -83,11 +83,11 @@ public class UserService {
     }
 
     /**
-     * Constr√≥i uma representa√ß√£o textual de logins a partir de IDs de usu√°rio.
+     * ConstrÛi uma representaÁ„o textual de logins a partir de IDs de usu·rio.
      *
-     * @param userIds lista de identificadores de usu√°rios.
-     * @return representa√ß√£o textual contendo os logins dos usu√°rios.
-     * @throws UsuarioNaoCadastrado se algum ID n√£o corresponder a um usu√°rio cadastrado.
+     * @param userIds lista de identificadores de usu·rios.
+     * @return representaÁ„o textual contendo os logins dos usu·rios.
+     * @throws UsuarioNaoCadastrado se algum ID n„o corresponder a um usu·rio cadastrado.
      */
     public String buildUsernameListById(List<String> userIds)
     throws UsuarioNaoCadastrado{
@@ -112,16 +112,16 @@ public class UserService {
     }
 
     /**
-     * Salva os dados de usu√°rios.
+     * Salva os dados de usu·rios.
      *
-     * @throws SaveError se ocorrer falha durante a persist√™ncia.
+     * @throws SaveError se ocorrer falha durante a persistÍncia.
      */
     public void saveData() throws SaveError{
         userRepository.saveData();
     }
 
     /**
-     * Limpa os dados de usu√°rios.
+     * Limpa os dados de usu·rios.
      */
     public void resetData(){
         userRepository.resetData();

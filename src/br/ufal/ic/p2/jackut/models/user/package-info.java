@@ -1,7 +1,7 @@
 /**
- * ContÃ©m as entidades relacionadas ao domÃ­nio de usuÃ¡rios.
+ * Contém as entidades relacionadas ao domínio de usuários.
  *
  * <p>Este pacote define objetos de conta, perfil, amizade e caixa de
- * notificaÃ§Ãµes, separando responsabilidades para manter o modelo coeso.</p>
+ * notificações, separando responsabilidades para manter o modelo coeso.</p>
  */
 package br.ufal.ic.p2.jackut.models.user;

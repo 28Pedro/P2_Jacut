@@ -5,7 +5,7 @@ import java.util.Optional;
 import java.util.Queue;
 
 /**
- * Representa o estado de leitura de um usuÃ¡rio dentro de um chat.
+ * Representa o estado de leitura de um usuário dentro de um chat.
  */
 public class ChatUserState {
 
@@ -21,7 +21,7 @@ public class ChatUserState {
     }
 
     /**
-     * Registra uma mensagem como nÃ£o lida.
+     * Registra uma mensagem como não lida.
      *
      * @param messenger identificador da mensagem recebida.
      */
@@ -30,9 +30,9 @@ public class ChatUserState {
     }
 
     /**
-     * LÃª a prÃ³xima mensagem nÃ£o lida.
+     * Lê a próxima mensagem não lida.
      *
-     * @return identificador da mensagem lida, ou vazio se nÃ£o houver mensagens.
+     * @return identificador da mensagem lida, ou vazio se não houver mensagens.
      */
     public Optional<String> readMessenger(){
         if(UnreadMessengers.isEmpty()){
@@ -64,18 +64,18 @@ public class ChatUserState {
     }
 
     /**
-     * Retorna a fila de mensagens nÃ£o lidas.
+     * Retorna a fila de mensagens não lidas.
      *
-     * @return fila de mensagens nÃ£o lidas.
+     * @return fila de mensagens não lidas.
      */
     public Queue<String> getUnreadMessengers() {
         return UnreadMessengers;
     }
 
     /**
-     * Define a fila de mensagens nÃ£o lidas.
+     * Define a fila de mensagens não lidas.
      *
-     * @param unreadMessengers fila de mensagens nÃ£o lidas.
+     * @param unreadMessengers fila de mensagens não lidas.
      */
     public void setUnreadMessengers(Queue<String> unreadMessengers) {
         UnreadMessengers = unreadMessengers;

@@ -1,7 +1,7 @@
 /**
- * ContÃ©m os manipuladores de estado para transiÃ§Ãµes de amizade.
+ * Contém os manipuladores de estado para transições de amizade.
  *
  * <p>As classes deste pacote implementam comportamentos diferentes para uma
- * solicitaÃ§Ã£o de amizade conforme o estado atual da relaÃ§Ã£o entre usuÃ¡rios.</p>
+ * solicitação de amizade conforme o estado atual da relação entre usuários.</p>
  */
 package br.ufal.ic.p2.jackut.services.user.friendshipStateHandles;

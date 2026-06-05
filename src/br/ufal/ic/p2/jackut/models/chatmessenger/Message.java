@@ -10,17 +10,17 @@ public class Message {
     public String id;
 
     /**
-     * Cria uma mensagem vazia para uso por mecanismos de serializaÃ§Ã£o.
+     * Cria uma mensagem vazia para uso por mecanismos de serialização.
      */
     public Message() {
     }
 
     /**
-     * Cria uma mensagem com conteÃºdo, chat associado e identificador.
+     * Cria uma mensagem com conteúdo, chat associado e identificador.
      *
-     * @param content conteÃºdo textual da mensagem.
+     * @param content conteúdo textual da mensagem.
      * @param chatMessageId identificador do chat ao qual a mensagem pertence.
-     * @param id identificador Ãºnico da mensagem.
+     * @param id identificador único da mensagem.
      */
     public Message(String content, String chatMessageId, String id) {
         this.content = content;
@@ -29,25 +29,25 @@ public class Message {
     }
 
     /**
-     * Retorna o conteÃºdo textual da mensagem.
+     * Retorna o conteúdo textual da mensagem.
      *
-     * @return conteÃºdo da mensagem.
+     * @return conteúdo da mensagem.
      */
     public String getContent() {
         return content;
     }
 
     /**
-     * Define o conteÃºdo textual da mensagem.
+     * Define o conteúdo textual da mensagem.
      *
-     * @param content conteÃºdo da mensagem.
+     * @param content conteúdo da mensagem.
      */
     public void setContent(String content) {
         this.content = content;
     }
 
     /**
-     * Retorna o identificador do chat associado Ã  mensagem.
+     * Retorna o identificador do chat associado à mensagem.
      *
      * @return identificador do chat.
      */
@@ -56,7 +56,7 @@ public class Message {
     }
 
     /**
-     * Define o identificador do chat associado Ã  mensagem.
+     * Define o identificador do chat associado à mensagem.
      *
      * @param chatMessageId identificador do chat.
      */
@@ -65,7 +65,7 @@ public class Message {
     }
 
     /**
-     * Retorna o identificador Ãºnico da mensagem.
+     * Retorna o identificador único da mensagem.
      *
      * @return identificador da mensagem.
      */
@@ -74,7 +74,7 @@ public class Message {
     }
 
     /**
-     * Define o identificador Ãºnico da mensagem.
+     * Define o identificador único da mensagem.
      *
      * @param id identificador da mensagem.
      */

@@ -8,9 +8,9 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * Reposit贸rio base gen茅rico para entidades persistidas em XML.
+ * Reposit髍io base gen閞ico para entidades persistidas em XML.
  *
- * @param <T> tipo da entidade armazenada pelo reposit贸rio.
+ * @param <T> tipo da entidade armazenada pelo reposit髍io.
  */
 public abstract class AbstractRepository<T> {
 
@@ -19,10 +19,10 @@ public abstract class AbstractRepository<T> {
     protected final String fileName;
 
     /**
-     * Cria o reposit贸rio carregando o mapa persistido no arquivo informado.
+     * Cria o reposit髍io carregando o mapa persistido no arquivo informado.
      *
      * @param xmlController controlador XML usado para leitura e escrita.
-     * @param fileName nome do arquivo de persist锚ncia.
+     * @param fileName nome do arquivo de persist阯cia.
      * @throws FileError se ocorrer falha ao carregar os dados do arquivo.
      */
     public AbstractRepository(XMLController xmlController, String fileName) throws FileError {
@@ -45,7 +45,7 @@ public abstract class AbstractRepository<T> {
      * Recupera uma entidade pelo identificador.
      *
      * @param id identificador da entidade.
-     * @return entidade encontrada, ou vazio se n茫o existir.
+     * @return entidade encontrada, ou vazio se n鉶 existir.
      */
     public Optional<T> getObject(String id) {
         return Optional.ofNullable(entityMap.get(id));
@@ -55,7 +55,7 @@ public abstract class AbstractRepository<T> {
      * Remove uma entidade pelo identificador.
      *
      * @param id identificador da entidade removida.
-     * @throws InaccessibleObjectException se o identificador n茫o existir no mapa.
+     * @throws InaccessibleObjectException se o identificador n鉶 existir no mapa.
      */
     public void removeObject(String id) throws InaccessibleObjectException{
         if(!entityMap.containsKey(id)){
@@ -65,9 +65,9 @@ public abstract class AbstractRepository<T> {
     }
 
     /**
-     * Salva o mapa de entidades no arquivo XML associado ao reposit贸rio.
+     * Salva o mapa de entidades no arquivo XML associado ao reposit髍io.
      *
-     * @throws SaveError se ocorrer falha durante a grava莽茫o.
+     * @throws SaveError se ocorrer falha durante a grava玢o.
      */
     public void saveData() throws SaveError {
         xmlController.saveMapToXML(entityMap, fileName);
@@ -75,7 +75,7 @@ public abstract class AbstractRepository<T> {
 
 
     /**
-     * Remove o arquivo persistido e limpa o mapa em mem贸ria.
+     * Remove o arquivo persistido e limpa o mapa em mem髍ia.
      */
     public void resetData(){
         xmlController.resetFiles(fileName);

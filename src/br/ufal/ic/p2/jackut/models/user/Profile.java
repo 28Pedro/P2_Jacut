@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * Representa o perfil edit√°vel de um usu√°rio.
+ * Representa o perfil edit·vel de um usu·rio.
  */
 public class Profile {
 
@@ -14,17 +14,17 @@ public class Profile {
     private String Id;
 
     /**
-     * Cria um perfil vazio para uso por mecanismos de serializa√ß√£o.
+     * Cria um perfil vazio para uso por mecanismos de serializaÁ„o.
      */
     public Profile() {
         this.profileAttributes = new HashMap<>();
     }
 
     /**
-     * Cria um perfil associado a um usu√°rio.
+     * Cria um perfil associado a um usu·rio.
      *
-     * @param userId identificador do usu√°rio dono do perfil.
-     * @param id identificador √∫nico do perfil.
+     * @param userId identificador do usu·rio dono do perfil.
+     * @param id identificador ˙nico do perfil.
      */
     public Profile(String userId, String id) {
         this();
@@ -46,7 +46,7 @@ public class Profile {
      * Recupera um atributo do perfil.
      *
      * @param attribute nome do atributo.
-     * @return valor do atributo, ou vazio se o atributo n√£o existir.
+     * @return valor do atributo, ou vazio se o atributo n„o existir.
      */
     public Optional<String> getUserAttribute(String attribute){
 
@@ -77,25 +77,25 @@ public class Profile {
     }
 
     /**
-     * Retorna o identificador do usu√°rio dono do perfil.
+     * Retorna o identificador do usu·rio dono do perfil.
      *
-     * @return identificador do usu√°rio.
+     * @return identificador do usu·rio.
      */
     public String getUserId() {
         return userId;
     }
 
     /**
-     * Define o identificador do usu√°rio dono do perfil.
+     * Define o identificador do usu·rio dono do perfil.
      *
-     * @param userId identificador do usu√°rio.
+     * @param userId identificador do usu·rio.
      */
     public void setUserId(String userId) {
         this.userId = userId;
     }
 
     /**
-     * Retorna o identificador √∫nico do perfil.
+     * Retorna o identificador ˙nico do perfil.
      *
      * @return identificador do perfil.
      */
@@ -104,7 +104,7 @@ public class Profile {
     }
 
     /**
-     * Define o identificador √∫nico do perfil.
+     * Define o identificador ˙nico do perfil.
      *
      * @param id identificador do perfil.
      */

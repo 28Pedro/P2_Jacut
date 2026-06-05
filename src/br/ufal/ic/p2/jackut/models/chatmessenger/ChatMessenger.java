@@ -12,7 +12,7 @@ public class ChatMessenger {
     private Map<String, ChatUserState> messengerStates;
 
     /**
-     * Cria um chat vazio para uso por mecanismos de serializaÃ§Ã£o.
+     * Cria um chat vazio para uso por mecanismos de serialização.
      */
     public ChatMessenger() {
         this.messengerStates = new HashMap<>();
@@ -21,7 +21,7 @@ public class ChatMessenger {
     /**
      * Cria um chat com identificador e chave de participantes.
      *
-     * @param id identificador Ãºnico do chat.
+     * @param id identificador único do chat.
      * @param chatParticipantsKey chave com os participantes do chat.
      */
     public ChatMessenger(String id, ChatParticipantsKey chatParticipantsKey){
@@ -40,7 +40,7 @@ public class ChatMessenger {
      * Envia uma mensagem para os participantes do chat, exceto o remetente.
      *
      * @param messenger identificador da mensagem enviada.
-     * @param senderId identificador do usuÃ¡rio remetente.
+     * @param senderId identificador do usuário remetente.
      */
     public void sendMessenger(String messenger, String senderId) {
 
@@ -53,10 +53,10 @@ public class ChatMessenger {
     }
 
     /**
-     * LÃª a prÃ³xima mensagem nÃ£o lida de um participante.
+     * Lê a próxima mensagem não lida de um participante.
      *
      * @param receiverId identificador do participante leitor.
-     * @return identificador da mensagem lida, ou vazio se nÃ£o houver mensagem.
+     * @return identificador da mensagem lida, ou vazio se não houver mensagem.
      */
     public Optional<String> readMessage(String receiverId){
         ChatUserState chatUserState = messengerStates.get(receiverId);
@@ -82,7 +82,7 @@ public class ChatMessenger {
     }
 
     /**
-     * Retorna o identificador Ãºnico do chat.
+     * Retorna o identificador único do chat.
      *
      * @return identificador do chat.
      */
@@ -91,7 +91,7 @@ public class ChatMessenger {
     }
 
     /**
-     * Define o identificador Ãºnico do chat.
+     * Define o identificador único do chat.
      *
      * @param id identificador do chat.
      */
@@ -102,7 +102,7 @@ public class ChatMessenger {
     /**
      * Retorna os estados de leitura dos participantes.
      *
-     * @return mapa entre usuÃ¡rios e seus estados de leitura.
+     * @return mapa entre usuários e seus estados de leitura.
      */
     public Map<String, ChatUserState> getMessengerStates() {
         return messengerStates;
@@ -111,7 +111,7 @@ public class ChatMessenger {
     /**
      * Define os estados de leitura dos participantes.
      *
-     * @param messengerStates mapa entre usuÃ¡rios e seus estados de leitura.
+     * @param messengerStates mapa entre usuários e seus estados de leitura.
      */
     public void setMessengerStates(Map<String, ChatUserState> messengerStates) {
         this.messengerStates = messengerStates;

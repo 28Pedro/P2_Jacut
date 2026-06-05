@@ -3,7 +3,7 @@ package br.ufal.ic.p2.jackut.models.chatmessenger;
 import java.util.*;
 
 /**
- * Representa a chave lÃ³gica formada pelos participantes de um chat.
+ * Representa a chave lógica formada pelos participantes de um chat.
  */
 public class ChatParticipantsKey {
 
@@ -19,7 +19,7 @@ public class ChatParticipantsKey {
     /**
      * Cria uma chave a partir dos identificadores dos participantes.
      *
-     * @param userIds identificadores dos usuÃ¡rios participantes.
+     * @param userIds identificadores dos usuários participantes.
      */
     public ChatParticipantsKey(String ... userIds){
         this();
@@ -54,7 +54,7 @@ public class ChatParticipantsKey {
     }
 
     /**
-     * Compara chaves de participantes pela igualdade do conjunto de usuÃ¡rios.
+     * Compara chaves de participantes pela igualdade do conjunto de usuários.
      *
      * @param o objeto comparado.
      * @return {@code true} se as chaves representarem os mesmos participantes.
@@ -70,9 +70,9 @@ public class ChatParticipantsKey {
     }
 
     /**
-     * Calcula o cÃ³digo hash da chave.
+     * Calcula o código hash da chave.
      *
-     * @return cÃ³digo hash baseado no conjunto de participantes.
+     * @return código hash baseado no conjunto de participantes.
      */
     @Override
     public int hashCode(){

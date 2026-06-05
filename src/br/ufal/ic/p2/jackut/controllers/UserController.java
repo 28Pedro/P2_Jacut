@@ -4,10 +4,10 @@ import br.ufal.ic.p2.jackut.exceptions.*;
 import br.ufal.ic.p2.jackut.services.user.*;
 
 /**
- * Controlador respons√°vel pelos casos de uso relacionados a usu√°rios.
+ * Controlador respons·vel pelos casos de uso relacionados a usu·rios.
  *
- * <p>Esta classe coordena servi√ßos de conta, perfil, amizade e caixa de
- * mensagens, mantendo a fachada desacoplada dos detalhes de cria√ß√£o e consulta
+ * <p>Esta classe coordena serviÁos de conta, perfil, amizade e caixa de
+ * mensagens, mantendo a fachada desacoplada dos detalhes de criaÁ„o e consulta
  * dessas estruturas.</p>
  */
 public class UserController {
@@ -19,9 +19,9 @@ public class UserController {
     MessageBoxService messageBoxService;
 
     /**
-     * Cria o controlador e inicializa os servi√ßos necess√°rios.
+     * Cria o controlador e inicializa os serviÁos necess·rios.
      *
-     * @throws SaveError se a infraestrutura de persist√™ncia n√£o puder ser preparada.
+     * @throws SaveError se a infraestrutura de persistÍncia n„o puder ser preparada.
      * @throws FileError se houver falha ao carregar dados persistidos.
      */
     public UserController() throws SaveError, FileError {
@@ -33,15 +33,15 @@ public class UserController {
     }
 
     /**
-     * Cria um usu√°rio e suas estruturas associadas.
+     * Cria um usu·rio e suas estruturas associadas.
      *
-     * @param userName login √∫nico do usu√°rio.
-     * @param password senha do usu√°rio.
+     * @param userName login ˙nico do usu·rio.
+     * @param password senha do usu·rio.
      * @param name nome inicial do perfil.
-     * @return identificador √∫nico do usu√°rio criado.
-     * @throws LoginInvalido se o login informado for inv√°lido.
-     * @throws SenhaInvalida se a senha informada for inv√°lida.
-     * @throws ContaComEsseNomeJaExiste se j√° existir usu√°rio com o mesmo login.
+     * @return identificador ˙nico do usu·rio criado.
+     * @throws LoginInvalido se o login informado for inv·lido.
+     * @throws SenhaInvalida se a senha informada for inv·lida.
+     * @throws ContaComEsseNomeJaExiste se j· existir usu·rio com o mesmo login.
      */
     public String CreateUser(String userName, String password, String name)
     throws LoginInvalido, SenhaInvalida, ContaComEsseNomeJaExiste {
@@ -55,13 +55,13 @@ public class UserController {
     }
 
     /**
-     * Recupera um atributo de perfil a partir do login do usu√°rio.
+     * Recupera um atributo de perfil a partir do login do usu·rio.
      *
-     * @param userName login do usu√°rio.
+     * @param userName login do usu·rio.
      * @param attributeName nome do atributo solicitado.
      * @return valor do atributo solicitado.
-     * @throws UsuarioNaoCadastrado se o usu√°rio n√£o existir.
-     * @throws AtributoNaoPreenchido se o atributo n√£o estiver preenchido.
+     * @throws UsuarioNaoCadastrado se o usu·rio n„o existir.
+     * @throws AtributoNaoPreenchido se o atributo n„o estiver preenchido.
      */
     public String getUserAttribute(String userName, String attributeName)
     throws UsuarioNaoCadastrado, AtributoNaoPreenchido{
@@ -71,11 +71,11 @@ public class UserController {
     }
 
     /**
-     * Abre uma sess√£o para um usu√°rio autenticado.
+     * Abre uma sess„o para um usu·rio autenticado.
      *
-     * @param userName login do usu√°rio.
-     * @param password senha do usu√°rio.
-     * @return identificador do usu√°rio autenticado.
+     * @param userName login do usu·rio.
+     * @param password senha do usu·rio.
+     * @return identificador do usu·rio autenticado.
      * @throws LoginOuSenhaInvalidos se login ou senha estiverem incorretos.
      */
     public String openSession(String userName, String password) throws
@@ -84,12 +84,12 @@ public class UserController {
     }
 
     /**
-     * Edita um atributo do perfil de um usu√°rio.
+     * Edita um atributo do perfil de um usu·rio.
      *
-     * @param UserId identificador do usu√°rio.
+     * @param UserId identificador do usu·rio.
      * @param attribute nome do atributo.
      * @param attributeValue valor a ser armazenado.
-     * @throws UsuarioNaoCadastrado se o usu√°rio n√£o existir.
+     * @throws UsuarioNaoCadastrado se o usu·rio n„o existir.
      */
     public void editProfile(String UserId, String attribute,
                             String attributeValue) throws UsuarioNaoCadastrado{
@@ -98,14 +98,14 @@ public class UserController {
     }
 
     /**
-     * Solicita ou confirma amizade com outro usu√°rio.
+     * Solicita ou confirma amizade com outro usu·rio.
      *
-     * @param userId identificador do usu√°rio que executa a a√ß√£o.
-     * @param friendUserName login do usu√°rio a ser adicionado.
-     * @throws UsuarioNaoCadastrado se algum usu√°rio n√£o estiver cadastrado.
-     * @throws AdicionarASiMesmoAmigo se o usu√°rio tentar adicionar a si mesmo.
-     * @throws UsuarioJaAdicionadoAmigo se os usu√°rios j√° forem amigos.
-     * @throws EsperandoAceitacaoAmigo se j√° existir solicita√ß√£o pendente.
+     * @param userId identificador do usu·rio que executa a aÁ„o.
+     * @param friendUserName login do usu·rio a ser adicionado.
+     * @throws UsuarioNaoCadastrado se algum usu·rio n„o estiver cadastrado.
+     * @throws AdicionarASiMesmoAmigo se o usu·rio tentar adicionar a si mesmo.
+     * @throws UsuarioJaAdicionadoAmigo se os usu·rios j· forem amigos.
+     * @throws EsperandoAceitacaoAmigo se j· existir solicitaÁ„o pendente.
      */
     public void addFriendship(String userId, String friendUserName)
             throws UsuarioNaoCadastrado, AdicionarASiMesmoAmigo,
@@ -121,12 +121,12 @@ public class UserController {
     }
 
     /**
-     * Verifica se dois usu√°rios s√£o amigos.
+     * Verifica se dois usu·rios s„o amigos.
      *
-     * @param userName login do primeiro usu√°rio.
-     * @param friendUsername login do segundo usu√°rio.
-     * @return {@code true} se os usu√°rios forem amigos; {@code false} caso contr√°rio.
-     * @throws UsuarioNaoCadastrado se algum usu√°rio n√£o estiver cadastrado.
+     * @param userName login do primeiro usu·rio.
+     * @param friendUsername login do segundo usu·rio.
+     * @return {@code true} se os usu·rios forem amigos; {@code false} caso contr·rio.
+     * @throws UsuarioNaoCadastrado se algum usu·rio n„o estiver cadastrado.
      */
     public boolean isFriend(String userName, String friendUsername) throws
             UsuarioNaoCadastrado{
@@ -138,11 +138,11 @@ public class UserController {
     }
 
     /**
-     * Retorna os amigos de um usu√°rio em formato textual.
+     * Retorna os amigos de um usu·rio em formato textual.
      *
-     * @param userName login do usu√°rio consultado.
+     * @param userName login do usu·rio consultado.
      * @return lista textual com os logins dos amigos.
-     * @throws UsuarioNaoCadastrado se o usu√°rio n√£o estiver cadastrado.
+     * @throws UsuarioNaoCadastrado se o usu·rio n„o estiver cadastrado.
      */
     public String getFriends(String userName) throws UsuarioNaoCadastrado{
 
@@ -155,7 +155,7 @@ public class UserController {
     }
 
     /**
-     * Salva os dados dos servi√ßos coordenados por este controlador.
+     * Salva os dados dos serviÁos coordenados por este controlador.
      *
      * @throws SaveError se ocorrer falha ao persistir algum dado.
      */
@@ -167,7 +167,7 @@ public class UserController {
     }
 
     /**
-     * Limpa os dados dos servi√ßos coordenados por este controlador.
+     * Limpa os dados dos serviÁos coordenados por este controlador.
      */
     public void resetData(){
         userService.resetData();

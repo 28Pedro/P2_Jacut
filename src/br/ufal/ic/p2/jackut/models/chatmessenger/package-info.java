@@ -1,8 +1,8 @@
 /**
- * ContÃ©m as entidades relacionadas ao domÃ­nio de chats e mensagens.
+ * Contém as entidades relacionadas ao domínio de chats e mensagens.
  *
  * <p>O pacote modela conversas, participantes, estados de leitura e mensagens
- * com identidade prÃ³pria, permitindo evoluÃ§Ã£o para chats com mÃºltiplos
- * usuÃ¡rios.</p>
+ * com identidade própria, permitindo evolução para chats com múltiplos
+ * usuários.</p>
  */
 package br.ufal.ic.p2.jackut.models.chatmessenger;

@@ -10,27 +10,27 @@ import br.ufal.ic.p2.jackut.repositories.XMLController;
 import java.util.Optional;
 
 /**
- * RepositÃ³rio responsÃ¡vel por persistir e recuperar mensagens.
+ * Repositório responsável por persistir e recuperar mensagens.
  */
 public class MessageRepository extends AbstractRepository<Message> {
 
     private static MessageRepository instance;
 
     /**
-     * Cria o repositÃ³rio de mensagens.
+     * Cria o repositório de mensagens.
      *
      * @throws FileError se ocorrer falha ao carregar mensagens persistidas.
-     * @throws SaveError se a infraestrutura de persistÃªncia nÃ£o puder ser preparada.
+     * @throws SaveError se a infraestrutura de persistência não puder ser preparada.
      */
     private MessageRepository() throws FileError, SaveError {
         super(XMLController.getInstance(),"messages.xml");
     }
 
     /**
-     * Retorna a instÃ¢ncia Ãºnica do repositÃ³rio de mensagens.
+     * Retorna a instância única do repositório de mensagens.
      *
-     * @return instÃ¢ncia compartilhada do repositÃ³rio.
-     * @throws SaveError se a infraestrutura de persistÃªncia nÃ£o puder ser preparada.
+     * @return instância compartilhada do repositório.
+     * @throws SaveError se a infraestrutura de persistência não puder ser preparada.
      * @throws FileError se ocorrer falha ao carregar mensagens persistidas.
      */
     public static MessageRepository getInstance() throws SaveError,FileError{
@@ -54,7 +54,7 @@ public class MessageRepository extends AbstractRepository<Message> {
      *
      * @param messageId identificador da mensagem.
      * @return mensagem encontrada.
-     * @throws NaoHaRecados se a mensagem nÃ£o for encontrada.
+     * @throws NaoHaRecados se a mensagem não for encontrada.
      */
     public Message getMessageById(String messageId) throws NaoHaRecados{
         return Optional.ofNullable(

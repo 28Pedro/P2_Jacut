@@ -14,7 +14,7 @@ import java.util.Map;
 
 
 /**
- * Controlador de persistÃªncia XML da aplicaÃ§Ã£o.
+ * Controlador de persistência XML da aplicação.
  */
 public class XMLController {
 
@@ -24,19 +24,19 @@ public class XMLController {
     private final String FILE_PATH = dataFolderPath.toString() + File.separator;
 
     /**
-     * Cria o controlador XML e garante a existÃªncia da pasta de dados.
+     * Cria o controlador XML e garante a existência da pasta de dados.
      *
-     * @throws SaveError se a pasta de dados nÃ£o puder ser criada.
+     * @throws SaveError se a pasta de dados não puder ser criada.
      */
     private XMLController() throws SaveError {
         createDirectoryIfNotExists();
     }
 
     /**
-     * Retorna a instÃ¢ncia Ãºnica do controlador XML.
+     * Retorna a instância única do controlador XML.
      *
-     * @return instÃ¢ncia compartilhada do controlador XML.
-     * @throws SaveError se a pasta de dados nÃ£o puder ser criada.
+     * @return instância compartilhada do controlador XML.
+     * @throws SaveError se a pasta de dados não puder ser criada.
      */
     public static XMLController getInstance() throws SaveError{
         if(instance == null){
@@ -81,8 +81,8 @@ public class XMLController {
      * @param fileName nome do arquivo XML.
      * @param <K> tipo da chave do mapa.
      * @param <V> tipo do valor do mapa.
-     * @return mapa carregado ou mapa vazio se o arquivo nÃ£o existir.
-     * @throws FileError se ocorrer falha durante a leitura ou decodificaÃ§Ã£o.
+     * @return mapa carregado ou mapa vazio se o arquivo não existir.
+     * @throws FileError se ocorrer falha durante a leitura ou decodificação.
      */
     @SuppressWarnings("unchecked")
     public <K, V> Map<K, V> loadMapFromXML(String fileName) throws FileError {
@@ -102,7 +102,7 @@ public class XMLController {
     }
 
     /**
-     * Remove arquivos de persistÃªncia.
+     * Remove arquivos de persistência.
      *
      * @param fileNames nomes dos arquivos a serem removidos.
      */

@@ -5,12 +5,12 @@ import br.ufal.ic.p2.jackut.controllers.UserController;
 import br.ufal.ic.p2.jackut.exceptions.*;
 
 /**
- * Fachada p√∫blica da aplica√ß√£o Jackut.
+ * Fachada p˙blica da aplicaÁ„o Jackut.
  *
- * <p>Esta classe concentra os m√©todos utilizados pelos testes de aceita√ß√£o e
- * delega a execu√ß√£o para os controladores respons√°veis. O objetivo √© oferecer
- * uma API simples e est√°vel, ocultando a organiza√ß√£o interna em servi√ßos,
- * modelos e reposit√≥rios.</p>
+ * <p>Esta classe concentra os mÈtodos utilizados pelos testes de aceitaÁ„o e
+ * delega a execuÁ„o para os controladores respons·veis. O objetivo È oferecer
+ * uma API simples e est·vel, ocultando a organizaÁ„o interna em serviÁos,
+ * modelos e repositÛrios.</p>
  */
 public class Facade {
 
@@ -20,7 +20,7 @@ public class Facade {
     /**
      * Cria uma nova fachada e inicializa os controladores principais.
      *
-     * @throws SaveError se a infraestrutura de persist√™ncia n√£o puder ser preparada.
+     * @throws SaveError se a infraestrutura de persistÍncia n„o puder ser preparada.
      * @throws FileError se ocorrer falha ao carregar dados persistidos.
      */
     public Facade() throws SaveError, FileError {
@@ -29,7 +29,7 @@ public class Facade {
     }
 
     /**
-     * Remove os dados persistidos e reinicia as estruturas em mem√≥ria.
+     * Remove os dados persistidos e reinicia as estruturas em memÛria.
      */
     public void zerarSistema(){
         userController.resetData();
@@ -37,9 +37,9 @@ public class Facade {
     }
 
     /**
-     * Persiste os dados atuais da aplica√ß√£o.
+     * Persiste os dados atuais da aplicaÁ„o.
      *
-     * @throws SaveError se ocorrer falha durante a grava√ß√£o dos dados.
+     * @throws SaveError se ocorrer falha durante a gravaÁ„o dos dados.
      */
     public void encerrarSistema() throws SaveError{
         userController.saveData();
@@ -47,15 +47,15 @@ public class Facade {
     }
 
     /**
-     * Cria uma nova conta de usu√°rio.
+     * Cria uma nova conta de usu·rio.
      *
-     * @param userName login √∫nico usado para identificar o usu√°rio.
-     * @param passWorld senha usada para autentica√ß√£o do usu√°rio.
-     * @param name nome inicial armazenado no perfil do usu√°rio.
-     * @return identificador √∫nico do usu√°rio criado.
-     * @throws SenhaInvalida se a senha informada for vazia ou inv√°lida.
-     * @throws LoginInvalido se o login informado for vazio ou inv√°lido.
-     * @throws ContaComEsseNomeJaExiste se j√° existir uma conta com o login informado.
+     * @param userName login ˙nico usado para identificar o usu·rio.
+     * @param passWorld senha usada para autenticaÁ„o do usu·rio.
+     * @param name nome inicial armazenado no perfil do usu·rio.
+     * @return identificador ˙nico do usu·rio criado.
+     * @throws SenhaInvalida se a senha informada for vazia ou inv·lida.
+     * @throws LoginInvalido se o login informado for vazio ou inv·lido.
+     * @throws ContaComEsseNomeJaExiste se j· existir uma conta com o login informado.
      */
      public String criarUsuario(String userName, String passWorld, String name)
      throws SenhaInvalida, LoginInvalido, ContaComEsseNomeJaExiste {
@@ -63,13 +63,13 @@ public class Facade {
      }
 
     /**
-     * Recupera um atributo do perfil de um usu√°rio.
+     * Recupera um atributo do perfil de um usu·rio.
      *
-     * @param username login do usu√°rio cujo atributo ser√° consultado.
+     * @param username login do usu·rio cujo atributo ser· consultado.
      * @param attributeName nome do atributo solicitado.
      * @return valor textual do atributo solicitado.
-     * @throws UsuarioNaoCadastrado se n√£o existir usu√°rio com o login informado.
-     * @throws AtributoNaoPreenchido se o atributo solicitado n√£o estiver preenchido.
+     * @throws UsuarioNaoCadastrado se n„o existir usu·rio com o login informado.
+     * @throws AtributoNaoPreenchido se o atributo solicitado n„o estiver preenchido.
      */
      public String getAtributoUsuario(String username, String attributeName)
      throws UsuarioNaoCadastrado,AtributoNaoPreenchido{
@@ -77,24 +77,24 @@ public class Facade {
      }
 
     /**
-     * Abre uma sess√£o para o usu√°rio informado.
+     * Abre uma sess„o para o usu·rio informado.
      *
-     * @param userName login do usu√°rio.
-     * @param password senha do usu√°rio.
-     * @return identificador da sess√£o, representado pelo ID do usu√°rio autenticado.
-     * @throws LoginOuSenhaInvalidos se o login ou a senha forem inv√°lidos.
+     * @param userName login do usu·rio.
+     * @param password senha do usu·rio.
+     * @return identificador da sess„o, representado pelo ID do usu·rio autenticado.
+     * @throws LoginOuSenhaInvalidos se o login ou a senha forem inv·lidos.
      */
      public String abrirSessao(String userName, String password) throws LoginOuSenhaInvalidos{
         return userController.openSession(userName,password);
      }
 
     /**
-     * Edita um atributo do perfil do usu√°rio autenticado.
+     * Edita um atributo do perfil do usu·rio autenticado.
      *
-     * @param userId identificador do usu√°rio.
+     * @param userId identificador do usu·rio.
      * @param attribute nome do atributo a ser editado.
      * @param attributeValue novo valor do atributo.
-     * @throws UsuarioNaoCadastrado se n√£o existir usu√°rio para o identificador informado.
+     * @throws UsuarioNaoCadastrado se n„o existir usu·rio para o identificador informado.
      */
      public void editarPerfil (String userId, String attribute, String attributeValue)
      throws UsuarioNaoCadastrado{
@@ -102,14 +102,14 @@ public class Facade {
      }
 
     /**
-     * Solicita ou confirma amizade entre dois usu√°rios.
+     * Solicita ou confirma amizade entre dois usu·rios.
      *
-     * @param userId identificador do usu√°rio que executa a a√ß√£o.
-     * @param friendUserName login do usu√°rio a ser adicionado como amigo.
-     * @throws UsuarioNaoCadastrado se algum usu√°rio envolvido n√£o estiver cadastrado.
-     * @throws AdicionarASiMesmoAmigo se o usu√°rio tentar adicionar a si mesmo.
-     * @throws UsuarioJaAdicionadoAmigo se os usu√°rios j√° forem amigos.
-     * @throws EsperandoAceitacaoAmigo se j√° existir solicita√ß√£o pendente de aceite.
+     * @param userId identificador do usu·rio que executa a aÁ„o.
+     * @param friendUserName login do usu·rio a ser adicionado como amigo.
+     * @throws UsuarioNaoCadastrado se algum usu·rio envolvido n„o estiver cadastrado.
+     * @throws AdicionarASiMesmoAmigo se o usu·rio tentar adicionar a si mesmo.
+     * @throws UsuarioJaAdicionadoAmigo se os usu·rios j· forem amigos.
+     * @throws EsperandoAceitacaoAmigo se j· existir solicitaÁ„o pendente de aceite.
      */
     public void adicionarAmigo(String userId, String friendUserName)
             throws UsuarioNaoCadastrado, AdicionarASiMesmoAmigo,
@@ -119,12 +119,12 @@ public class Facade {
     }
 
     /**
-     * Verifica se dois usu√°rios s√£o amigos.
+     * Verifica se dois usu·rios s„o amigos.
      *
-     * @param userName login do primeiro usu√°rio.
-     * @param friendUsername login do segundo usu√°rio.
-     * @return {@code true} se os usu√°rios forem amigos; {@code false} caso contr√°rio.
-     * @throws UsuarioNaoCadastrado se algum dos usu√°rios n√£o estiver cadastrado.
+     * @param userName login do primeiro usu·rio.
+     * @param friendUsername login do segundo usu·rio.
+     * @return {@code true} se os usu·rios forem amigos; {@code false} caso contr·rio.
+     * @throws UsuarioNaoCadastrado se algum dos usu·rios n„o estiver cadastrado.
      */
     public boolean ehAmigo(String userName, String friendUsername) throws
             UsuarioNaoCadastrado{
@@ -133,23 +133,23 @@ public class Facade {
     }
 
     /**
-     * Retorna a lista de amigos de um usu√°rio.
+     * Retorna a lista de amigos de um usu·rio.
      *
-     * @param userName login do usu√°rio consultado.
-     * @return representa√ß√£o textual da lista de amigos do usu√°rio.
-     * @throws UsuarioNaoCadastrado se o usu√°rio informado n√£o estiver cadastrado.
+     * @param userName login do usu·rio consultado.
+     * @return representaÁ„o textual da lista de amigos do usu·rio.
+     * @throws UsuarioNaoCadastrado se o usu·rio informado n„o estiver cadastrado.
      */
     public String getAmigos(String userName) throws UsuarioNaoCadastrado{
         return userController.getFriends(userName);
     }
 
     /**
-     * Envia um recado de um usu√°rio para outro.
+     * Envia um recado de um usu·rio para outro.
      *
-     * @param senderId identificador do usu√°rio remetente.
-     * @param receiverUserName login do usu√°rio destinat√°rio.
-     * @param messenger conte√∫do textual do recado.
-     * @throws UsuarioNaoCadastrado se o destinat√°rio n√£o estiver cadastrado.
+     * @param senderId identificador do usu·rio remetente.
+     * @param receiverUserName login do usu·rio destinat·rio.
+     * @param messenger conte˙do textual do recado.
+     * @throws UsuarioNaoCadastrado se o destinat·rio n„o estiver cadastrado.
      * @throws EnviarRecadoParaSiMesmo se o remetente tentar enviar recado para si mesmo.
      */
     public void enviarRecado(String senderId, String receiverUserName, String messenger) throws
@@ -158,12 +158,12 @@ public class Facade {
     }
 
     /**
-     * L√™ o pr√≥ximo recado dispon√≠vel para o usu√°rio.
+     * LÍ o prÛximo recado disponÌvel para o usu·rio.
      *
-     * @param userId identificador do usu√°rio que deseja ler o recado.
-     * @return conte√∫do textual do pr√≥ximo recado n√£o lido.
-     * @throws UsuarioNaoCadastrado se o usu√°rio informado n√£o estiver cadastrado.
-     * @throws NaoHaRecados se o usu√°rio n√£o possuir recados pendentes.
+     * @param userId identificador do usu·rio que deseja ler o recado.
+     * @return conte˙do textual do prÛximo recado n„o lido.
+     * @throws UsuarioNaoCadastrado se o usu·rio informado n„o estiver cadastrado.
+     * @throws NaoHaRecados se o usu·rio n„o possuir recados pendentes.
      */
     public String lerRecado(String userId)
             throws UsuarioNaoCadastrado,NaoHaRecados{

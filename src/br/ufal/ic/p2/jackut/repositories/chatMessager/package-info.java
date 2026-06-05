@@ -1,7 +1,7 @@
 /**
- * ContÃ©m os repositÃ³rios das entidades do domÃ­nio de chat e mensagens.
+ * Contém os repositórios das entidades do domínio de chat e mensagens.
  *
  * <p>Este pacote isola o armazenamento de conversas e mensagens, permitindo
- * que a camada de serviÃ§os manipule o domÃ­nio sem conhecer detalhes de XML.</p>
+ * que a camada de serviços manipule o domínio sem conhecer detalhes de XML.</p>
  */
 package br.ufal.ic.p2.jackut.repositories.chatMessager;

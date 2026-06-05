@@ -11,7 +11,7 @@ import java.util.UUID;
 
 
 /**
- * Servi√ßo respons√°vel por caixas de notifica√ß√µes de mensagens dos usu√°rios.
+ * ServiÁo respons·vel por caixas de notificaÁıes de mensagens dos usu·rios.
  */
 public class MessageBoxService {
 
@@ -19,19 +19,19 @@ public class MessageBoxService {
     private final MessengerBoxRepository messengerBoxRepository;
 
     /**
-     * Cria o servi√ßo de caixas de mensagem.
+     * Cria o serviÁo de caixas de mensagem.
      *
      * @throws FileError se ocorrer falha ao carregar caixas persistidas.
-     * @throws SaveError se a infraestrutura de persist√™ncia n√£o puder ser preparada.
+     * @throws SaveError se a infraestrutura de persistÍncia n„o puder ser preparada.
      */
     private MessageBoxService() throws FileError, SaveError {
         this.messengerBoxRepository = MessengerBoxRepository.getInstance();
     }
 
     /**
-     * Cria uma caixa de mensagens para um usu√°rio.
+     * Cria uma caixa de mensagens para um usu·rio.
      *
-     * @param userId identificador do usu√°rio dono da caixa.
+     * @param userId identificador do usu·rio dono da caixa.
      */
     public void buildMessageBoxObject(String userId){
         MessengerBox messengerBox = new MessengerBox(userId, UUID.randomUUID().toString());
@@ -39,10 +39,10 @@ public class MessageBoxService {
     }
 
     /**
-     * Retorna a inst√¢ncia √∫nica do servi√ßo de caixas de mensagem.
+     * Retorna a inst‚ncia ˙nica do serviÁo de caixas de mensagem.
      *
-     * @return inst√¢ncia compartilhada do servi√ßo.
-     * @throws SaveError se a infraestrutura de persist√™ncia n√£o puder ser preparada.
+     * @return inst‚ncia compartilhada do serviÁo.
+     * @throws SaveError se a infraestrutura de persistÍncia n„o puder ser preparada.
      * @throws FileError se ocorrer falha ao carregar caixas persistidas.
      */
     public static MessageBoxService getInstance() throws SaveError, FileError{
@@ -54,11 +54,11 @@ public class MessageBoxService {
     }
 
     /**
-     * Adiciona uma notifica√ß√£o de mensagem √† caixa de um usu√°rio.
+     * Adiciona uma notificaÁ„o de mensagem ‡ caixa de um usu·rio.
      *
-     * @param userId identificador do usu√°rio notificado.
-     * @param chatMessengerId identificador da mensagem ou refer√™ncia de chat notificada.
-     * @throws UsuarioNaoCadastrado se a caixa do usu√°rio n√£o for encontrada.
+     * @param userId identificador do usu·rio notificado.
+     * @param chatMessengerId identificador da mensagem ou referÍncia de chat notificada.
+     * @throws UsuarioNaoCadastrado se a caixa do usu·rio n„o for encontrada.
      */
     public void notifyUser(String userId, String chatMessengerId) throws UsuarioNaoCadastrado {
 
@@ -67,11 +67,11 @@ public class MessageBoxService {
     }
 
     /**
-     * Obt√©m a pr√≥xima notifica√ß√£o pendente de um usu√°rio.
+     * ObtÈm a prÛxima notificaÁ„o pendente de um usu·rio.
      *
-     * @param userId identificador do usu√°rio consultado.
-     * @return notifica√ß√£o pendente, ou {@link Optional#empty()} se n√£o houver notifica√ß√£o.
-     * @throws UsuarioNaoCadastrado se a caixa do usu√°rio n√£o for encontrada.
+     * @param userId identificador do usu·rio consultado.
+     * @return notificaÁ„o pendente, ou {@link Optional#empty()} se n„o houver notificaÁ„o.
+     * @throws UsuarioNaoCadastrado se a caixa do usu·rio n„o for encontrada.
      */
     public Optional<String> getNotificationUser(String userId)
             throws UsuarioNaoCadastrado{
@@ -84,7 +84,7 @@ public class MessageBoxService {
     /**
      * Salva os dados das caixas de mensagem.
      *
-     * @throws SaveError se ocorrer falha durante a persist√™ncia.
+     * @throws SaveError se ocorrer falha durante a persistÍncia.
      */
     public void saveData() throws SaveError{
         messengerBoxRepository.saveData();

@@ -11,10 +11,10 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Controlador respons√°vel pelos casos de uso de recados, chats e mensagens.
+ * Controlador respons·vel pelos casos de uso de recados, chats e mensagens.
  *
- * <p>Esta classe coordena a cria√ß√£o de mensagens, associa√ß√£o com chats,
- * notifica√ß√£o dos destinat√°rios e leitura dos recados pendentes.</p>
+ * <p>Esta classe coordena a criaÁ„o de mensagens, associaÁ„o com chats,
+ * notificaÁ„o dos destinat·rios e leitura dos recados pendentes.</p>
  */
 public class ChatMessengerController {
 
@@ -24,9 +24,9 @@ public class ChatMessengerController {
     private final MessageService messageService;
 
     /**
-     * Cria o controlador e inicializa os servi√ßos de chat, mensagem e usu√°rio.
+     * Cria o controlador e inicializa os serviÁos de chat, mensagem e usu·rio.
      *
-     * @throws SaveError se a infraestrutura de persist√™ncia n√£o puder ser preparada.
+     * @throws SaveError se a infraestrutura de persistÍncia n„o puder ser preparada.
      * @throws FileError se houver falha ao carregar dados persistidos.
      */
     public ChatMessengerController() throws SaveError, FileError {
@@ -37,12 +37,12 @@ public class ChatMessengerController {
     }
 
     /**
-     * Envia uma mensagem de um usu√°rio para outro.
+     * Envia uma mensagem de um usu·rio para outro.
      *
-     * @param messengerContent conte√∫do textual da mensagem.
-     * @param senderId identificador do usu√°rio remetente.
-     * @param receiverUserName login do usu√°rio destinat√°rio.
-     * @throws UsuarioNaoCadastrado se o destinat√°rio n√£o estiver cadastrado.
+     * @param messengerContent conte˙do textual da mensagem.
+     * @param senderId identificador do usu·rio remetente.
+     * @param receiverUserName login do usu·rio destinat·rio.
+     * @throws UsuarioNaoCadastrado se o destinat·rio n„o estiver cadastrado.
      * @throws EnviarRecadoParaSiMesmo se o remetente tentar enviar mensagem para si mesmo.
      */
     public void SendMessenger(String messengerContent, String senderId, String receiverUserName) throws
@@ -69,12 +69,12 @@ public class ChatMessengerController {
     }
 
     /**
-     * L√™ a pr√≥xima mensagem pendente de um usu√°rio.
+     * LÍ a prÛxima mensagem pendente de um usu·rio.
      *
-     * @param userId identificador do usu√°rio que realizar√° a leitura.
-     * @return conte√∫do textual da pr√≥xima mensagem n√£o lida.
-     * @throws UsuarioNaoCadastrado se o usu√°rio n√£o estiver cadastrado.
-     * @throws NaoHaRecados se n√£o houver mensagens pendentes.
+     * @param userId identificador do usu·rio que realizar· a leitura.
+     * @return conte˙do textual da prÛxima mensagem n„o lida.
+     * @throws UsuarioNaoCadastrado se o usu·rio n„o estiver cadastrado.
+     * @throws NaoHaRecados se n„o houver mensagens pendentes.
      */
     public String readMessenger(String userId)
             throws UsuarioNaoCadastrado,NaoHaRecados{
@@ -93,7 +93,7 @@ public class ChatMessengerController {
     /**
      * Salva os dados de chats e mensagens.
      *
-     * @throws SaveError se ocorrer falha durante a persist√™ncia.
+     * @throws SaveError se ocorrer falha durante a persistÍncia.
      */
     public void saveData() throws SaveError{
        chatMessengerService.saveData();

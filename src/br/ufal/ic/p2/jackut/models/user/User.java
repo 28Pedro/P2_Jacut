@@ -3,7 +3,7 @@ package br.ufal.ic.p2.jackut.models.user;
 import java.util.*;
 
 /**
- * Representa a conta b√°sica de um usu√°rio do Jackut.
+ * Representa a conta b·sica de um usu·rio do Jackut.
  */
 public class User {
 
@@ -12,16 +12,16 @@ public class User {
     private String id;
 
     /**
-     * Cria um usu√°rio vazio para uso por mecanismos de serializa√ß√£o.
+     * Cria um usu·rio vazio para uso por mecanismos de serializaÁ„o.
      */
     public User(){}
 
     /**
-     * Cria um usu√°rio com login, senha e identificador.
+     * Cria um usu·rio com login, senha e identificador.
      *
-     * @param username login do usu√°rio.
-     * @param password senha do usu√°rio.
-     * @param id identificador √∫nico do usu√°rio.
+     * @param username login do usu·rio.
+     * @param password senha do usu·rio.
+     * @param id identificador ˙nico do usu·rio.
      */
     public User(String username, String password, String id) {
         this();
@@ -32,64 +32,64 @@ public class User {
     }
 
     /**
-     * Valida a senha informada para abertura de sess√£o.
+     * Valida a senha informada para abertura de sess„o.
      *
      * @param password senha informada.
-     * @return identificador do usu√°rio se a senha for v√°lida; caso contr√°rio, vazio.
+     * @return identificador do usu·rio se a senha for v·lida; caso contr·rio, vazio.
      */
     public Optional<String> validateSection(String password){
          return this.password.matches(password) ? Optional.of(getId()) : Optional.empty();
     }
 
     /**
-     * Retorna o login do usu√°rio.
+     * Retorna o login do usu·rio.
      *
-     * @return login do usu√°rio.
+     * @return login do usu·rio.
      */
     public String getUserName() {
         return userName;
     }
 
     /**
-     * Define o login do usu√°rio.
+     * Define o login do usu·rio.
      *
-     * @param userName login do usu√°rio.
+     * @param userName login do usu·rio.
      */
     public void setUserName(String userName) {
         this.userName = userName;
     }
 
     /**
-     * Retorna a senha do usu√°rio.
+     * Retorna a senha do usu·rio.
      *
-     * @return senha do usu√°rio.
+     * @return senha do usu·rio.
      */
     public String getPassword() {
         return password;
     }
 
     /**
-     * Define a senha do usu√°rio.
+     * Define a senha do usu·rio.
      *
-     * @param password senha do usu√°rio.
+     * @param password senha do usu·rio.
      */
     public void setPassword(String password) {
         this.password = password;
     }
 
     /**
-     * Retorna o identificador √∫nico do usu√°rio.
+     * Retorna o identificador ˙nico do usu·rio.
      *
-     * @return identificador do usu√°rio.
+     * @return identificador do usu·rio.
      */
     public String getId() {
         return id;
     }
 
     /**
-     * Define o identificador √∫nico do usu√°rio.
+     * Define o identificador ˙nico do usu·rio.
      *
-     * @param id identificador do usu√°rio.
+     * @param id identificador do usu·rio.
      */
     public void setId(String id) {
         this.id = id;

@@ -1,7 +1,7 @@
 /**
- * ContÃ©m os pacotes de entidades de domÃ­nio do Jackut.
+ * Contém os pacotes de entidades de domínio do Jackut.
  *
  * <p>As entidades representam os conceitos persistidos e manipulados pela
- * aplicaÃ§Ã£o, como usuÃ¡rios, perfis, amizades, chats e mensagens.</p>
+ * aplicação, como usuários, perfis, amizades, chats e mensagens.</p>
  */
 package br.ufal.ic.p2.jackut.models;

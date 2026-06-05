@@ -11,26 +11,26 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Servi√ßo respons√°vel pelas regras de neg√≥cio de amizades.
+ * ServiÁo respons·vel pelas regras de negÛcio de amizades.
  */
 public class FriendshipService {
 
     private final FriendshipRepository friendshipRepository;
 
     /**
-     * Cria o servi√ßo de amizades.
+     * Cria o serviÁo de amizades.
      *
      * @throws FileError se ocorrer falha ao carregar dados de amizades.
-     * @throws SaveError se a infraestrutura de persist√™ncia n√£o puder ser preparada.
+     * @throws SaveError se a infraestrutura de persistÍncia n„o puder ser preparada.
      */
     public FriendshipService() throws FileError, SaveError {
         this.friendshipRepository = FriendshipRepository.getInstance();
     }
 
     /**
-     * Cria a estrutura de amizade associada a um usu√°rio.
+     * Cria a estrutura de amizade associada a um usu·rio.
      *
-     * @param userId identificador do usu√°rio dono da estrutura.
+     * @param userId identificador do usu·rio dono da estrutura.
      */
     public void buildFriendshipObject(String userId){
         Friendship friendship = new Friendship(userId, UUID.randomUUID().toString());
@@ -38,13 +38,13 @@ public class FriendshipService {
     }
 
     /**
-     * Solicita ou confirma amizade entre dois usu√°rios.
+     * Solicita ou confirma amizade entre dois usu·rios.
      *
-     * @param userId identificador do usu√°rio que executa a a√ß√£o.
-     * @param friendUserId identificador do usu√°rio relacionado.
-     * @throws UsuarioNaoCadastrado se alguma estrutura de amizade n√£o for encontrada.
-     * @throws UsuarioJaAdicionadoAmigo se a amizade j√° estiver confirmada.
-     * @throws EsperandoAceitacaoAmigo se j√° existir solicita√ß√£o pendente.
+     * @param userId identificador do usu·rio que executa a aÁ„o.
+     * @param friendUserId identificador do usu·rio relacionado.
+     * @throws UsuarioNaoCadastrado se alguma estrutura de amizade n„o for encontrada.
+     * @throws UsuarioJaAdicionadoAmigo se a amizade j· estiver confirmada.
+     * @throws EsperandoAceitacaoAmigo se j· existir solicitaÁ„o pendente.
      */
     public void addFriendship(String userId, String friendUserId)
     throws UsuarioNaoCadastrado,UsuarioJaAdicionadoAmigo,
@@ -60,12 +60,12 @@ public class FriendshipService {
     }
 
     /**
-     * Verifica se dois usu√°rios s√£o amigos.
+     * Verifica se dois usu·rios s„o amigos.
      *
-     * @param userId identificador do primeiro usu√°rio.
-     * @param friendUserId identificador do segundo usu√°rio.
-     * @return {@code true} se os usu√°rios forem amigos; {@code false} caso contr√°rio.
-     * @throws UsuarioNaoCadastrado se alguma estrutura de amizade n√£o for encontrada.
+     * @param userId identificador do primeiro usu·rio.
+     * @param friendUserId identificador do segundo usu·rio.
+     * @return {@code true} se os usu·rios forem amigos; {@code false} caso contr·rio.
+     * @throws UsuarioNaoCadastrado se alguma estrutura de amizade n„o for encontrada.
      */
     public boolean isFriend(String userId, String friendUserId) throws
             UsuarioNaoCadastrado{
@@ -95,11 +95,11 @@ public class FriendshipService {
     }
 
     /**
-     * Retorna os IDs dos usu√°rios amigos de um usu√°rio.
+     * Retorna os IDs dos usu·rios amigos de um usu·rio.
      *
-     * @param UserId identificador do usu√°rio consultado.
-     * @return lista de identificadores dos usu√°rios amigos.
-     * @throws UsuarioNaoCadastrado se a estrutura de amizade do usu√°rio n√£o for encontrada.
+     * @param UserId identificador do usu·rio consultado.
+     * @return lista de identificadores dos usu·rios amigos.
+     * @throws UsuarioNaoCadastrado se a estrutura de amizade do usu·rio n„o for encontrada.
      */
     public List<String> getFriends(String UserId) throws UsuarioNaoCadastrado{
 
@@ -122,7 +122,7 @@ public class FriendshipService {
     /**
      * Salva os dados de amizades.
      *
-     * @throws SaveError se ocorrer falha durante a persist√™ncia.
+     * @throws SaveError se ocorrer falha durante a persistÍncia.
      */
     public void saveData() throws SaveError{
         friendshipRepository.saveData();

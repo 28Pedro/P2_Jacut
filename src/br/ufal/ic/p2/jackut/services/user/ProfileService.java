@@ -11,27 +11,27 @@ import br.ufal.ic.p2.jackut.repositories.users.ProfileRepository;
 import java.util.UUID;
 
 /**
- * ServiÃ§o responsÃ¡vel pelas regras de negÃ³cio dos perfis de usuÃ¡rio.
+ * Serviço responsável pelas regras de negócio dos perfis de usuário.
  */
 public class ProfileService {
 
     private final ProfileRepository profileRepository;
 
     /**
-     * Cria o serviÃ§o de perfis.
+     * Cria o serviço de perfis.
      *
      * @throws FileError se ocorrer falha ao carregar perfis persistidos.
-     * @throws SaveError se a infraestrutura de persistÃªncia nÃ£o puder ser preparada.
+     * @throws SaveError se a infraestrutura de persistência não puder ser preparada.
      */
     public ProfileService() throws FileError, SaveError {
         this.profileRepository = ProfileRepository.getInstance();
     }
 
     /**
-     * Cria um perfil para um usuÃ¡rio.
+     * Cria um perfil para um usuário.
      *
-     * @param userId identificador do usuÃ¡rio dono do perfil.
-     * @param name nome inicial do usuÃ¡rio, armazenado no atributo {@code nome}.
+     * @param userId identificador do usuário dono do perfil.
+     * @param name nome inicial do usuário, armazenado no atributo {@code nome}.
      */
     public void createProfile(String userId, String name){
         Profile profile = new Profile(userId, UUID.randomUUID().toString());
@@ -44,13 +44,13 @@ public class ProfileService {
     }
 
     /**
-     * Recupera um atributo do perfil de um usuÃ¡rio.
+     * Recupera um atributo do perfil de um usuário.
      *
-     * @param userId identificador do usuÃ¡rio dono do perfil.
+     * @param userId identificador do usuário dono do perfil.
      * @param attributeName nome do atributo solicitado.
      * @return valor textual do atributo.
-     * @throws UsuarioNaoCadastrado se o perfil do usuÃ¡rio nÃ£o for encontrado.
-     * @throws AtributoNaoPreenchido se o atributo nÃ£o estiver preenchido.
+     * @throws UsuarioNaoCadastrado se o perfil do usuário não for encontrado.
+     * @throws AtributoNaoPreenchido se o atributo não estiver preenchido.
      */
     public String getUserAttribute(String userId, String attributeName)
             throws UsuarioNaoCadastrado, AtributoNaoPreenchido {
@@ -62,12 +62,12 @@ public class ProfileService {
     }
 
     /**
-     * Edita um atributo do perfil de um usuÃ¡rio.
+     * Edita um atributo do perfil de um usuário.
      *
-     * @param userId identificador do usuÃ¡rio dono do perfil.
+     * @param userId identificador do usuário dono do perfil.
      * @param attribute nome do atributo a ser editado.
      * @param attributeValue valor a ser armazenado.
-     * @throws UsuarioNaoCadastrado se o perfil do usuÃ¡rio nÃ£o for encontrado.
+     * @throws UsuarioNaoCadastrado se o perfil do usuário não for encontrado.
      */
     public void editProfile(String userId, String attribute,
                             String attributeValue) throws UsuarioNaoCadastrado{
@@ -79,7 +79,7 @@ public class ProfileService {
     /**
      * Salva os dados de perfis.
      *
-     * @throws SaveError se ocorrer falha durante a persistÃªncia.
+     * @throws SaveError se ocorrer falha durante a persistência.
      */
     public void saveData() throws SaveError{
         profileRepository.saveData();

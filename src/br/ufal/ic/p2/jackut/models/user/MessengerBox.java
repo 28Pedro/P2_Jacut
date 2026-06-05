@@ -5,7 +5,7 @@ import java.util.Optional;
 import java.util.Queue;
 
 /**
- * Representa a caixa de notificaÃ§Ãµes de mensagens de um usuÃ¡rio.
+ * Representa a caixa de notificações de mensagens de um usuário.
  */
 public class MessengerBox {
 
@@ -14,17 +14,17 @@ public class MessengerBox {
     private String id;
 
     /**
-     * Cria uma caixa vazia para uso por mecanismos de serializaÃ§Ã£o.
+     * Cria uma caixa vazia para uso por mecanismos de serialização.
      */
     public MessengerBox(){
         this.messengerNotifications = new ArrayDeque<>();
     }
 
     /**
-     * Cria uma caixa de mensagens para um usuÃ¡rio.
+     * Cria uma caixa de mensagens para um usuário.
      *
-     * @param userId identificador do usuÃ¡rio dono da caixa.
-     * @param id identificador Ãºnico da caixa.
+     * @param userId identificador do usuário dono da caixa.
+     * @param id identificador único da caixa.
      */
     public MessengerBox(String userId, String id){
         this();
@@ -33,18 +33,18 @@ public class MessengerBox {
     }
 
     /**
-     * Adiciona uma notificaÃ§Ã£o Ã  fila da caixa.
+     * Adiciona uma notificação à fila da caixa.
      *
-     * @param chatMessengerId identificador da mensagem ou referÃªncia de chat notificada.
+     * @param chatMessengerId identificador da mensagem ou referência de chat notificada.
      */
     public void addNotification(String chatMessengerId){
         messengerNotifications.add(chatMessengerId);
     }
 
     /**
-     * Remove e retorna a prÃ³xima notificaÃ§Ã£o pendente.
+     * Remove e retorna a próxima notificação pendente.
      *
-     * @return prÃ³xima notificaÃ§Ã£o, ou vazio se nÃ£o houver notificaÃ§Ãµes.
+     * @return próxima notificação, ou vazio se não houver notificações.
      */
     public Optional<String> popNotification(){
         return Optional.ofNullable(messengerNotifications.poll());
@@ -52,43 +52,43 @@ public class MessengerBox {
 
 
     /**
-     * Retorna a fila de notificaÃ§Ãµes.
+     * Retorna a fila de notificações.
      *
-     * @return fila de notificaÃ§Ãµes.
+     * @return fila de notificações.
      */
     public Queue<String> getMessengerNotifications() {
         return messengerNotifications;
     }
 
     /**
-     * Define a fila de notificaÃ§Ãµes.
+     * Define a fila de notificações.
      *
-     * @param messengerNotifications fila de notificaÃ§Ãµes.
+     * @param messengerNotifications fila de notificações.
      */
     public void setMessengerNotifications(Queue<String> messengerNotifications) {
         this.messengerNotifications = messengerNotifications;
     }
 
     /**
-     * Retorna o identificador do usuÃ¡rio dono da caixa.
+     * Retorna o identificador do usuário dono da caixa.
      *
-     * @return identificador do usuÃ¡rio.
+     * @return identificador do usuário.
      */
     public String getUserId() {
         return userId;
     }
 
     /**
-     * Define o identificador do usuÃ¡rio dono da caixa.
+     * Define o identificador do usuário dono da caixa.
      *
-     * @param userId identificador do usuÃ¡rio.
+     * @param userId identificador do usuário.
      */
     public void setUserId(String userId) {
         this.userId = userId;
     }
 
     /**
-     * Retorna o identificador Ãºnico da caixa.
+     * Retorna o identificador único da caixa.
      *
      * @return identificador da caixa.
      */
@@ -97,7 +97,7 @@ public class MessengerBox {
     }
 
     /**
-     * Define o identificador Ãºnico da caixa.
+     * Define o identificador único da caixa.
      *
      * @param id identificador da caixa.
      */
