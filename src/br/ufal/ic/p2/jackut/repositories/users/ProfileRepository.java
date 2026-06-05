@@ -11,11 +11,20 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * Repositório responsável por persistir e recuperar perfis.
+ */
 public class ProfileRepository extends AbstractRepository<Profile>{
 
     private static ProfileRepository instance;
     private Map<String,String> profileByUserId;
 
+    /**
+     * Cria o repositório de perfis e reconstrói o índice por usuário.
+     *
+     * @throws SaveError se a infraestrutura de persistência não puder ser preparada.
+     * @throws FileError se ocorrer falha ao carregar perfis persistidos.
+     */
     private ProfileRepository() throws SaveError, FileError {
         super(XMLController.getInstance(),"profile.xml");
         this.profileByUserId = new HashMap<>();
@@ -27,6 +36,11 @@ public class ProfileRepository extends AbstractRepository<Profile>{
         }
     }
 
+    /**
+     * Salva um perfil e atualiza o índice por usuário.
+     *
+     * @param profile perfil salvo.
+     */
     public void saveProfile(Profile profile){
         String id = profile.getId();
 
@@ -34,6 +48,13 @@ public class ProfileRepository extends AbstractRepository<Profile>{
         profileByUserId.put(profile.getUserId(), id);
     }
 
+    /**
+     * Retorna a instância única do repositório de perfis.
+     *
+     * @return instância compartilhada do repositório.
+     * @throws SaveError se a infraestrutura de persistência não puder ser preparada.
+     * @throws FileError se ocorrer falha ao carregar perfis persistidos.
+     */
     public static ProfileRepository getInstance() throws SaveError,FileError{
         if(instance == null){
             instance = new ProfileRepository();
@@ -41,6 +62,13 @@ public class ProfileRepository extends AbstractRepository<Profile>{
         return instance;
     }
 
+    /**
+     * Recupera o perfil associado a um usuário.
+     *
+     * @param userId identificador do usuário dono do perfil.
+     * @return perfil encontrado.
+     * @throws UsuarioNaoCadastrado se o perfil do usuário não for encontrado.
+     */
     public Profile profileById(String userId) throws UsuarioNaoCadastrado{
         Optional<Profile> profileO = Optional.ofNullable(entityMap.get(
                 profileByUserId.get(userId)
@@ -49,6 +77,9 @@ public class ProfileRepository extends AbstractRepository<Profile>{
         return profileO.orElseThrow(UsuarioNaoCadastrado::new);
     }
 
+    /**
+     * Limpa perfis e índice por usuário.
+     */
     @Override
     public void resetData(){
         super.resetData();

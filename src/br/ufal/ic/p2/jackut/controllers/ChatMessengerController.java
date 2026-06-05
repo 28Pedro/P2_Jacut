@@ -10,6 +10,12 @@ import br.ufal.ic.p2.jackut.services.user.UserIntegrator;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Controlador responsável pelos casos de uso de recados, chats e mensagens.
+ *
+ * <p>Esta classe coordena a criação de mensagens, associação com chats,
+ * notificação dos destinatários e leitura dos recados pendentes.</p>
+ */
 public class ChatMessengerController {
 
     private final UserIntegrator userIntegrator;
@@ -17,6 +23,12 @@ public class ChatMessengerController {
     private final ChatMessengerService chatMessengerService;
     private final MessageService messageService;
 
+    /**
+     * Cria o controlador e inicializa os serviços de chat, mensagem e usuário.
+     *
+     * @throws SaveError se a infraestrutura de persistência não puder ser preparada.
+     * @throws FileError se houver falha ao carregar dados persistidos.
+     */
     public ChatMessengerController() throws SaveError, FileError {
         this.userIntegrator = UserIntegrator.getInstance();
         this.chatMessengerService = new ChatMessengerService();
@@ -24,6 +36,15 @@ public class ChatMessengerController {
         this.messageService = new MessageService();
     }
 
+    /**
+     * Envia uma mensagem de um usuário para outro.
+     *
+     * @param messengerContent conteúdo textual da mensagem.
+     * @param senderId identificador do usuário remetente.
+     * @param receiverUserName login do usuário destinatário.
+     * @throws UsuarioNaoCadastrado se o destinatário não estiver cadastrado.
+     * @throws EnviarRecadoParaSiMesmo se o remetente tentar enviar mensagem para si mesmo.
+     */
     public void SendMessenger(String messengerContent, String senderId, String receiverUserName) throws
             UsuarioNaoCadastrado,EnviarRecadoParaSiMesmo {
 
@@ -47,6 +68,14 @@ public class ChatMessengerController {
 
     }
 
+    /**
+     * Lê a próxima mensagem pendente de um usuário.
+     *
+     * @param userId identificador do usuário que realizará a leitura.
+     * @return conteúdo textual da próxima mensagem não lida.
+     * @throws UsuarioNaoCadastrado se o usuário não estiver cadastrado.
+     * @throws NaoHaRecados se não houver mensagens pendentes.
+     */
     public String readMessenger(String userId)
             throws UsuarioNaoCadastrado,NaoHaRecados{
 
@@ -61,11 +90,19 @@ public class ChatMessengerController {
         return messageService.showMessage(unreadMessageId);
     }
 
+    /**
+     * Salva os dados de chats e mensagens.
+     *
+     * @throws SaveError se ocorrer falha durante a persistência.
+     */
     public void saveData() throws SaveError{
        chatMessengerService.saveData();
        messageService.saveData();
     }
 
+    /**
+     * Limpa os dados de chats e mensagens.
+     */
     public void resetData(){
         chatMessengerService.resetData();
         messageService.resetData();
