@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * Reposit√≥rio respons√°vel por persistir e recuperar estruturas de amizade.
+ * RepositÛrio respons·vel por persistir e recuperar estruturas de amizade.
  */
 public class FriendshipRepository extends AbstractRepository<Friendship> {
 
@@ -20,9 +20,9 @@ public class FriendshipRepository extends AbstractRepository<Friendship> {
     private static FriendshipRepository instance;
 
     /**
-     * Cria o reposit√≥rio de amizades e reconstr√≥i o √≠ndice por usu√°rio.
+     * Cria o repositÛrio de amizades e reconstrÛi o Ìndice por usu·rio.
      *
-     * @throws SaveError se a infraestrutura de persist√™ncia n√£o puder ser preparada.
+     * @throws SaveError se a infraestrutura de persistÍncia n„o puder ser preparada.
      * @throws FileError se ocorrer falha ao carregar amizades persistidas.
      */
     private FriendshipRepository() throws SaveError, FileError {
@@ -38,10 +38,10 @@ public class FriendshipRepository extends AbstractRepository<Friendship> {
     }
 
     /**
-     * Retorna a inst√¢ncia √∫nica do reposit√≥rio de amizades.
+     * Retorna a inst‚ncia ˙nica do repositÛrio de amizades.
      *
-     * @return inst√¢ncia compartilhada do reposit√≥rio.
-     * @throws SaveError se a infraestrutura de persist√™ncia n√£o puder ser preparada.
+     * @return inst‚ncia compartilhada do repositÛrio.
+     * @throws SaveError se a infraestrutura de persistÍncia n„o puder ser preparada.
      * @throws FileError se ocorrer falha ao carregar amizades persistidas.
      */
     public static FriendshipRepository getInstance() throws SaveError, FileError{
@@ -52,7 +52,7 @@ public class FriendshipRepository extends AbstractRepository<Friendship> {
     }
 
     /**
-     * Salva uma estrutura de amizade e atualiza o √≠ndice por usu√°rio.
+     * Salva uma estrutura de amizade e atualiza o Ìndice por usu·rio.
      *
      * @param friendship estrutura de amizade salva.
      */
@@ -68,7 +68,7 @@ public class FriendshipRepository extends AbstractRepository<Friendship> {
      *
      * @param friendshipId identificador da estrutura de amizade.
      * @return estrutura de amizade encontrada.
-     * @throws UsuarioNaoCadastrado se a estrutura n√£o for encontrada.
+     * @throws UsuarioNaoCadastrado se a estrutura n„o for encontrada.
      */
     public Friendship getFriendshipById(String friendshipId) throws
             UsuarioNaoCadastrado{
@@ -79,11 +79,11 @@ public class FriendshipRepository extends AbstractRepository<Friendship> {
     }
 
     /**
-     * Recupera a estrutura de amizade associada a um usu√°rio.
+     * Recupera a estrutura de amizade associada a um usu·rio.
      *
-     * @param userId identificador do usu√°rio dono da estrutura.
+     * @param userId identificador do usu·rio dono da estrutura.
      * @return estrutura de amizade encontrada.
-     * @throws UsuarioNaoCadastrado se a estrutura n√£o for encontrada.
+     * @throws UsuarioNaoCadastrado se a estrutura n„o for encontrada.
      */
     public Friendship getFriendshipByUserId(String userId) throws
             UsuarioNaoCadastrado{
@@ -91,7 +91,7 @@ public class FriendshipRepository extends AbstractRepository<Friendship> {
     }
 
     /**
-     * Limpa amizades e √≠ndice por usu√°rio.
+     * Limpa amizades e Ìndice por usu·rio.
      */
     @Override
     public void resetData(){

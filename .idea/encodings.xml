@@ -25,6 +25,11 @@
     <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/repositories/chatMessager/MessageRepository.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/repositories/chatMessager/package-info.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/repositories/package-info.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/repositories/users/FriendshipRepository.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/repositories/users/MessengerBoxRepository.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/repositories/users/ProfileRepository.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/repositories/users/UserRepository.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/repositories/users/package-info.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/services/chatMessenger/ChatMessengerService.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/services/chatMessenger/MessageService.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/services/chatMessenger/package-info.java" charset="ISO-8859-1" />

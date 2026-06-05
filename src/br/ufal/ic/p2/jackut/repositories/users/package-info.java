@@ -1,7 +1,7 @@
 /**
- * ContÃ©m os repositÃ³rios das entidades do domÃ­nio de usuÃ¡rios.
+ * Contém os repositórios das entidades do domínio de usuários.
  *
- * <p>Os repositÃ³rios deste pacote mantÃªm mapas principais e Ã­ndices auxiliares
- * para recuperar usuÃ¡rios, perfis, amizades e caixas de mensagens.</p>
+ * <p>Os repositórios deste pacote mantêm mapas principais e índices auxiliares
+ * para recuperar usuários, perfis, amizades e caixas de mensagens.</p>
  */
 package br.ufal.ic.p2.jackut.repositories.users;
