@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * Reposit√≥rio respons√°vel por persistir e recuperar caixas de mensagem.
+ * RepositÛrio respons·vel por persistir e recuperar caixas de mensagem.
  */
 public class MessengerBoxRepository extends AbstractRepository<MessengerBox> {
 
@@ -20,9 +20,9 @@ public class MessengerBoxRepository extends AbstractRepository<MessengerBox> {
     private static MessengerBoxRepository instance;
 
     /**
-     * Cria o reposit√≥rio de caixas de mensagem e reconstr√≥i o √≠ndice por usu√°rio.
+     * Cria o repositÛrio de caixas de mensagem e reconstrÛi o Ìndice por usu·rio.
      *
-     * @throws SaveError se a infraestrutura de persist√™ncia n√£o puder ser preparada.
+     * @throws SaveError se a infraestrutura de persistÍncia n„o puder ser preparada.
      * @throws FileError se ocorrer falha ao carregar caixas persistidas.
      */
     private MessengerBoxRepository() throws SaveError, FileError {
@@ -38,10 +38,10 @@ public class MessengerBoxRepository extends AbstractRepository<MessengerBox> {
     }
 
     /**
-     * Retorna a inst√¢ncia √∫nica do reposit√≥rio de caixas de mensagem.
+     * Retorna a inst‚ncia ˙nica do repositÛrio de caixas de mensagem.
      *
-     * @return inst√¢ncia compartilhada do reposit√≥rio.
-     * @throws SaveError se a infraestrutura de persist√™ncia n√£o puder ser preparada.
+     * @return inst‚ncia compartilhada do repositÛrio.
+     * @throws SaveError se a infraestrutura de persistÍncia n„o puder ser preparada.
      * @throws FileError se ocorrer falha ao carregar caixas persistidas.
      */
     public static MessengerBoxRepository getInstance() throws SaveError, FileError{
@@ -52,7 +52,7 @@ public class MessengerBoxRepository extends AbstractRepository<MessengerBox> {
     }
 
     /**
-     * Salva uma caixa de mensagem e atualiza o √≠ndice por usu√°rio.
+     * Salva uma caixa de mensagem e atualiza o Ìndice por usu·rio.
      *
      * @param messengerBox caixa de mensagem salva.
      */
@@ -69,7 +69,7 @@ public class MessengerBoxRepository extends AbstractRepository<MessengerBox> {
      *
      * @param friendshipId identificador da caixa de mensagem.
      * @return caixa de mensagem encontrada.
-     * @throws UsuarioNaoCadastrado se a caixa n√£o for encontrada.
+     * @throws UsuarioNaoCadastrado se a caixa n„o for encontrada.
      */
     public MessengerBox getMessengerBoxById(String friendshipId) throws
             UsuarioNaoCadastrado {
@@ -80,11 +80,11 @@ public class MessengerBoxRepository extends AbstractRepository<MessengerBox> {
     }
 
     /**
-     * Recupera a caixa de mensagem associada a um usu√°rio.
+     * Recupera a caixa de mensagem associada a um usu·rio.
      *
-     * @param userId identificador do usu√°rio dono da caixa.
+     * @param userId identificador do usu·rio dono da caixa.
      * @return caixa de mensagem encontrada.
-     * @throws UsuarioNaoCadastrado se a caixa n√£o for encontrada.
+     * @throws UsuarioNaoCadastrado se a caixa n„o for encontrada.
      */
     public MessengerBox getMessengerBoxByUserId(String userId) throws
             UsuarioNaoCadastrado{
@@ -92,7 +92,7 @@ public class MessengerBoxRepository extends AbstractRepository<MessengerBox> {
     }
 
     /**
-     * Limpa caixas de mensagem e √≠ndice por usu√°rio.
+     * Limpa caixas de mensagem e Ìndice por usu·rio.
      */
     @Override
     public void resetData(){

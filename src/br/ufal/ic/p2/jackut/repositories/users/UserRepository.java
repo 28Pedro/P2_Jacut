@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Reposit√≥rio respons√°vel por persistir e recuperar usu√°rios.
+ * RepositÛrio respons·vel por persistir e recuperar usu·rios.
  */
 public class UserRepository extends AbstractRepository<User> {
 
@@ -19,10 +19,10 @@ public class UserRepository extends AbstractRepository<User> {
     private static UserRepository instance;
 
     /**
-     * Cria o reposit√≥rio de usu√°rios e reconstr√≥i o √≠ndice por login.
+     * Cria o repositÛrio de usu·rios e reconstrÛi o Ìndice por login.
      *
-     * @throws FileError se ocorrer falha ao carregar usu√°rios persistidos.
-     * @throws SaveError se a infraestrutura de persist√™ncia n√£o puder ser preparada.
+     * @throws FileError se ocorrer falha ao carregar usu·rios persistidos.
+     * @throws SaveError se a infraestrutura de persistÍncia n„o puder ser preparada.
      */
     private UserRepository() throws FileError,SaveError {
         super(XMLController.getInstance(),"user.xml");
@@ -37,11 +37,11 @@ public class UserRepository extends AbstractRepository<User> {
     }
 
     /**
-     * Retorna a inst√¢ncia √∫nica do reposit√≥rio de usu√°rios.
+     * Retorna a inst‚ncia ˙nica do repositÛrio de usu·rios.
      *
-     * @return inst√¢ncia compartilhada do reposit√≥rio.
-     * @throws SaveError se a infraestrutura de persist√™ncia n√£o puder ser preparada.
-     * @throws FileError se ocorrer falha ao carregar usu√°rios persistidos.
+     * @return inst‚ncia compartilhada do repositÛrio.
+     * @throws SaveError se a infraestrutura de persistÍncia n„o puder ser preparada.
+     * @throws FileError se ocorrer falha ao carregar usu·rios persistidos.
      */
     public static UserRepository getInstance() throws SaveError,FileError{
         if(instance == null){
@@ -51,10 +51,10 @@ public class UserRepository extends AbstractRepository<User> {
     }
 
     /**
-     * Salva um usu√°rio e atualiza o √≠ndice por login.
+     * Salva um usu·rio e atualiza o Ìndice por login.
      *
-     * @param user usu√°rio salvo.
-     * @param id identificador do usu√°rio.
+     * @param user usu·rio salvo.
+     * @param id identificador do usu·rio.
      */
     public void saveUser(User user, String id){
         userByUserName.put(user.getUserName(), user.getId());
@@ -62,11 +62,11 @@ public class UserRepository extends AbstractRepository<User> {
     }
 
     /**
-     * Recupera um usu√°rio por ID ou lan√ßa exce√ß√£o.
+     * Recupera um usu·rio por ID ou lanÁa exceÁ„o.
      *
-     * @param userId identificador do usu√°rio.
-     * @return usu√°rio encontrado.
-     * @throws UsuarioNaoCadastrado se o usu√°rio n√£o existir.
+     * @param userId identificador do usu·rio.
+     * @return usu·rio encontrado.
+     * @throws UsuarioNaoCadastrado se o usu·rio n„o existir.
      */
     public User findUserOrThrow(String userId) throws UsuarioNaoCadastrado {
         return getObject(userId)
@@ -74,21 +74,21 @@ public class UserRepository extends AbstractRepository<User> {
     }
 
     /**
-     * Verifica se j√° existe usu√°rio com determinado login.
+     * Verifica se j· existe usu·rio com determinado login.
      *
      * @param userName login consultado.
-     * @return {@code true} se o login j√° estiver cadastrado.
+     * @return {@code true} se o login j· estiver cadastrado.
      */
     public boolean UserNameExists(String userName){
         return userByUserName.containsKey(userName);
     }
 
     /**
-     * Recupera um usu√°rio pelo login.
+     * Recupera um usu·rio pelo login.
      *
-     * @param userName login do usu√°rio.
-     * @return usu√°rio encontrado.
-     * @throws UsuarioNaoCadastrado se o login n√£o estiver cadastrado.
+     * @param userName login do usu·rio.
+     * @return usu·rio encontrado.
+     * @throws UsuarioNaoCadastrado se o login n„o estiver cadastrado.
      */
     public User getUserByName(String userName) throws UsuarioNaoCadastrado{
 
@@ -96,7 +96,7 @@ public class UserRepository extends AbstractRepository<User> {
     }
 
     /**
-     * Limpa usu√°rios e √≠ndice por login.
+     * Limpa usu·rios e Ìndice por login.
      */
     @Override
     public void resetData(){

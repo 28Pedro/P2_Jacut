@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * Reposit√≥rio respons√°vel por persistir e recuperar perfis.
+ * RepositÛrio respons·vel por persistir e recuperar perfis.
  */
 public class ProfileRepository extends AbstractRepository<Profile>{
 
@@ -20,9 +20,9 @@ public class ProfileRepository extends AbstractRepository<Profile>{
     private Map<String,String> profileByUserId;
 
     /**
-     * Cria o reposit√≥rio de perfis e reconstr√≥i o √≠ndice por usu√°rio.
+     * Cria o repositÛrio de perfis e reconstrÛi o Ìndice por usu·rio.
      *
-     * @throws SaveError se a infraestrutura de persist√™ncia n√£o puder ser preparada.
+     * @throws SaveError se a infraestrutura de persistÍncia n„o puder ser preparada.
      * @throws FileError se ocorrer falha ao carregar perfis persistidos.
      */
     private ProfileRepository() throws SaveError, FileError {
@@ -37,7 +37,7 @@ public class ProfileRepository extends AbstractRepository<Profile>{
     }
 
     /**
-     * Salva um perfil e atualiza o √≠ndice por usu√°rio.
+     * Salva um perfil e atualiza o Ìndice por usu·rio.
      *
      * @param profile perfil salvo.
      */
@@ -49,10 +49,10 @@ public class ProfileRepository extends AbstractRepository<Profile>{
     }
 
     /**
-     * Retorna a inst√¢ncia √∫nica do reposit√≥rio de perfis.
+     * Retorna a inst‚ncia ˙nica do repositÛrio de perfis.
      *
-     * @return inst√¢ncia compartilhada do reposit√≥rio.
-     * @throws SaveError se a infraestrutura de persist√™ncia n√£o puder ser preparada.
+     * @return inst‚ncia compartilhada do repositÛrio.
+     * @throws SaveError se a infraestrutura de persistÍncia n„o puder ser preparada.
      * @throws FileError se ocorrer falha ao carregar perfis persistidos.
      */
     public static ProfileRepository getInstance() throws SaveError,FileError{
@@ -63,11 +63,11 @@ public class ProfileRepository extends AbstractRepository<Profile>{
     }
 
     /**
-     * Recupera o perfil associado a um usu√°rio.
+     * Recupera o perfil associado a um usu·rio.
      *
-     * @param userId identificador do usu√°rio dono do perfil.
+     * @param userId identificador do usu·rio dono do perfil.
      * @return perfil encontrado.
-     * @throws UsuarioNaoCadastrado se o perfil do usu√°rio n√£o for encontrado.
+     * @throws UsuarioNaoCadastrado se o perfil do usu·rio n„o for encontrado.
      */
     public Profile profileById(String userId) throws UsuarioNaoCadastrado{
         Optional<Profile> profileO = Optional.ofNullable(entityMap.get(
@@ -78,7 +78,7 @@ public class ProfileRepository extends AbstractRepository<Profile>{
     }
 
     /**
-     * Limpa perfis e √≠ndice por usu√°rio.
+     * Limpa perfis e Ìndice por usu·rio.
      */
     @Override
     public void resetData(){
