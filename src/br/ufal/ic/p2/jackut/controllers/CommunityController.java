@@ -2,6 +2,7 @@ package br.ufal.ic.p2.jackut.controllers;
 
 import br.ufal.ic.p2.jackut.exceptions.*;
 import br.ufal.ic.p2.jackut.services.community.CommunityService;
+import br.ufal.ic.p2.jackut.services.user.CommunityListService;
 import br.ufal.ic.p2.jackut.services.user.UserIntegrator;
 
 /**
@@ -10,6 +11,7 @@ import br.ufal.ic.p2.jackut.services.user.UserIntegrator;
 public class CommunityController {
 
     private final CommunityService communityService;
+    private final CommunityListService communityListService;
     private final UserIntegrator userIntegrator;
 
     /**
@@ -20,6 +22,7 @@ public class CommunityController {
      */
     public CommunityController() throws SaveError, FileError {
         this.communityService = new CommunityService();
+        this.communityListService = new CommunityListService();
         this.userIntegrator = UserIntegrator.getInstance();
     }
 
@@ -31,11 +34,31 @@ public class CommunityController {
      * @param description descrição da comunidade.
      * @throws UsuarioNaoCadastrado se o usuário dono não estiver cadastrado.
      * @throws ComunidadeComEsseNomeJaExiste se já existir comunidade com o nome informado.
+     * @throws UsuarioJaFazParteDessaComunidade se a comunidade já estiver na lista do usuário.
      */
     public void createCommunity(String userId, String name, String description)
-            throws UsuarioNaoCadastrado, ComunidadeComEsseNomeJaExiste {
+            throws UsuarioNaoCadastrado, ComunidadeComEsseNomeJaExiste,
+            UsuarioJaFazParteDessaComunidade {
         String ownerUserName = userIntegrator.getUserNameById(userId);
         communityService.createCommunity(userId, ownerUserName, name, description);
+        communityListService.addCommunity(userId, name);
+    }
+
+    /**
+     * Adiciona um usuário a uma comunidade existente.
+     *
+     * @param userId identificador do usuário.
+     * @param name nome da comunidade.
+     * @throws UsuarioNaoCadastrado se o usuário não estiver cadastrado.
+     * @throws ComunidadeNaoExiste se a comunidade não existir.
+     * @throws UsuarioJaFazParteDessaComunidade se o usuário já participar da comunidade.
+     */
+    public void addCommunity(String userId, String name)
+            throws UsuarioNaoCadastrado, ComunidadeNaoExiste,
+            UsuarioJaFazParteDessaComunidade {
+        String userName = userIntegrator.getUserNameById(userId);
+        communityService.addMember(name, userName);
+        communityListService.addCommunity(userId, name);
     }
 
     /**

@@ -4,6 +4,7 @@ import br.ufal.ic.p2.jackut.exceptions.ComunidadeComEsseNomeJaExiste;
 import br.ufal.ic.p2.jackut.exceptions.ComunidadeNaoExiste;
 import br.ufal.ic.p2.jackut.exceptions.FileError;
 import br.ufal.ic.p2.jackut.exceptions.SaveError;
+import br.ufal.ic.p2.jackut.exceptions.UsuarioJaFazParteDessaComunidade;
 import br.ufal.ic.p2.jackut.models.community.Community;
 import br.ufal.ic.p2.jackut.repositories.community.CommunityRepository;
 
@@ -77,6 +78,25 @@ public class CommunityService {
      */
     public String getMembers(String name) throws ComunidadeNaoExiste {
         return communityRepository.getCommunityByName(name).buildMembersList();
+    }
+
+    /**
+     * Adiciona um usuário como membro de uma comunidade.
+     *
+     * @param communityName nome da comunidade.
+     * @param userName login do usuário.
+     * @throws ComunidadeNaoExiste se a comunidade não existir.
+     * @throws UsuarioJaFazParteDessaComunidade se o usuário já participar da comunidade.
+     */
+    public void addMember(String communityName, String userName)
+            throws ComunidadeNaoExiste, UsuarioJaFazParteDessaComunidade {
+        Community community = communityRepository.getCommunityByName(communityName);
+
+        if (community.containsMember(userName)) {
+            throw new UsuarioJaFazParteDessaComunidade();
+        }
+
+        community.addMember(userName);
     }
 
     /**

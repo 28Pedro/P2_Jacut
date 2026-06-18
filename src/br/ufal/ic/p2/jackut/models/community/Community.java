@@ -43,6 +43,25 @@ public class Community {
     }
 
     /**
+     * Adiciona um membro à comunidade.
+     *
+     * @param userName login do usuário adicionado.
+     */
+    public void addMember(String userName) {
+        membersUserNames.add(userName);
+    }
+
+    /**
+     * Verifica se um usuário já participa da comunidade.
+     *
+     * @param userName login do usuário consultado.
+     * @return {@code true} se o usuário já for membro.
+     */
+    public boolean containsMember(String userName) {
+        return membersUserNames.contains(userName);
+    }
+
+    /**
      * Retorna os membros em formato textual esperado pelos testes.
      *
      * @return membros da comunidade no formato {@code {login1,login2}}.

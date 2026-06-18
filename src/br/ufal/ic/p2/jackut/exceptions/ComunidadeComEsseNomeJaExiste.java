@@ -1,13 +1,13 @@
 package br.ufal.ic.p2.jackut.exceptions;
 
 /**
- * Exce√ß√£o lan√ßada quando j√° existe comunidade com o nome informado.
+ * ExceÁ„o lanÁada quando j· existe comunidade com o nome informado.
  */
 public class ComunidadeComEsseNomeJaExiste extends Exception {
     /**
-     * Cria a exce√ß√£o com a mensagem esperada pelos testes de aceita√ß√£o.
+     * Cria a exceÁ„o com a mensagem esperada pelos testes de aceitaÁ„o.
      */
     public ComunidadeComEsseNomeJaExiste() {
-        super("Comunidade com esse nome j\u00e1 existe.");
+        super("Comunidade com esse nome j· existe.");
     }
 }

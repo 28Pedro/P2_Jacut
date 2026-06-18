@@ -1,13 +1,13 @@
 package br.ufal.ic.p2.jackut.exceptions;
 
 /**
- * Exce√ß√£o lan√ßada quando uma comunidade solicitada n√£o existe.
+ * ExceÁ„o lanÁada quando uma comunidade solicitada n„o existe.
  */
 public class ComunidadeNaoExiste extends Exception {
     /**
-     * Cria a exce√ß√£o com a mensagem esperada pelos testes de aceita√ß√£o.
+     * Cria a exceÁ„o com a mensagem esperada pelos testes de aceitaÁ„o.
      */
     public ComunidadeNaoExiste() {
-        super("Comunidade n\u00e3o existe.");
+        super("Comunidade n„o existe.");
     }
 }

@@ -156,10 +156,27 @@ public class Facade {
      * @param description descrição da comunidade.
      * @throws UsuarioNaoCadastrado se o usuário dono não estiver cadastrado.
      * @throws ComunidadeComEsseNomeJaExiste se já existir comunidade com o nome informado.
+     * @throws UsuarioJaFazParteDessaComunidade se a comunidade já estiver vinculada ao usuário.
      */
     public void criarComunidade(String userId, String name, String description)
-            throws UsuarioNaoCadastrado, ComunidadeComEsseNomeJaExiste {
+            throws UsuarioNaoCadastrado, ComunidadeComEsseNomeJaExiste,
+            UsuarioJaFazParteDessaComunidade {
         communityController.createCommunity(userId, name, description);
+    }
+
+    /**
+     * Adiciona um usuário a uma comunidade existente.
+     *
+     * @param userId identificador do usuário.
+     * @param name nome da comunidade.
+     * @throws UsuarioNaoCadastrado se o usuário não estiver cadastrado.
+     * @throws ComunidadeNaoExiste se a comunidade não existir.
+     * @throws UsuarioJaFazParteDessaComunidade se o usuário já participar da comunidade.
+     */
+    public void adicionarComunidade(String userId, String name)
+            throws UsuarioNaoCadastrado, ComunidadeNaoExiste,
+            UsuarioJaFazParteDessaComunidade {
+        communityController.addCommunity(userId, name);
     }
 
     /**
@@ -193,6 +210,17 @@ public class Facade {
      */
     public String getMembrosComunidade(String name) throws ComunidadeNaoExiste {
         return communityController.getCommunityMembers(name);
+    }
+
+    /**
+     * Recupera as comunidades das quais um usuário participa.
+     *
+     * @param userName login do usuário.
+     * @return comunidades do usuário em formato textual.
+     * @throws UsuarioNaoCadastrado se o usuário não estiver cadastrado.
+     */
+    public String getComunidades(String userName) throws UsuarioNaoCadastrado {
+        return userController.getCommunities(userName);
     }
 
     /**
