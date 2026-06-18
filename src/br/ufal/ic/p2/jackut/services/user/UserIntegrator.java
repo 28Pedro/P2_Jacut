@@ -9,11 +9,11 @@ import br.ufal.ic.p2.jackut.repositories.users.UserRepository;
 import java.util.Optional;
 
 /**
- * ServiÁo auxiliar para integraÁ„o com o repositÛrio de usu·rios.
+ * Servi√ßo auxiliar para integra√ß√£o com o reposit√≥rio de usu√°rios.
  *
- * <p>Centraliza a convers„o de login em identificador interno, evitando que
- * controladores de outros domÌnios acessem diretamente o repositÛrio de
- * usu·rios.</p>
+ * <p>Centraliza a convers√£o de login em identificador interno, evitando que
+ * controladores de outros dom√≠nios acessem diretamente o reposit√≥rio de
+ * usu√°rios.</p>
  */
 public class UserIntegrator {
 
@@ -23,21 +23,21 @@ public class UserIntegrator {
 
 
    /**
-    * Cria o integrador de usu·rios.
+    * Cria o integrador de usu√°rios.
     *
-    * @throws FileError se ocorrer falha ao carregar dados de usu·rios.
-    * @throws SaveError se a infraestrutura de persistÍncia n„o puder ser preparada.
+    * @throws FileError se ocorrer falha ao carregar dados de usu√°rios.
+    * @throws SaveError se a infraestrutura de persist√™ncia n√£o puder ser preparada.
     */
    private UserIntegrator() throws FileError, SaveError {
        this.userRepository = UserRepository.getInstance();
    }
 
    /**
-    * Retorna a inst‚ncia ˙nica do integrador de usu·rios.
+    * Retorna a inst√¢ncia √∫nica do integrador de usu√°rios.
     *
-    * @return inst‚ncia compartilhada do integrador.
-    * @throws SaveError se a infraestrutura de persistÍncia n„o puder ser preparada.
-    * @throws FileError se ocorrer falha ao carregar dados de usu·rios.
+    * @return inst√¢ncia compartilhada do integrador.
+    * @throws SaveError se a infraestrutura de persist√™ncia n√£o puder ser preparada.
+    * @throws FileError se ocorrer falha ao carregar dados de usu√°rios.
     */
    public static UserIntegrator getInstance() throws SaveError, FileError{
 
@@ -49,14 +49,26 @@ public class UserIntegrator {
    }
 
     /**
-     * Recupera o identificador interno de um usu·rio a partir do login.
+     * Recupera o identificador interno de um usu√°rio a partir do login.
      *
-     * @param userName login do usu·rio.
-     * @return identificador interno do usu·rio.
-     * @throws UsuarioNaoCadastrado se n„o existir usu·rio com o login informado.
+     * @param userName login do usu√°rio.
+     * @return identificador interno do usu√°rio.
+     * @throws UsuarioNaoCadastrado se n√£o existir usu√°rio com o login informado.
      */
     public String getUserByName(String userName) throws UsuarioNaoCadastrado {
        User user = userRepository.getUserByName(userName);
         return user.getId();
+    }
+
+    /**
+     * Recupera o login de um usu√°rio a partir do identificador interno.
+     *
+     * @param userId identificador interno do usu√°rio.
+     * @return login do usu√°rio.
+     * @throws UsuarioNaoCadastrado se n√£o existir usu√°rio com o identificador informado.
+     */
+    public String getUserNameById(String userId) throws UsuarioNaoCadastrado {
+       User user = userRepository.findUserOrThrow(userId);
+       return user.getUserName();
     }
 }
