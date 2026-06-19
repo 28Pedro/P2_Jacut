@@ -1,6 +1,7 @@
 package br.ufal.ic.p2.jackut.services.user;
 
 import br.ufal.ic.p2.jackut.exceptions.*;
+import br.ufal.ic.p2.jackut.models.chatmessenger.ChatMessenger;
 import br.ufal.ic.p2.jackut.services.chatMessenger.ChatMessengerService;
 import br.ufal.ic.p2.jackut.services.chatMessenger.MessageService;
 
@@ -30,6 +31,25 @@ public class MessageBoxIntegrator {
         this.messageBoxService = MessageBoxService.getInstance();
     }
 
+    /**
+     * Sends a private message and notifies every recipient in its chat.
+     *
+     * @param messageContent content of the message.
+     * @param senderId identifier of the sender.
+     * @param receiverId identifier of the recipient.
+     * @throws UsuarioNaoCadastrado if a recipient does not have a message box.
+     */
+    public void sendPrivateMessage(String messageContent, String senderId, String receiverId)
+            throws UsuarioNaoCadastrado {
+        ChatMessenger chatMessenger = chatMessengerService.getOrBuild(senderId, receiverId);
+        String messageId = messageService.createMessage(chatMessenger.getId(), messageContent);
+        List<String> receiverIds = chatMessengerService.SendMessenger(
+                messageId, senderId, chatMessenger);
+
+        for (String userId : receiverIds) {
+            messageBoxService.notifyUser(userId, messageId);
+        }
+    }
     /**
      * Cria um chat para uma comunidade.
      *

@@ -17,7 +17,13 @@ public class RelationshipIntegrator {
         this.relationshipRepository = RelationshipRepository.getInstance();
     }
 
-    public static RelationshipIntegrator getInstance() throws SaveError, FileError {
+    /**
+     * Retorna a instancia compartilhada do integrador de relacionamentos.
+     *
+     * @return integrador de relacionamentos.
+     * @throws SaveError se a infraestrutura de persistencia nao puder ser preparada.
+     * @throws FileError se ocorrer falha ao carregar dados persistidos.
+     */    public static RelationshipIntegrator getInstance() throws SaveError, FileError {
         if (instance == null) {
             instance = new RelationshipIntegrator();
         }
@@ -25,7 +31,12 @@ public class RelationshipIntegrator {
         return instance;
     }
 
-    public void deleteUserRelationships(String userId) throws UsuarioNaoCadastrado {
+    /**
+     * Remove relacionamentos proprios e referencias ao usuario em outros relacionamentos.
+     *
+     * @param userId identificador do usuario removido.
+     * @throws UsuarioNaoCadastrado se as estruturas de relacionamento nao existirem.
+     */    public void deleteUserRelationships(String userId) throws UsuarioNaoCadastrado {
         relationshipRepository.deleteRelationshipsByUserId(userId);
         relationshipRepository.removeUserFromAllRelationships(userId);
     }

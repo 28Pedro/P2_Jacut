@@ -17,7 +17,13 @@ public class ProfileIntegrator {
         this.profileRepository = ProfileRepository.getInstance();
     }
 
-    public static ProfileIntegrator getInstance() throws SaveError, FileError {
+    /**
+     * Retorna a instancia compartilhada do integrador de perfis.
+     *
+     * @return integrador de perfis.
+     * @throws SaveError se a infraestrutura de persistencia nao puder ser preparada.
+     * @throws FileError se ocorrer falha ao carregar dados persistidos.
+     */    public static ProfileIntegrator getInstance() throws SaveError, FileError {
         if (instance == null) {
             instance = new ProfileIntegrator();
         }
@@ -25,7 +31,12 @@ public class ProfileIntegrator {
         return instance;
     }
 
-    public void deleteProfile(String userId) throws UsuarioNaoCadastrado {
+    /**
+     * Remove o perfil associado a um usuario.
+     *
+     * @param userId identificador do usuario removido.
+     * @throws UsuarioNaoCadastrado se o perfil nao estiver cadastrado.
+     */    public void deleteProfile(String userId) throws UsuarioNaoCadastrado {
         profileRepository.deleteProfileByUserId(userId);
     }
 }
