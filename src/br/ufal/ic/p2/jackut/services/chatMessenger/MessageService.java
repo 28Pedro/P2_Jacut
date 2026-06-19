@@ -1,6 +1,7 @@
 package br.ufal.ic.p2.jackut.services.chatMessenger;
 
 import br.ufal.ic.p2.jackut.exceptions.FileError;
+import br.ufal.ic.p2.jackut.exceptions.NaoHaMensagens;
 import br.ufal.ic.p2.jackut.exceptions.NaoHaRecados;
 import br.ufal.ic.p2.jackut.exceptions.SaveError;
 import br.ufal.ic.p2.jackut.models.chatmessenger.Message;
@@ -9,16 +10,16 @@ import br.ufal.ic.p2.jackut.repositories.chatMessager.MessageRepository;
 import java.util.UUID;
 
 /**
- * Serviço responsável pelas regras de criação, consulta e persistência de mensagens.
+ * ServiÃ§o responsÃ¡vel pelas regras de criaÃ§Ã£o, consulta e persistÃªncia de mensagens.
  */
 public class MessageService {
 
     private final MessageRepository messageRepository;
 
     /**
-     * Cria o serviço de mensagens.
+     * Cria o serviÃ§o de mensagens.
      *
-     * @throws SaveError se a infraestrutura de persistência não puder ser preparada.
+     * @throws SaveError se a infraestrutura de persistÃªncia nÃ£o puder ser preparada.
      * @throws FileError se ocorrer falha ao carregar mensagens persistidas.
      */
     public MessageService() throws SaveError, FileError {
@@ -29,8 +30,8 @@ public class MessageService {
      * Cria uma nova mensagem associada a um chat.
      *
      * @param chatMessageId identificador do chat ao qual a mensagem pertence.
-     * @param content conteúdo textual da mensagem.
-     * @return identificador único da mensagem criada.
+     * @param content conteÃºdo textual da mensagem.
+     * @return identificador Ãºnico da mensagem criada.
      */
     public String createMessage(String chatMessageId, String content){
 
@@ -42,11 +43,11 @@ public class MessageService {
     }
 
     /**
-     * Recupera o identificador do chat associado a uma mensagem.
+     * Recupera o identificador do chat associado a uma mensagem privada.
      *
      * @param messageId identificador da mensagem.
      * @return identificador do chat da mensagem.
-     * @throws NaoHaRecados se a mensagem não for encontrada.
+     * @throws NaoHaRecados se a mensagem nÃ£o for encontrada.
      */
     public String getChatIdByMessage(String messageId) throws NaoHaRecados{
         Message message = messageRepository.getMessageById(messageId);
@@ -54,20 +55,51 @@ public class MessageService {
     }
 
     /**
-     * Recupera o conteúdo textual de uma mensagem.
+     * Recupera o identificador do chat associado a uma mensagem de comunidade.
      *
      * @param messageId identificador da mensagem.
-     * @return conteúdo textual da mensagem.
-     * @throws NaoHaRecados se a mensagem não for encontrada.
+     * @return identificador do chat da mensagem.
+     * @throws NaoHaMensagens se a mensagem nÃ£o for encontrada.
+     */
+    public String getCommunityChatIdByMessage(String messageId) throws NaoHaMensagens{
+        try {
+            Message message = messageRepository.getMessageById(messageId);
+            return message.getChatMessageId();
+        } catch (NaoHaRecados e) {
+            throw new NaoHaMensagens();
+        }
+    }
+
+    /**
+     * Recupera o conteÃºdo textual de uma mensagem privada.
+     *
+     * @param messageId identificador da mensagem.
+     * @return conteÃºdo textual da mensagem.
+     * @throws NaoHaRecados se a mensagem nÃ£o for encontrada.
      */
     public String showMessage(String messageId) throws NaoHaRecados {
         return messageRepository.getMessageById(messageId).getContent();
     }
 
     /**
+     * Recupera o conteÃºdo textual de uma mensagem de comunidade.
+     *
+     * @param messageId identificador da mensagem.
+     * @return conteÃºdo textual da mensagem.
+     * @throws NaoHaMensagens se a mensagem nÃ£o for encontrada.
+     */
+    public String showCommunityMessage(String messageId) throws NaoHaMensagens {
+        try {
+            return messageRepository.getMessageById(messageId).getContent();
+        } catch (NaoHaRecados e) {
+            throw new NaoHaMensagens();
+        }
+    }
+
+    /**
      * Salva os dados de mensagens.
      *
-     * @throws SaveError se ocorrer falha durante a persistência.
+     * @throws SaveError se ocorrer falha durante a persistÃªncia.
      */
     public void saveData() throws SaveError{
         messageRepository.saveData();

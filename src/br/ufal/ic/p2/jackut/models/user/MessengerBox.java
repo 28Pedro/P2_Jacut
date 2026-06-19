@@ -5,26 +5,32 @@ import java.util.Optional;
 import java.util.Queue;
 
 /**
- * Representa a caixa de notificaÁıes de mensagens de um usu·rio.
+ * Representa a caixa de notifica√ß√µes de um usu√°rio.
+ *
+ * <p>A caixa mant√©m filas separadas para recados privados e mensagens enviadas
+ * a comunidades, preservando a diferen√ßa entre os comandos lerRecado e
+ * lerMensagem.</p>
  */
 public class MessengerBox {
 
     private Queue<String> messengerNotifications;
+    private Queue<String> communityMessageNotifications;
     private String userId;
     private String id;
 
     /**
-     * Cria uma caixa vazia para uso por mecanismos de serializaÁ„o.
+     * Cria uma caixa vazia para uso por mecanismos de serializa√ß√£o.
      */
     public MessengerBox(){
         this.messengerNotifications = new ArrayDeque<>();
+        this.communityMessageNotifications = new ArrayDeque<>();
     }
 
     /**
-     * Cria uma caixa de mensagens para um usu·rio.
+     * Cria uma caixa de mensagens para um usu√°rio.
      *
-     * @param userId identificador do usu·rio dono da caixa.
-     * @param id identificador ˙nico da caixa.
+     * @param userId identificador do usu√°rio dono da caixa.
+     * @param id identificador √∫nico da caixa.
      */
     public MessengerBox(String userId, String id){
         this();
@@ -33,62 +39,97 @@ public class MessengerBox {
     }
 
     /**
-     * Adiciona uma notificaÁ„o ‡ fila da caixa.
+     * Adiciona uma notifica√ß√£o de recado privado √† fila da caixa.
      *
-     * @param chatMessengerId identificador da mensagem ou referÍncia de chat notificada.
+     * @param chatMessengerId identificador da mensagem ou refer√™ncia de chat notificada.
      */
     public void addNotification(String chatMessengerId){
         messengerNotifications.add(chatMessengerId);
     }
 
     /**
-     * Remove e retorna a prÛxima notificaÁ„o pendente.
+     * Remove e retorna a pr√≥xima notifica√ß√£o de recado privado pendente.
      *
-     * @return prÛxima notificaÁ„o, ou vazio se n„o houver notificaÁıes.
+     * @return pr√≥xima notifica√ß√£o, ou vazio se n√£o houver notifica√ß√µes.
      */
     public Optional<String> popNotification(){
         return Optional.ofNullable(messengerNotifications.poll());
     }
 
+    /**
+     * Adiciona uma notifica√ß√£o de mensagem de comunidade √† fila da caixa.
+     *
+     * @param messageId identificador da mensagem de comunidade.
+     */
+    public void addCommunityMessageNotification(String messageId) {
+        communityMessageNotifications.add(messageId);
+    }
 
     /**
-     * Retorna a fila de notificaÁıes.
+     * Remove e retorna a pr√≥xima notifica√ß√£o de mensagem de comunidade pendente.
      *
-     * @return fila de notificaÁıes.
+     * @return pr√≥xima notifica√ß√£o de comunidade, ou vazio se n√£o houver notifica√ß√µes.
+     */
+    public Optional<String> popCommunityMessageNotification() {
+        return Optional.ofNullable(communityMessageNotifications.poll());
+    }
+
+    /**
+     * Retorna a fila de notifica√ß√µes de recados privados.
+     *
+     * @return fila de notifica√ß√µes de recados.
      */
     public Queue<String> getMessengerNotifications() {
         return messengerNotifications;
     }
 
     /**
-     * Define a fila de notificaÁıes.
+     * Define a fila de notifica√ß√µes de recados privados.
      *
-     * @param messengerNotifications fila de notificaÁıes.
+     * @param messengerNotifications fila de notifica√ß√µes.
      */
     public void setMessengerNotifications(Queue<String> messengerNotifications) {
         this.messengerNotifications = messengerNotifications;
     }
 
     /**
-     * Retorna o identificador do usu·rio dono da caixa.
+     * Retorna a fila de notifica√ß√µes de mensagens de comunidade.
      *
-     * @return identificador do usu·rio.
+     * @return fila de notifica√ß√µes de mensagens de comunidade.
+     */
+    public Queue<String> getCommunityMessageNotifications() {
+        return communityMessageNotifications;
+    }
+
+    /**
+     * Define a fila de notifica√ß√µes de mensagens de comunidade.
+     *
+     * @param communityMessageNotifications fila de notifica√ß√µes de mensagens de comunidade.
+     */
+    public void setCommunityMessageNotifications(Queue<String> communityMessageNotifications) {
+        this.communityMessageNotifications = communityMessageNotifications;
+    }
+
+    /**
+     * Retorna o identificador do usu√°rio dono da caixa.
+     *
+     * @return identificador do usu√°rio.
      */
     public String getUserId() {
         return userId;
     }
 
     /**
-     * Define o identificador do usu·rio dono da caixa.
+     * Define o identificador do usu√°rio dono da caixa.
      *
-     * @param userId identificador do usu·rio.
+     * @param userId identificador do usu√°rio.
      */
     public void setUserId(String userId) {
         this.userId = userId;
     }
 
     /**
-     * Retorna o identificador ˙nico da caixa.
+     * Retorna o identificador √∫nico da caixa.
      *
      * @return identificador da caixa.
      */
@@ -97,7 +138,7 @@ public class MessengerBox {
     }
 
     /**
-     * Define o identificador ˙nico da caixa.
+     * Define o identificador √∫nico da caixa.
      *
      * @param id identificador da caixa.
      */

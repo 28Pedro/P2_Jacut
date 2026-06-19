@@ -3,6 +3,7 @@ package br.ufal.ic.p2.jackut.controllers;
 import br.ufal.ic.p2.jackut.exceptions.*;
 import br.ufal.ic.p2.jackut.services.community.CommunityService;
 import br.ufal.ic.p2.jackut.services.user.CommunityListService;
+import br.ufal.ic.p2.jackut.services.user.MessageBoxIntegrator;
 import br.ufal.ic.p2.jackut.services.user.UserIntegrator;
 
 /**
@@ -12,6 +13,7 @@ public class CommunityController {
 
     private final CommunityService communityService;
     private final CommunityListService communityListService;
+    private final MessageBoxIntegrator messageBoxIntegrator;
     private final UserIntegrator userIntegrator;
 
     /**
@@ -23,6 +25,7 @@ public class CommunityController {
     public CommunityController() throws SaveError, FileError {
         this.communityService = new CommunityService();
         this.communityListService = new CommunityListService();
+        this.messageBoxIntegrator = new MessageBoxIntegrator();
         this.userIntegrator = UserIntegrator.getInstance();
     }
 
@@ -40,7 +43,9 @@ public class CommunityController {
             throws UsuarioNaoCadastrado, ComunidadeComEsseNomeJaExiste,
             UsuarioJaFazParteDessaComunidade {
         String ownerUserName = userIntegrator.getUserNameById(userId);
-        communityService.createCommunity(userId, ownerUserName, name, description);
+        communityService.validateCommunityNameAvailable(name);
+        String chatMessengerId = messageBoxIntegrator.buildCommunityChat(userId);
+        communityService.createCommunity(userId, ownerUserName, name, description, chatMessengerId);
         communityListService.addCommunity(userId, name);
     }
 
@@ -57,8 +62,38 @@ public class CommunityController {
             throws UsuarioNaoCadastrado, ComunidadeNaoExiste,
             UsuarioJaFazParteDessaComunidade {
         String userName = userIntegrator.getUserNameById(userId);
-        communityService.addMember(name, userName);
+        String chatMessengerId = communityService.addMember(name, userId, userName);
+        messageBoxIntegrator.addParticipantToCommunityChat(chatMessengerId, userId);
         communityListService.addCommunity(userId, name);
+    }
+
+    /**
+     * Envia uma mensagem para uma comunidade.
+     *
+     * @param userId identificador do usuário remetente.
+     * @param communityName nome da comunidade.
+     * @param message conteúdo textual da mensagem.
+     * @throws UsuarioNaoCadastrado se o usuário remetente não estiver cadastrado.
+     * @throws ComunidadeNaoExiste se a comunidade não existir.
+     */
+    public void sendCommunityMessage(String userId, String communityName, String message)
+            throws UsuarioNaoCadastrado, ComunidadeNaoExiste {
+        userIntegrator.getUserNameById(userId);
+        String chatMessengerId = communityService.getChatMessengerId(communityName);
+        messageBoxIntegrator.sendCommunityMessage(chatMessengerId, message);
+    }
+
+    /**
+     * Lê a próxima mensagem de comunidade pendente para um usuário.
+     *
+     * @param userId identificador do usuário leitor.
+     * @return conteúdo textual da mensagem.
+     * @throws UsuarioNaoCadastrado se o usuário não estiver cadastrado.
+     * @throws NaoHaMensagens se não houver mensagens pendentes.
+     */
+    public String readCommunityMessage(String userId)
+            throws UsuarioNaoCadastrado, NaoHaMensagens {
+        return messageBoxIntegrator.readCommunityMessage(userId);
     }
 
     /**

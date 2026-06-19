@@ -12,7 +12,7 @@ public class ChatMessenger {
     private Map<String, ChatUserState> messengerStates;
 
     /**
-     * Cria um chat vazio para uso por mecanismos de serialização.
+     * Cria um chat vazio para uso por mecanismos de serializaÃ§Ã£o.
      */
     public ChatMessenger() {
         this.messengerStates = new HashMap<>();
@@ -21,7 +21,7 @@ public class ChatMessenger {
     /**
      * Cria um chat com identificador e chave de participantes.
      *
-     * @param id identificador único do chat.
+     * @param id identificador Ãºnico do chat.
      * @param chatParticipantsKey chave com os participantes do chat.
      */
     public ChatMessenger(String id, ChatParticipantsKey chatParticipantsKey){
@@ -37,10 +37,23 @@ public class ChatMessenger {
     }
 
     /**
+     * Adiciona um participante ao chat, preservando o estado de leitura individual.
+     *
+     * @param userId identificador do usuÃ¡rio participante.
+     */
+    public void addParticipant(String userId) {
+        if (!usersId.getUserIds().contains(userId)) {
+            usersId.getUserIds().add(userId);
+        }
+
+        messengerStates.putIfAbsent(userId, new ChatUserState());
+    }
+
+    /**
      * Envia uma mensagem para os participantes do chat, exceto o remetente.
      *
      * @param messenger identificador da mensagem enviada.
-     * @param senderId identificador do usuário remetente.
+     * @param senderId identificador do usuÃ¡rio remetente.
      */
     public void sendMessenger(String messenger, String senderId) {
 
@@ -53,13 +66,29 @@ public class ChatMessenger {
     }
 
     /**
-     * Lê a próxima mensagem não lida de um participante.
+     * Envia uma mensagem para todos os participantes do chat.
+     *
+     * @param messenger identificador da mensagem enviada.
+     */
+    public void sendMessengerToAll(String messenger) {
+        messengerStates.
+                forEach((userId, chatUserState) ->
+                        chatUserState.receiveMessenger(messenger));
+    }
+
+    /**
+     * LÃª a prÃ³xima mensagem nÃ£o lida de um participante.
      *
      * @param receiverId identificador do participante leitor.
-     * @return identificador da mensagem lida, ou vazio se não houver mensagem.
+     * @return identificador da mensagem lida, ou vazio se nÃ£o houver mensagem.
      */
     public Optional<String> readMessage(String receiverId){
         ChatUserState chatUserState = messengerStates.get(receiverId);
+
+        if (chatUserState == null) {
+            return Optional.empty();
+        }
+
         return chatUserState.readMessenger();
     }
 
@@ -82,7 +111,7 @@ public class ChatMessenger {
     }
 
     /**
-     * Retorna o identificador único do chat.
+     * Retorna o identificador Ãºnico do chat.
      *
      * @return identificador do chat.
      */
@@ -91,7 +120,7 @@ public class ChatMessenger {
     }
 
     /**
-     * Define o identificador único do chat.
+     * Define o identificador Ãºnico do chat.
      *
      * @param id identificador do chat.
      */
@@ -102,7 +131,7 @@ public class ChatMessenger {
     /**
      * Retorna os estados de leitura dos participantes.
      *
-     * @return mapa entre usuários e seus estados de leitura.
+     * @return mapa entre usuÃ¡rios e seus estados de leitura.
      */
     public Map<String, ChatUserState> getMessengerStates() {
         return messengerStates;
@@ -111,7 +140,7 @@ public class ChatMessenger {
     /**
      * Define os estados de leitura dos participantes.
      *
-     * @param messengerStates mapa entre usuários e seus estados de leitura.
+     * @param messengerStates mapa entre usuÃ¡rios e seus estados de leitura.
      */
     public void setMessengerStates(Map<String, ChatUserState> messengerStates) {
         this.messengerStates = messengerStates;

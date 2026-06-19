@@ -9,6 +9,7 @@
     <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/enums/package-info.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/exceptions/ComunidadeComEsseNomeJaExiste.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/exceptions/ComunidadeNaoExiste.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/exceptions/NaoHaMensagens.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/exceptions/UsuarioJaFazParteDessaComunidade.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/exceptions/package-info.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/models/chatmessenger/ChatMessenger.java" charset="ISO-8859-1" />

@@ -224,6 +224,32 @@ public class Facade {
     }
 
     /**
+     * Envia uma mensagem para uma comunidade.
+     *
+     * @param userId identificador do usuário remetente.
+     * @param communityName nome da comunidade.
+     * @param message conteúdo textual da mensagem.
+     * @throws UsuarioNaoCadastrado se o usuário remetente não estiver cadastrado.
+     * @throws ComunidadeNaoExiste se a comunidade não existir.
+     */
+    public void enviarMensagem(String userId, String communityName, String message)
+            throws UsuarioNaoCadastrado, ComunidadeNaoExiste {
+        communityController.sendCommunityMessage(userId, communityName, message);
+    }
+
+    /**
+     * Lê a próxima mensagem de comunidade pendente para o usuário.
+     *
+     * @param userId identificador do usuário leitor.
+     * @return conteúdo textual da próxima mensagem de comunidade.
+     * @throws UsuarioNaoCadastrado se o usuário não estiver cadastrado.
+     * @throws NaoHaMensagens se o usuário não possuir mensagens pendentes.
+     */
+    public String lerMensagem(String userId) throws UsuarioNaoCadastrado, NaoHaMensagens {
+        return communityController.readCommunityMessage(userId);
+    }
+
+    /**
      * Envia um recado de um usuário para outro.
      *
      * @param senderId identificador do usuário remetente.
