@@ -106,7 +106,7 @@ public class UserController {
     }
 
     /**
-     * Solicita ou confirma amizade com outro usuário.
+     * Solicita ou confirma relacionamento com outro usuário.
      *
      * @param userId identificador do usuário que executa a ação.
      * @throws UsuarioNaoCadastrado se algum usuário não estiver cadastrado.
@@ -115,7 +115,7 @@ public class UserController {
      * @throws EsperandoAceitacaoRelationship se já existir solicitação pendente.
      * @throws FuncaoInvalida se o destinatário tiver marcado o usuário como inimigo.
      */
-    public void addRelationship(String userId, String relatedUserName, RelationshipType type)
+    private void addRelationship(String userId, String relatedUserName, RelationshipType type)
             throws UsuarioNaoCadastrado, AdicionarASiMesmoRelationship,
             UsuarioJaAdicionadoRelationship, EsperandoAceitacaoRelationship,
             FuncaoInvalida {
@@ -123,6 +123,24 @@ public class UserController {
         String relatedUserId = userIntegrator.getUserByName(relatedUserName);
         interactionIntegrator.assertCanInteract(userId, relatedUserName);
         relationshipService.addRelationship(userId, relatedUserId, type);
+    }
+
+    /**
+     * Solicita ou confirma a requisição de amizade entre dois usuários
+     *
+     * @param userId
+     * @param relatedUserName
+     * @throws UsuarioNaoCadastrado
+     * @throws AdicionarASiMesmoRelationship
+     * @throws UsuarioJaAdicionadoRelationship
+     * @throws EsperandoAceitacaoRelationship
+     * @throws FuncaoInvalida
+     */
+
+    public void addFriendship(String userId, String relatedUserName) throws UsuarioNaoCadastrado, AdicionarASiMesmoRelationship,
+            UsuarioJaAdicionadoRelationship, EsperandoAceitacaoRelationship,
+            FuncaoInvalida {
+        addRelationship(userId,relatedUserName,RelationshipType.FRIENDSHIP);
     }
 
     /**

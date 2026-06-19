@@ -4,7 +4,6 @@ import br.ufal.ic.p2.jackut.controllers.ChatMessengerController;
 import br.ufal.ic.p2.jackut.controllers.CommunityController;
 import br.ufal.ic.p2.jackut.controllers.UserController;
 import br.ufal.ic.p2.jackut.controllers.UserDeletionController;
-import br.ufal.ic.p2.jackut.enums.RelationshipType;
 import br.ufal.ic.p2.jackut.exceptions.*;
 
 /**
@@ -115,7 +114,8 @@ public class Facade {
      *
      * @param userId identificador da conta removida.
      * @throws UsuarioNaoCadastrado se a conta nao estiver cadastrada.
-     */    public void removerUsuario(String userId) throws UsuarioNaoCadastrado {
+     */
+    public void removerUsuario(String userId) throws UsuarioNaoCadastrado {
         userDeletionController.deleteUser(userId);
     }
 
@@ -135,7 +135,7 @@ public class Facade {
             UsuarioJaAdicionadoRelationship, EsperandoAceitacaoRelationship,
             FuncaoInvalida {
 
-        userController.addRelationship(userId, friendUserName, RelationshipType.FRIENDSHIP);
+        userController.addFriendship(userId, friendUserName);
     }
 
     /**
