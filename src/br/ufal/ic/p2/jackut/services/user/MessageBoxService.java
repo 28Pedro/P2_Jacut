@@ -7,11 +7,12 @@ import br.ufal.ic.p2.jackut.models.user.MessengerBox;
 import br.ufal.ic.p2.jackut.repositories.users.MessengerBoxRepository;
 
 import java.util.Optional;
+import java.util.Collection;
 import java.util.UUID;
 
 
 /**
- * Serviço responsável por caixas de notificações de mensagens dos usuários.
+ * Serviço responsável por caixas de notificações dos usuários.
  */
 public class MessageBoxService {
 
@@ -54,7 +55,7 @@ public class MessageBoxService {
     }
 
     /**
-     * Adiciona uma notificação de mensagem à caixa de um usuário.
+     * Adiciona uma notificação de recado privado à caixa de um usuário.
      *
      * @param userId identificador do usuário notificado.
      * @param chatMessengerId identificador da mensagem ou referência de chat notificada.
@@ -67,7 +68,19 @@ public class MessageBoxService {
     }
 
     /**
-     * Obtém a próxima notificação pendente de um usuário.
+     * Adiciona uma notificação de mensagem de comunidade à caixa de um usuário.
+     *
+     * @param userId identificador do usuário notificado.
+     * @param messageId identificador da mensagem de comunidade.
+     * @throws UsuarioNaoCadastrado se a caixa do usuário não for encontrada.
+     */
+    public void notifyCommunityMessage(String userId, String messageId) throws UsuarioNaoCadastrado {
+        MessengerBox messengerBox = messengerBoxRepository.getMessengerBoxByUserId(userId);
+        messengerBox.addCommunityMessageNotification(messageId);
+    }
+
+    /**
+     * Obtém a próxima notificação de recado pendente de um usuário.
      *
      * @param userId identificador do usuário consultado.
      * @return notificação pendente, ou {@link Optional#empty()} se não houver notificação.
@@ -78,6 +91,38 @@ public class MessageBoxService {
 
         MessengerBox messengerBox= messengerBoxRepository.getMessengerBoxByUserId(userId);
         return messengerBox.popNotification();
+    }
+
+    /**
+     * Obtém a próxima notificação de mensagem de comunidade de um usuário.
+     *
+     * @param userId identificador do usuário consultado.
+     * @return notificação pendente, ou {@link Optional#empty()} se não houver notificação.
+     * @throws UsuarioNaoCadastrado se a caixa do usuário não for encontrada.
+     */
+    public Optional<String> getCommunityMessageNotificationUser(String userId)
+            throws UsuarioNaoCadastrado{
+
+        MessengerBox messengerBox = messengerBoxRepository.getMessengerBoxByUserId(userId);
+        return messengerBox.popCommunityMessageNotification();
+    }
+
+    /**
+     * Remove notificações associadas às mensagens excluídas.
+     *
+     * @param messageIds identificadores das mensagens removidas.
+     */
+    public void removeNotifications(Collection<String> messageIds) {
+        messengerBoxRepository.removeNotifications(messageIds);
+    }
+
+    /**
+     * Remove a caixa de mensagens de um usuário.
+     *
+     * @param userId identificador do usuário removido.
+     */
+    public void deleteMessengerBox(String userId) {
+        messengerBoxRepository.deleteMessengerBoxByUserId(userId);
     }
 
 

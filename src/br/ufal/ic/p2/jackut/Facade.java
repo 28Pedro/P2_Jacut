@@ -1,7 +1,10 @@
 package br.ufal.ic.p2.jackut;
 
 import br.ufal.ic.p2.jackut.controllers.ChatMessengerController;
+import br.ufal.ic.p2.jackut.controllers.CommunityController;
 import br.ufal.ic.p2.jackut.controllers.UserController;
+import br.ufal.ic.p2.jackut.controllers.UserDeletionController;
+import br.ufal.ic.p2.jackut.enums.RelationshipType;
 import br.ufal.ic.p2.jackut.exceptions.*;
 
 /**
@@ -16,6 +19,8 @@ public class Facade {
 
     UserController userController;
     ChatMessengerController chatMessengerController;
+    CommunityController communityController;
+    UserDeletionController userDeletionController;
 
     /**
      * Cria uma nova fachada e inicializa os controladores principais.
@@ -26,6 +31,8 @@ public class Facade {
     public Facade() throws SaveError, FileError {
         this.userController = new UserController();
         this.chatMessengerController = new ChatMessengerController();
+        this.communityController = new CommunityController();
+        this.userDeletionController = new UserDeletionController();
     }
 
     /**
@@ -34,6 +41,7 @@ public class Facade {
     public void zerarSistema(){
         userController.resetData();
         chatMessengerController.resetData();
+        communityController.resetData();
     }
 
     /**
@@ -44,6 +52,7 @@ public class Facade {
     public void encerrarSistema() throws SaveError{
         userController.saveData();
         chatMessengerController.saveData();
+        communityController.saveData();
     }
 
     /**
@@ -101,21 +110,27 @@ public class Facade {
         userController.editProfile(userId,attribute, attributeValue);
      }
 
+    public void removerUsuario(String userId) throws UsuarioNaoCadastrado {
+        userDeletionController.deleteUser(userId);
+    }
+
     /**
      * Solicita ou confirma amizade entre dois usuários.
      *
      * @param userId identificador do usuário que executa a ação.
      * @param friendUserName login do usuário a ser adicionado como amigo.
      * @throws UsuarioNaoCadastrado se algum usuário envolvido não estiver cadastrado.
-     * @throws AdicionarASiMesmoAmigo se o usuário tentar adicionar a si mesmo.
-     * @throws UsuarioJaAdicionadoAmigo se os usuários já forem amigos.
-     * @throws EsperandoAceitacaoAmigo se já existir solicitação pendente de aceite.
+     * @throws AdicionarASiMesmoRelationship se o usuário tentar adicionar a si mesmo.
+     * @throws UsuarioJaAdicionadoRelationship se os usuários já forem amigos.
+     * @throws EsperandoAceitacaoRelationship se já existir solicitação pendente de aceite.
+     * @throws FuncaoInvalida se o destinatário tiver marcado o usuário como inimigo.
      */
     public void adicionarAmigo(String userId, String friendUserName)
-            throws UsuarioNaoCadastrado, AdicionarASiMesmoAmigo,
-            UsuarioJaAdicionadoAmigo, EsperandoAceitacaoAmigo{
+            throws UsuarioNaoCadastrado, AdicionarASiMesmoRelationship,
+            UsuarioJaAdicionadoRelationship, EsperandoAceitacaoRelationship,
+            FuncaoInvalida {
 
-        userController.addFriendship(userId,friendUserName);
+        userController.addRelationship(userId, friendUserName, RelationshipType.FRIENDSHIP);
     }
 
     /**
@@ -143,6 +158,159 @@ public class Facade {
         return userController.getFriends(userName);
     }
 
+    public void adicionarIdolo(String userId, String idolUserName)
+            throws UsuarioNaoCadastrado, AdicionarASiMesmoRelationship,
+            UsuarioJaAdicionadoRelationship, EsperandoAceitacaoRelationship,
+            FuncaoInvalida {
+        userController.addIdol(userId, idolUserName);
+    }
+
+    public boolean ehFa(String userName, String idolUserName) throws UsuarioNaoCadastrado {
+        return userController.isFan(userName, idolUserName);
+    }
+
+    public String getFas(String userName) throws UsuarioNaoCadastrado {
+        return userController.getFans(userName);
+    }
+
+    public void adicionarPaquera(String userId, String crushUserName)
+            throws UsuarioNaoCadastrado, AdicionarASiMesmoRelationship,
+            UsuarioJaAdicionadoRelationship, EsperandoAceitacaoRelationship,
+            FuncaoInvalida, EnviarRecadoParaSiMesmo {
+        userController.addCrush(userId, crushUserName);
+
+        if (userController.hasReciprocalCrush(userId, crushUserName)) {
+            String crushUserId = userController.getUserIdByName(crushUserName);
+            String userLogin = userController.getUserNameById(userId);
+            String userDisplayName = userController.getUserDisplayNameById(userId);
+            String crushDisplayName = userController.getUserDisplayNameById(crushUserId);
+
+            chatMessengerController.SendMessenger(
+                    crushDisplayName + " \u00e9 seu paquera - Recado do Jackut.",
+                    crushUserId,
+                    userLogin);
+            chatMessengerController.SendMessenger(
+                    userDisplayName + " \u00e9 seu paquera - Recado do Jackut.",
+                    userId,
+                    crushUserName);
+        }
+    }
+
+    public boolean ehPaquera(String userId, String crushUserName) throws UsuarioNaoCadastrado {
+        return userController.isCrush(userId, crushUserName);
+    }
+
+    public String getPaqueras(String userId) throws UsuarioNaoCadastrado {
+        return userController.getCrushes(userId);
+    }
+
+    public void adicionarInimigo(String userId, String enemyUserName)
+            throws UsuarioNaoCadastrado, AdicionarASiMesmoRelationship,
+            UsuarioJaAdicionadoRelationship, EsperandoAceitacaoRelationship {
+        userController.addEnemy(userId, enemyUserName);
+    }
+
+    /**
+     * Cria uma comunidade.
+     *
+     * @param userId identificador do usuário dono da comunidade.
+     * @param name nome único da comunidade.
+     * @param description descrição da comunidade.
+     * @throws UsuarioNaoCadastrado se o usuário dono não estiver cadastrado.
+     * @throws ComunidadeComEsseNomeJaExiste se já existir comunidade com o nome informado.
+     * @throws UsuarioJaFazParteDessaComunidade se a comunidade já estiver vinculada ao usuário.
+     */
+    public void criarComunidade(String userId, String name, String description)
+            throws UsuarioNaoCadastrado, ComunidadeComEsseNomeJaExiste,
+            UsuarioJaFazParteDessaComunidade {
+        communityController.createCommunity(userId, name, description);
+    }
+
+    /**
+     * Adiciona um usuário a uma comunidade existente.
+     *
+     * @param userId identificador do usuário.
+     * @param name nome da comunidade.
+     * @throws UsuarioNaoCadastrado se o usuário não estiver cadastrado.
+     * @throws ComunidadeNaoExiste se a comunidade não existir.
+     * @throws UsuarioJaFazParteDessaComunidade se o usuário já participar da comunidade.
+     */
+    public void adicionarComunidade(String userId, String name)
+            throws UsuarioNaoCadastrado, ComunidadeNaoExiste,
+            UsuarioJaFazParteDessaComunidade {
+        communityController.addCommunity(userId, name);
+    }
+
+    /**
+     * Recupera a descrição de uma comunidade.
+     *
+     * @param name nome da comunidade.
+     * @return descrição da comunidade.
+     * @throws ComunidadeNaoExiste se a comunidade não existir.
+     */
+    public String getDescricaoComunidade(String name) throws ComunidadeNaoExiste {
+        return communityController.getCommunityDescription(name);
+    }
+
+    /**
+     * Recupera o dono de uma comunidade.
+     *
+     * @param name nome da comunidade.
+     * @return login do dono da comunidade.
+     * @throws ComunidadeNaoExiste se a comunidade não existir.
+     */
+    public String getDonoComunidade(String name) throws ComunidadeNaoExiste {
+        return communityController.getCommunityOwner(name);
+    }
+
+    /**
+     * Recupera os membros de uma comunidade.
+     *
+     * @param name nome da comunidade.
+     * @return membros da comunidade em formato textual.
+     * @throws ComunidadeNaoExiste se a comunidade não existir.
+     */
+    public String getMembrosComunidade(String name) throws ComunidadeNaoExiste {
+        return communityController.getCommunityMembers(name);
+    }
+
+    /**
+     * Recupera as comunidades das quais um usuário participa.
+     *
+     * @param userName login do usuário.
+     * @return comunidades do usuário em formato textual.
+     * @throws UsuarioNaoCadastrado se o usuário não estiver cadastrado.
+     */
+    public String getComunidades(String userName) throws UsuarioNaoCadastrado {
+        return userController.getCommunities(userName);
+    }
+
+    /**
+     * Envia uma mensagem para uma comunidade.
+     *
+     * @param userId identificador do usuário remetente.
+     * @param communityName nome da comunidade.
+     * @param message conteúdo textual da mensagem.
+     * @throws UsuarioNaoCadastrado se o usuário remetente não estiver cadastrado.
+     * @throws ComunidadeNaoExiste se a comunidade não existir.
+     */
+    public void enviarMensagem(String userId, String communityName, String message)
+            throws UsuarioNaoCadastrado, ComunidadeNaoExiste {
+        communityController.sendCommunityMessage(userId, communityName, message);
+    }
+
+    /**
+     * Lê a próxima mensagem de comunidade pendente para o usuário.
+     *
+     * @param userId identificador do usuário leitor.
+     * @return conteúdo textual da próxima mensagem de comunidade.
+     * @throws UsuarioNaoCadastrado se o usuário não estiver cadastrado.
+     * @throws NaoHaMensagens se o usuário não possuir mensagens pendentes.
+     */
+    public String lerMensagem(String userId) throws UsuarioNaoCadastrado, NaoHaMensagens {
+        return communityController.readCommunityMessage(userId);
+    }
+
     /**
      * Envia um recado de um usuário para outro.
      *
@@ -153,7 +321,8 @@ public class Facade {
      * @throws EnviarRecadoParaSiMesmo se o remetente tentar enviar recado para si mesmo.
      */
     public void enviarRecado(String senderId, String receiverUserName, String messenger) throws
-            UsuarioNaoCadastrado,EnviarRecadoParaSiMesmo {
+            UsuarioNaoCadastrado, EnviarRecadoParaSiMesmo, FuncaoInvalida {
+        userController.assertCanInteract(senderId, receiverUserName);
         chatMessengerController.SendMessenger(messenger,senderId,receiverUserName);
     }
 

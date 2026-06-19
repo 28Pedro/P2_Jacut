@@ -6,8 +6,6 @@ import br.ufal.ic.p2.jackut.exceptions.UsuarioNaoCadastrado;
 import br.ufal.ic.p2.jackut.models.user.User;
 import br.ufal.ic.p2.jackut.repositories.users.UserRepository;
 
-import java.util.Optional;
-
 /**
  * Serviço auxiliar para integração com o repositório de usuários.
  *
@@ -58,5 +56,27 @@ public class UserIntegrator {
     public String getUserByName(String userName) throws UsuarioNaoCadastrado {
        User user = userRepository.getUserByName(userName);
         return user.getId();
+    }
+
+    /**
+     * Recupera o login de um usuário a partir do identificador interno.
+     *
+     * @param userId identificador interno do usuário.
+     * @return login do usuário.
+     * @throws UsuarioNaoCadastrado se não existir usuário com o identificador informado.
+     */
+    public String getUserNameById(String userId) throws UsuarioNaoCadastrado {
+       User user = userRepository.findUserOrThrow(userId);
+       return user.getUserName();
+    }
+
+    /**
+     * Remove o cadastro principal de um usuário.
+     *
+     * @param userId identificador do usuário removido.
+     * @throws UsuarioNaoCadastrado se o usuário não estiver cadastrado.
+     */
+    public void deleteUser(String userId) throws UsuarioNaoCadastrado {
+       userRepository.deleteUser(userId);
     }
 }

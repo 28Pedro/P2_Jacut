@@ -1,12 +1,14 @@
 package br.ufal.ic.p2.jackut.services.chatMessenger;
 
 import br.ufal.ic.p2.jackut.exceptions.FileError;
+import br.ufal.ic.p2.jackut.exceptions.NaoHaMensagens;
 import br.ufal.ic.p2.jackut.exceptions.NaoHaRecados;
 import br.ufal.ic.p2.jackut.exceptions.SaveError;
 import br.ufal.ic.p2.jackut.models.chatmessenger.Message;
 import br.ufal.ic.p2.jackut.repositories.chatMessager.MessageRepository;
 
 import java.util.UUID;
+import java.util.Collection;
 
 /**
  * Serviço responsável pelas regras de criação, consulta e persistência de mensagens.
@@ -42,7 +44,7 @@ public class MessageService {
     }
 
     /**
-     * Recupera o identificador do chat associado a uma mensagem.
+     * Recupera o identificador do chat associado a uma mensagem privada.
      *
      * @param messageId identificador da mensagem.
      * @return identificador do chat da mensagem.
@@ -54,7 +56,23 @@ public class MessageService {
     }
 
     /**
-     * Recupera o conteúdo textual de uma mensagem.
+     * Recupera o identificador do chat associado a uma mensagem de comunidade.
+     *
+     * @param messageId identificador da mensagem.
+     * @return identificador do chat da mensagem.
+     * @throws NaoHaMensagens se a mensagem não for encontrada.
+     */
+    public String getCommunityChatIdByMessage(String messageId) throws NaoHaMensagens{
+        try {
+            Message message = messageRepository.getMessageById(messageId);
+            return message.getChatMessageId();
+        } catch (NaoHaRecados e) {
+            throw new NaoHaMensagens();
+        }
+    }
+
+    /**
+     * Recupera o conteúdo textual de uma mensagem privada.
      *
      * @param messageId identificador da mensagem.
      * @return conteúdo textual da mensagem.
@@ -62,6 +80,30 @@ public class MessageService {
      */
     public String showMessage(String messageId) throws NaoHaRecados {
         return messageRepository.getMessageById(messageId).getContent();
+    }
+
+    /**
+     * Recupera o conteúdo textual de uma mensagem de comunidade.
+     *
+     * @param messageId identificador da mensagem.
+     * @return conteúdo textual da mensagem.
+     * @throws NaoHaMensagens se a mensagem não for encontrada.
+     */
+    public String showCommunityMessage(String messageId) throws NaoHaMensagens {
+        try {
+            return messageRepository.getMessageById(messageId).getContent();
+        } catch (NaoHaRecados e) {
+            throw new NaoHaMensagens();
+        }
+    }
+
+    /**
+     * Exclui mensagens que não podem mais ser entregues.
+     *
+     * @param messageIds identificadores das mensagens removidas.
+     */
+    public void deleteMessages(Collection<String> messageIds) {
+        messageRepository.deleteMessages(messageIds);
     }
 
     /**

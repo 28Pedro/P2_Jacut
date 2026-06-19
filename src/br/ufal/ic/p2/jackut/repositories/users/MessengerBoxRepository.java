@@ -8,6 +8,7 @@ import br.ufal.ic.p2.jackut.repositories.AbstractRepository;
 import br.ufal.ic.p2.jackut.repositories.XMLController;
 
 import java.util.HashMap;
+import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
 
@@ -20,7 +21,7 @@ public class MessengerBoxRepository extends AbstractRepository<MessengerBox> {
     private static MessengerBoxRepository instance;
 
     /**
-     * Cria o repositório de caixas de mensagem e reconstrói o índice por usuário.
+     * Cria o reposit?rio de caixas de mensagem e reconstrói o índice por usuário.
      *
      * @throws SaveError se a infraestrutura de persistência não puder ser preparada.
      * @throws FileError se ocorrer falha ao carregar caixas persistidas.
@@ -67,15 +68,15 @@ public class MessengerBoxRepository extends AbstractRepository<MessengerBox> {
     /**
      * Recupera uma caixa de mensagem por ID.
      *
-     * @param friendshipId identificador da caixa de mensagem.
+     * @param messageBoxId identificador da caixa de mensagem.
      * @return caixa de mensagem encontrada.
      * @throws UsuarioNaoCadastrado se a caixa não for encontrada.
      */
-    public MessengerBox getMessengerBoxById(String friendshipId) throws
+    public MessengerBox getMessengerBoxById(String messageBoxId) throws
             UsuarioNaoCadastrado {
 
         return Optional.
-                ofNullable(entityMap.get(friendshipId)).
+                ofNullable(entityMap.get(messageBoxId)).
                 orElseThrow(UsuarioNaoCadastrado::new);
     }
 
@@ -89,6 +90,28 @@ public class MessengerBoxRepository extends AbstractRepository<MessengerBox> {
     public MessengerBox getMessengerBoxByUserId(String userId) throws
             UsuarioNaoCadastrado{
         return getMessengerBoxById(messengerBoxByUserId.get(userId));
+    }
+
+    /**
+     * Remove notificações das mensagens excluídas em todas as caixas.
+     *
+     * @param messageIds identificadores das mensagens excluídas.
+     */
+    public void removeNotifications(Collection<String> messageIds) {
+        entityMap.values().forEach(messageBox -> messageBox.removeNotifications(messageIds));
+    }
+
+    /**
+     * Remove a caixa de mensagem vinculada a um usuário.
+     *
+     * @param userId identificador do usuário removido.
+     */
+    public void deleteMessengerBoxByUserId(String userId) {
+        String messengerBoxId = messengerBoxByUserId.remove(userId);
+
+        if (messengerBoxId != null) {
+            entityMap.remove(messengerBoxId);
+        }
     }
 
     /**

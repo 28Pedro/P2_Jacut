@@ -37,6 +37,40 @@ public class ChatMessenger {
     }
 
     /**
+     * Adiciona um participante ao chat, preservando o estado de leitura individual.
+     *
+     * @param userId identificador do usuário participante.
+     */
+    public void addParticipant(String userId) {
+        if (!usersId.getUserIds().contains(userId)) {
+            usersId.getUserIds().add(userId);
+        }
+
+        messengerStates.putIfAbsent(userId, new ChatUserState());
+    }
+
+    /**
+     * Remove um participante e o respectivo estado de leitura do chat.
+     *
+     * @param userId identificador do participante removido.
+     */
+    public void removeParticipant(String userId) {
+        usersId.getUserIds().remove(userId);
+        messengerStates.remove(userId);
+    }
+    
+    /**
+     * Reúne os identificadores de mensagens que permanecem não lidas no chat.
+     *
+     * @return identificadores das mensagens pendentes de leitura.
+     */
+    public Set<String> getUnreadMessageIds() {
+        Set<String> messageIds = new HashSet<>();
+        messengerStates.values().forEach(state -> messageIds.addAll(state.getUnreadMessengers()));
+        return messageIds;
+    }
+
+    /**
      * Envia uma mensagem para os participantes do chat, exceto o remetente.
      *
      * @param messenger identificador da mensagem enviada.
@@ -53,6 +87,17 @@ public class ChatMessenger {
     }
 
     /**
+     * Envia uma mensagem para todos os participantes do chat.
+     *
+     * @param messenger identificador da mensagem enviada.
+     */
+    public void sendMessengerToAll(String messenger) {
+        messengerStates.
+                forEach((userId, chatUserState) ->
+                        chatUserState.receiveMessenger(messenger));
+    }
+
+    /**
      * Lê a próxima mensagem não lida de um participante.
      *
      * @param receiverId identificador do participante leitor.
@@ -60,6 +105,11 @@ public class ChatMessenger {
      */
     public Optional<String> readMessage(String receiverId){
         ChatUserState chatUserState = messengerStates.get(receiverId);
+
+        if (chatUserState == null) {
+            return Optional.empty();
+        }
+
         return chatUserState.readMessenger();
     }
 

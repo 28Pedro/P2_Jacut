@@ -1,6 +1,7 @@
 package br.ufal.ic.p2.jackut.services.chatMessenger;
 
 import br.ufal.ic.p2.jackut.exceptions.FileError;
+import br.ufal.ic.p2.jackut.exceptions.NaoHaMensagens;
 import br.ufal.ic.p2.jackut.exceptions.NaoHaRecados;
 import br.ufal.ic.p2.jackut.exceptions.SaveError;
 import br.ufal.ic.p2.jackut.models.chatmessenger.ChatMessenger;
@@ -27,7 +28,7 @@ public class ChatMessengerService {
     }
 
     /**
-     * Registra uma mensagem em um chat para todos os destinatários.
+     * Registra uma mensagem privada em um chat para todos os destinatários.
      *
      * @param messageId identificador da mensagem enviada.
      * @param senderId identificador do usuário remetente.
@@ -45,7 +46,27 @@ public class ChatMessengerService {
     }
 
     /**
-     * Lê a próxima mensagem não lida de um usuário em um chat.
+     * Registra uma mensagem de comunidade para todos os participantes do chat.
+     *
+     * @param messageId identificador da mensagem enviada.
+     * @param chatMessengerId identificador do chat da comunidade.
+     * @return lista de identificadores dos usuários que devem ser notificados.
+     */
+    public List<String> sendCommunityMessenger(String messageId, String chatMessengerId){
+        Optional<ChatMessenger> chatMessengerO = chatMessengerRepository.getObject(chatMessengerId);
+
+        if (chatMessengerO.isEmpty()) {
+            return List.of();
+        }
+
+        ChatMessenger chatMessenger = chatMessengerO.get();
+        chatMessenger.sendMessengerToAll(messageId);
+
+        return chatMessenger.getUsersId().getUserList();
+    }
+
+    /**
+     * Lê a próxima mensagem não lida de um usuário em um chat privado.
      *
      * @param chatMessengerId identificador do chat.
      * @param receiverId identificador do usuário leitor.
@@ -60,6 +81,71 @@ public class ChatMessengerService {
        ChatMessenger chatMessenger = chatMessengerO.orElseThrow(NaoHaRecados::new);
 
        return chatMessenger.readMessage(receiverId).orElseThrow(NaoHaRecados::new);
+    }
+
+    /**
+     * Lê a próxima mensagem de comunidade não lida de um usuário.
+     *
+     * @param chatMessengerId identificador do chat da comunidade.
+     * @param receiverId identificador do usuário leitor.
+     * @return identificador da mensagem lida.
+     * @throws NaoHaMensagens se o chat não existir ou não houver mensagens não lidas.
+     */
+    public String receiveCommunityMessenger(String chatMessengerId, String receiverId)
+            throws NaoHaMensagens{
+
+        Optional<ChatMessenger> chatMessengerO =
+                chatMessengerRepository.getObject(chatMessengerId);
+        ChatMessenger chatMessenger = chatMessengerO.orElseThrow(NaoHaMensagens::new);
+
+        return chatMessenger.readMessage(receiverId).orElseThrow(NaoHaMensagens::new);
+    }
+
+    /**
+     * Cria um chat de comunidade com o dono como primeiro participante.
+     *
+     * @param ownerUserId identificador do dono da comunidade.
+     * @return identificador do chat criado.
+     */
+    public String buildCommunityChat(String ownerUserId) {
+        String id = UUID.randomUUID().toString();
+        ChatMessenger chatMessenger = new ChatMessenger(id, new ChatParticipantsKey(ownerUserId));
+        chatMessengerRepository.saveChatMessenger(chatMessenger);
+        return id;
+    }
+
+    /**
+     * Adiciona um participante a um chat existente.
+     *
+     * @param chatMessengerId identificador do chat.
+     * @param userId identificador do usuário adicionado.
+     */
+    public void addParticipant(String chatMessengerId, String userId) {
+        Optional<ChatMessenger> chatMessengerO = chatMessengerRepository.getObject(chatMessengerId);
+
+        if (chatMessengerO.isPresent()) {
+            ChatMessenger chatMessenger = chatMessengerO.get();
+            chatMessenger.addParticipant(userId);
+            chatMessengerRepository.saveChatMessenger(chatMessenger);
+        }
+    }
+
+    /**
+     * Remove os chats privados e de comunidades excluídas vinculados ao usuário,
+     * preservando os chats das comunidades das quais ele apenas deixou de participar.
+     *
+     * @param userId identificador do usuário removido.
+     * @param communityChatsToKeep chats de comunidades que permanecem ativos.
+     * @return identificadores de mensagens que ainda estavam não lidas nos chats removidos.
+     */
+    public Set<String> deleteUserChats(String userId, Collection<String> communityChatsToKeep) {
+        Set<String> chatIdsToDelete = chatMessengerRepository.getChatIdsByParticipant(userId);
+        chatIdsToDelete.removeAll(communityChatsToKeep);
+
+        Set<String> unreadMessageIds =
+                chatMessengerRepository.deleteChatsAndCollectUnreadMessages(chatIdsToDelete);
+        chatMessengerRepository.removeUserFromChats(userId, communityChatsToKeep);
+        return unreadMessageIds;
     }
 
     /**

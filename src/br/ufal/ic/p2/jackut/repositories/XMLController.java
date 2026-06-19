@@ -96,7 +96,7 @@ public class XMLController {
         try (XMLDecoder decoder = new XMLDecoder(new BufferedInputStream(new FileInputStream(file)))) {
             Object data = decoder.readObject();
             return (Map<K, V>) data;
-        } catch (Exception e) {
+        } catch (FileNotFoundException e) {
             throw new FileError(fullPath);
         }
     }

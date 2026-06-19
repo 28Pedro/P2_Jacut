@@ -4,10 +4,14 @@ br.ufal.ic.p2.jackut.controllers
 br.ufal.ic.p2.jackut.enums
 br.ufal.ic.p2.jackut.exceptions
 br.ufal.ic.p2.jackut.models.chatmessenger
+br.ufal.ic.p2.jackut.models.community
 br.ufal.ic.p2.jackut.models.user
+br.ufal.ic.p2.jackut.models.user.relationship
 br.ufal.ic.p2.jackut.repositories
 br.ufal.ic.p2.jackut.repositories.chatMessager
+br.ufal.ic.p2.jackut.repositories.community
 br.ufal.ic.p2.jackut.repositories.users
 br.ufal.ic.p2.jackut.services.chatMessenger
+br.ufal.ic.p2.jackut.services.community
 br.ufal.ic.p2.jackut.services.user
-br.ufal.ic.p2.jackut.services.user.friendshipStateHandles
+br.ufal.ic.p2.jackut.services.user.relationshipStateHandles

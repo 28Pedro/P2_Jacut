@@ -1,15 +1,21 @@
 package br.ufal.ic.p2.jackut.models.user;
 
 import java.util.ArrayDeque;
+import java.util.Collection;
 import java.util.Optional;
 import java.util.Queue;
 
 /**
- * Representa a caixa de notificações de mensagens de um usuário.
+ * Representa a caixa de notificações de um usuário.
+ *
+ * <p>A caixa mantém filas separadas para recados privados e mensagens enviadas
+ * a comunidades, preservando a diferença entre os comandos lerRecado e
+ * lerMensagem.</p>
  */
 public class MessengerBox {
 
     private Queue<String> messengerNotifications;
+    private Queue<String> communityMessageNotifications;
     private String userId;
     private String id;
 
@@ -18,6 +24,7 @@ public class MessengerBox {
      */
     public MessengerBox(){
         this.messengerNotifications = new ArrayDeque<>();
+        this.communityMessageNotifications = new ArrayDeque<>();
     }
 
     /**
@@ -33,7 +40,7 @@ public class MessengerBox {
     }
 
     /**
-     * Adiciona uma notificação à fila da caixa.
+     * Adiciona uma notificação de recado privado à fila da caixa.
      *
      * @param chatMessengerId identificador da mensagem ou referência de chat notificada.
      */
@@ -42,7 +49,7 @@ public class MessengerBox {
     }
 
     /**
-     * Remove e retorna a próxima notificação pendente.
+     * Remove e retorna a próxima notificação de recado privado pendente.
      *
      * @return próxima notificação, ou vazio se não houver notificações.
      */
@@ -50,23 +57,68 @@ public class MessengerBox {
         return Optional.ofNullable(messengerNotifications.poll());
     }
 
+    /**
+     * Adiciona uma notificação de mensagem de comunidade à fila da caixa.
+     *
+     * @param messageId identificador da mensagem de comunidade.
+     */
+    public void addCommunityMessageNotification(String messageId) {
+        communityMessageNotifications.add(messageId);
+    }
 
     /**
-     * Retorna a fila de notificações.
+     * Remove e retorna a próxima notificação de mensagem de comunidade pendente.
      *
-     * @return fila de notificações.
+     * @return próxima notificação de comunidade, ou vazio se não houver notificações.
+     */
+    public Optional<String> popCommunityMessageNotification() {
+        return Optional.ofNullable(communityMessageNotifications.poll());
+    }
+
+    /**
+     * Remove notificações referentes às mensagens excluídas.
+     *
+     * @param messageIds identificadores das mensagens excluídas.
+     */
+    public void removeNotifications(Collection<String> messageIds) {
+        messengerNotifications.removeIf(messageIds::contains);
+        communityMessageNotifications.removeIf(messageIds::contains);
+    }
+
+    /**
+     * Retorna a fila de notificações de recados privados.
+     *
+     * @return fila de notificações de recados.
      */
     public Queue<String> getMessengerNotifications() {
         return messengerNotifications;
     }
 
     /**
-     * Define a fila de notificações.
+     * Define a fila de notificações de recados privados.
      *
      * @param messengerNotifications fila de notificações.
      */
     public void setMessengerNotifications(Queue<String> messengerNotifications) {
         this.messengerNotifications = messengerNotifications;
+    }
+
+    /**
+     * Retorna a fila de notificações de mensagens de comunidade.
+     *
+     * @return fila de notificações de mensagens de comunidade.
+     */
+    public Queue<String> getCommunityMessageNotifications() {
+        return communityMessageNotifications;
+    }
+
+    /**
+     * Define a fila de notificações de mensagens de comunidade.
+     *
+     * @param communityMessageNotifications fila de notificações de mensagens de comunidade.
+     */
+    public void setCommunityMessageNotifications(Queue<String> communityMessageNotifications) {
+        this.communityMessageNotifications = communityMessageNotifications;
     }
 
     /**
