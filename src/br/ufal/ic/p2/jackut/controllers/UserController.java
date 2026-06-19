@@ -109,6 +109,8 @@ public class UserController {
      * Solicita ou confirma relacionamento com outro usuário.
      *
      * @param userId identificador do usuário que executa a ação.
+     * @param relatedUserName login do usuario relacionado.
+     * @param type tipo do relacionamento solicitado.
      * @throws UsuarioNaoCadastrado se algum usuário não estiver cadastrado.
      * @throws AdicionarASiMesmoRelationship se o usuário tentar adicionar a si mesmo.
      * @throws UsuarioJaAdicionadoRelationship se os usuários já forem amigos.
@@ -126,17 +128,16 @@ public class UserController {
     }
 
     /**
-     * Solicita ou confirma a requisição de amizade entre dois usuários
+     * Solicita ou confirma uma amizade entre dois usuarios.
      *
-     * @param userId
-     * @param relatedUserName
-     * @throws UsuarioNaoCadastrado
-     * @throws AdicionarASiMesmoRelationship
-     * @throws UsuarioJaAdicionadoRelationship
-     * @throws EsperandoAceitacaoRelationship
-     * @throws FuncaoInvalida
+     * @param userId identificador do usuario que envia ou confirma a solicitacao.
+     * @param relatedUserName login do usuario relacionado.
+     * @throws UsuarioNaoCadastrado se algum usuario nao estiver cadastrado.
+     * @throws AdicionarASiMesmoRelationship se o usuario indicar a si mesmo.
+     * @throws UsuarioJaAdicionadoRelationship se a amizade ja existir.
+     * @throws EsperandoAceitacaoRelationship se houver solicitacao pendente.
+     * @throws FuncaoInvalida se a interacao estiver bloqueada por inimizade.
      */
-
     public void addFriendship(String userId, String relatedUserName) throws UsuarioNaoCadastrado, AdicionarASiMesmoRelationship,
             UsuarioJaAdicionadoRelationship, EsperandoAceitacaoRelationship,
             FuncaoInvalida {
@@ -177,6 +178,17 @@ public class UserController {
 
     }
 
+    /**
+     * Registra que um usuario e fa de outro usuario.
+     *
+     * @param userId identificador do fa.
+     * @param idolUserName login do idolo.
+     * @throws UsuarioNaoCadastrado se algum usuario nao estiver cadastrado.
+     * @throws AdicionarASiMesmoRelationship se o usuario indicar a si mesmo.
+     * @throws UsuarioJaAdicionadoRelationship se o relacionamento ja existir.
+     * @throws EsperandoAceitacaoRelationship se houver solicitacao pendente.
+     * @throws FuncaoInvalida se a interacao estiver bloqueada por inimizade.
+     */
     public void addIdol(String userId, String idolUserName)
             throws UsuarioNaoCadastrado, AdicionarASiMesmoRelationship,
             UsuarioJaAdicionadoRelationship, EsperandoAceitacaoRelationship,
@@ -186,12 +198,27 @@ public class UserController {
         relationshipService.addRelationship(userId, idolUserId, RelationshipType.FAN);
     }
 
+    /**
+     * Verifica se um usuario e fa de outro.
+     *
+     * @param userName login do possivel fa.
+     * @param idolUserName login do possivel idolo.
+     * @return {@code true} quando o relacionamento existir.
+     * @throws UsuarioNaoCadastrado se algum usuario nao estiver cadastrado.
+     */
     public boolean isFan(String userName, String idolUserName) throws UsuarioNaoCadastrado {
         String userId = userIntegrator.getUserByName(userName);
         String idolUserId = userIntegrator.getUserByName(idolUserName);
         return relationshipService.hasRelationship(userId, idolUserId, RelationshipType.FAN);
     }
 
+    /**
+     * Retorna os fas de um usuario.
+     *
+     * @param userName login do usuario consultado.
+     * @return representacao textual dos fas.
+     * @throws UsuarioNaoCadastrado se o usuario nao estiver cadastrado.
+     */
     public String getFans(String userName) throws UsuarioNaoCadastrado {
         String userId = userIntegrator.getUserByName(userName);
         return userService.buildUsernameListById(
@@ -199,15 +226,15 @@ public class UserController {
     }
 
     /**
-     * Adds a crush relationship and notifies both users when it becomes reciprocal.
+     * Adiciona uma paquera e notifica os envolvidos quando ela se torna reciproca.
      *
-     * @param userId identifier of the user adding the crush.
-     * @param crushUserName login of the related user.
-     * @throws UsuarioNaoCadastrado if either user is not registered.
-     * @throws AdicionarASiMesmoRelationship if the user adds themselves.
-     * @throws UsuarioJaAdicionadoRelationship if the relationship already exists.
-     * @throws EsperandoAceitacaoRelationship if there is a pending relationship request.
-     * @throws FuncaoInvalida if interaction is blocked by an enemy relationship.
+     * @param userId identificador do usuario que adiciona a paquera.
+     * @param crushUserName login da paquera.
+     * @throws UsuarioNaoCadastrado se algum usuario nao estiver cadastrado.
+     * @throws AdicionarASiMesmoRelationship se o usuario indicar a si mesmo.
+     * @throws UsuarioJaAdicionadoRelationship se o relacionamento ja existir.
+     * @throws EsperandoAceitacaoRelationship se houver solicitacao pendente.
+     * @throws FuncaoInvalida se a interacao estiver bloqueada por inimizade.
      */
     public void addCrush(String userId, String crushUserName)
             throws UsuarioNaoCadastrado, AdicionarASiMesmoRelationship,
@@ -232,16 +259,41 @@ public class UserController {
         }
     }
 
+    /**
+     * Verifica se um usuario possui uma paquera registrada.
+     *
+     * @param userId identificador do usuario consultado.
+     * @param crushUserName login da paquera.
+     * @return {@code true} quando o relacionamento existir.
+     * @throws UsuarioNaoCadastrado se algum usuario nao estiver cadastrado.
+     */
     public boolean isCrush(String userId, String crushUserName) throws UsuarioNaoCadastrado {
         String crushUserId = userIntegrator.getUserByName(crushUserName);
         return relationshipService.hasRelationship(userId, crushUserId, RelationshipType.CRUSH);
     }
 
+    /**
+     * Retorna as paqueras registradas por um usuario.
+     *
+     * @param userId identificador do usuario consultado.
+     * @return representacao textual das paqueras.
+     * @throws UsuarioNaoCadastrado se o usuario nao estiver cadastrado.
+     */
     public String getCrushes(String userId) throws UsuarioNaoCadastrado {
         return userService.buildUsernameListById(
                 relationshipService.getRelatedUsers(userId, RelationshipType.CRUSH));
     }
 
+    /**
+     * Registra um usuario como inimigo de outro.
+     *
+     * @param userId identificador do usuario que executa a acao.
+     * @param enemyUserName login do inimigo.
+     * @throws UsuarioNaoCadastrado se algum usuario nao estiver cadastrado.
+     * @throws AdicionarASiMesmoRelationship se o usuario indicar a si mesmo.
+     * @throws UsuarioJaAdicionadoRelationship se o relacionamento ja existir.
+     * @throws EsperandoAceitacaoRelationship se houver solicitacao pendente.
+     */
     public void addEnemy(String userId, String enemyUserName)
             throws UsuarioNaoCadastrado, AdicionarASiMesmoRelationship,
             UsuarioJaAdicionadoRelationship, EsperandoAceitacaoRelationship {
@@ -249,6 +301,13 @@ public class UserController {
         relationshipService.addRelationship(userId, enemyUserId, RelationshipType.ENEMY);
     }
 
+    /**
+     * Recupera o nome de exibicao do usuario, usando o login como alternativa.
+     *
+     * @param userId identificador do usuario consultado.
+     * @return nome do perfil ou login quando o nome nao estiver preenchido.
+     * @throws UsuarioNaoCadastrado se o usuario nao estiver cadastrado.
+     */
     public String getUserDisplayNameById(String userId) throws UsuarioNaoCadastrado {
         try {
             return profileService.getUserAttribute(userId, "nome");
