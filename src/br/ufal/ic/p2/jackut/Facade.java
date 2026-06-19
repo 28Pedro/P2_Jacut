@@ -178,22 +178,6 @@ public class Facade {
             UsuarioJaAdicionadoRelationship, EsperandoAceitacaoRelationship,
             FuncaoInvalida, EnviarRecadoParaSiMesmo {
         userController.addCrush(userId, crushUserName);
-
-        if (userController.hasReciprocalCrush(userId, crushUserName)) {
-            String crushUserId = userController.getUserIdByName(crushUserName);
-            String userLogin = userController.getUserNameById(userId);
-            String userDisplayName = userController.getUserDisplayNameById(userId);
-            String crushDisplayName = userController.getUserDisplayNameById(crushUserId);
-
-            chatMessengerController.SendMessenger(
-                    crushDisplayName + " \u00e9 seu paquera - Recado do Jackut.",
-                    crushUserId,
-                    userLogin);
-            chatMessengerController.SendMessenger(
-                    userDisplayName + " \u00e9 seu paquera - Recado do Jackut.",
-                    userId,
-                    crushUserName);
-        }
     }
 
     public boolean ehPaquera(String userId, String crushUserName) throws UsuarioNaoCadastrado {

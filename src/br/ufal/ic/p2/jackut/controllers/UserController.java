@@ -18,6 +18,7 @@ public class UserController {
     RelationshipService relationshipService;
     UserIntegrator userIntegrator;
     MessageBoxService messageBoxService;
+    MessageBoxIntegrator messageBoxIntegrator;
     CommunityListService communityListService;
 
     /**
@@ -32,6 +33,7 @@ public class UserController {
         this.relationshipService = new RelationshipService();
         this.userIntegrator = UserIntegrator.getInstance();
         this.messageBoxService = MessageBoxService.getInstance();
+        this.messageBoxIntegrator = new MessageBoxIntegrator();
         this.communityListService = new CommunityListService();
     }
 
@@ -177,6 +179,17 @@ public class UserController {
                 relationshipService.getReverseRelatedUsers(userId, RelationshipType.FAN));
     }
 
+    /**
+     * Adds a crush relationship and notifies both users when it becomes reciprocal.
+     *
+     * @param userId identifier of the user adding the crush.
+     * @param crushUserName login of the related user.
+     * @throws UsuarioNaoCadastrado if either user is not registered.
+     * @throws AdicionarASiMesmoRelationship if the user adds themselves.
+     * @throws UsuarioJaAdicionadoRelationship if the relationship already exists.
+     * @throws EsperandoAceitacaoRelationship if there is a pending relationship request.
+     * @throws FuncaoInvalida if interaction is blocked by an enemy relationship.
+     */
     public void addCrush(String userId, String crushUserName)
             throws UsuarioNaoCadastrado, AdicionarASiMesmoRelationship,
             UsuarioJaAdicionadoRelationship, EsperandoAceitacaoRelationship,
@@ -184,6 +197,20 @@ public class UserController {
         String crushUserId = userIntegrator.getUserByName(crushUserName);
         assertCanInteract(userId, crushUserName);
         relationshipService.addRelationship(userId, crushUserId, RelationshipType.CRUSH);
+
+        if (relationshipService.hasRelationship(crushUserId, userId, RelationshipType.CRUSH)) {
+            String userDisplayName = getUserDisplayNameById(userId);
+            String crushDisplayName = getUserDisplayNameById(crushUserId);
+
+            messageBoxIntegrator.sendPrivateMessage(
+                    crushDisplayName + " é seu paquera - Recado do Jackut.",
+                    crushUserId,
+                    userId);
+            messageBoxIntegrator.sendPrivateMessage(
+                    userDisplayName + " é seu paquera - Recado do Jackut.",
+                    userId,
+                    crushUserId);
+        }
     }
 
     public boolean isCrush(String userId, String crushUserName) throws UsuarioNaoCadastrado {
@@ -201,20 +228,6 @@ public class UserController {
             UsuarioJaAdicionadoRelationship, EsperandoAceitacaoRelationship {
         String enemyUserId = userIntegrator.getUserByName(enemyUserName);
         relationshipService.addRelationship(userId, enemyUserId, RelationshipType.ENEMY);
-    }
-
-    public boolean hasReciprocalCrush(String userId, String crushUserName)
-            throws UsuarioNaoCadastrado {
-        String crushUserId = userIntegrator.getUserByName(crushUserName);
-        return relationshipService.hasRelationship(crushUserId, userId, RelationshipType.CRUSH);
-    }
-
-    public String getUserNameById(String userId) throws UsuarioNaoCadastrado {
-        return userIntegrator.getUserNameById(userId);
-    }
-
-    public String getUserIdByName(String userName) throws UsuarioNaoCadastrado {
-        return userIntegrator.getUserByName(userName);
     }
 
     public String getUserDisplayNameById(String userId) throws UsuarioNaoCadastrado {
