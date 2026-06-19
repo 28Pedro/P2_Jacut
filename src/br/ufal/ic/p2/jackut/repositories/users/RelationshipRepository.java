@@ -36,6 +36,13 @@ public class RelationshipRepository extends AbstractRepository<Relationship> {
         }
     }
 
+    /**
+     * Retorna a instancia compartilhada do repositorio.
+     *
+     * @return repositorio de relacionamentos.
+     * @throws SaveError se a infraestrutura de persistencia nao puder ser preparada.
+     * @throws FileError se ocorrer falha ao carregar dados persistidos.
+     */
     public static RelationshipRepository getInstance() throws SaveError, FileError {
         if (instance == null) {
             instance = new RelationshipRepository();
@@ -43,11 +50,24 @@ public class RelationshipRepository extends AbstractRepository<Relationship> {
         return instance;
     }
 
+    /**
+     * Salva um relacionamento e atualiza seus indices.
+     *
+     * @param relationship relacionamento armazenado.
+     */
     public void saveRelationship(Relationship relationship) {
         addObject(relationship.getId(), relationship);
         addIndex(relationship);
     }
 
+    /**
+     * Recupera o relacionamento de determinado tipo pertencente a um usuario.
+     *
+     * @param userId identificador do usuario dono.
+     * @param type tipo de relacionamento.
+     * @return relacionamento encontrado.
+     * @throws UsuarioNaoCadastrado se o usuario nao possuir estruturas cadastradas.
+     */
     public Relationship getRelationshipByUserId(String userId, RelationshipType type)
             throws UsuarioNaoCadastrado {
         Map<RelationshipType, String> userRelationships = relationshipByUserId.get(userId);
@@ -59,12 +79,25 @@ public class RelationshipRepository extends AbstractRepository<Relationship> {
         return getRelationshipById(userRelationships.get(type));
     }
 
+    /**
+     * Recupera um relacionamento por identificador.
+     *
+     * @param relationshipId identificador do relacionamento.
+     * @return relacionamento encontrado.
+     * @throws UsuarioNaoCadastrado se o relacionamento nao existir.
+     */
     public Relationship getRelationshipById(String relationshipId)
             throws UsuarioNaoCadastrado {
         return Optional.ofNullable(entityMap.get(relationshipId))
                 .orElseThrow(UsuarioNaoCadastrado::new);
     }
 
+    /**
+     * Retorna os relacionamentos cadastrados de um tipo.
+     *
+     * @param type tipo de relacionamento.
+     * @return relacionamentos do tipo informado.
+     */
     public List<Relationship> getRelationshipsByType(RelationshipType type) {
         List<Relationship> relationships = new ArrayList<>();
         List<String> relationshipIds = relationshipIdsByType.get(type);
@@ -83,6 +116,12 @@ public class RelationshipRepository extends AbstractRepository<Relationship> {
         return relationships;
     }
 
+    /**
+     * Exclui todos os relacionamentos pertencentes a um usuario.
+     *
+     * @param userId identificador do usuario removido.
+     * @throws UsuarioNaoCadastrado se o usuario nao possuir estruturas cadastradas.
+     */
     public void deleteRelationshipsByUserId(String userId) throws UsuarioNaoCadastrado {
         Map<RelationshipType, String> userRelationships = relationshipByUserId.get(userId);
 
@@ -98,6 +137,11 @@ public class RelationshipRepository extends AbstractRepository<Relationship> {
         relationshipByUserId.remove(userId);
     }
 
+    /**
+     * Remove referencias a um usuario dos relacionamentos remanescentes.
+     *
+     * @param userId identificador do usuario removido.
+     */
     public void removeUserFromAllRelationships(String userId) {
         for (Relationship relationship : entityMap.values()) {
             for (RelationshipState state : RelationshipState.values()) {
@@ -107,6 +151,9 @@ public class RelationshipRepository extends AbstractRepository<Relationship> {
     }
 
     @Override
+    /**
+     * Limpa os dados e os indices de relacionamentos.
+     */
     public void resetData() {
         super.resetData();
         relationshipByUserId.clear();
