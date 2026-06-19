@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Relatório Milestone 2 - Jackut</title>
+  <style>
+    :root { --ink:#000; --muted:#000; --line:#000; --paper:#fff; --surface:#fff; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; background:#fff; color:var(--ink); font-family:'Times New Roman', Times, serif; font-size:12pt; line-height:1.5; }
+    main { width:min(100% - 32px, 210mm); min-height:297mm; margin:18px auto; background:var(--paper); }
+    header { padding:48px 10% 38px; border-bottom:1px solid #000; background:#fff; }
+    .institution { margin:0 0 34px; text-align:center; font-size:12pt; letter-spacing:0; color:var(--muted); text-transform:uppercase; }
+    h1,h2,h3,h4 { color:#000; font-size:12pt; line-height:1.5; }
+    h1 { margin:0; text-align:center; font-weight:700; letter-spacing:0; text-transform:uppercase; }
+    h1 span { display:block; margin-top:12px; color:#000; font-size:12pt; font-weight:700; letter-spacing:0; }
+    .subtitle { max-width:700px; margin:26px auto 0; text-align:center; color:#000; font-size:12pt; }
+    .meta { margin-top:42px; display:flex; justify-content:space-between; gap:24px; color:#000; font-size:12pt; }
+    .content { padding:36px 10% 56px; }
+    section { margin:0 0 38px; scroll-margin-top:24px; }
+    h2 { margin:0 0 18px; padding-bottom:6px; border-bottom:1px solid #000; font-weight:700; text-transform:uppercase; }
+    h3 { margin:26px 0 10px; font-weight:700; }
+    h4 { margin:18px 0 8px; font-weight:700; }
+    p { margin:0 0 14px; text-align:justify; text-indent:1.25cm; }
+    a { color:#000; }
+    code { padding:0; background:transparent; border:0; border-radius:0; font-family:'Courier New',monospace; font-size:12pt; color:#000; }
+    .toc { margin:30px 0 42px; padding:18px 22px; border:1px solid #000; background:#fff; }
+    .toc h2 { margin:0 0 10px; border:0; font-size:12pt; }
+    .toc ol { columns:2; gap:42px; margin:0; padding-left:22px; }
+    .toc li { margin:6px 0; break-inside:avoid; }
+    .toc a { color:var(--ink); text-decoration:none; }
+    .toc a:hover { color:var(--blue); text-decoration:underline; }
+    .callout { margin:20px 0; padding:14px 16px; border:1px solid #000; background:#fff; }
+    .callout strong { color:#000; }
+    .warning { border-left:4px solid #000; background:#fff; }
+    .warning strong { color:#000; }
+    ul,ol { margin:0 0 18px; padding-left:25px; }
+    li { margin:7px 0; }
+    table { width:100%; margin:20px 0; border-collapse:collapse; font-size:12pt; line-height:1.4; }
+    th,td { padding:10px 11px; border:1px solid var(--line); text-align:left; vertical-align:top; }
+    th { background:#fff; color:#000; font-weight:700; }
+    tr:nth-child(even) td { background:#fff; }
+    .diagram { margin:22px 0 8px; padding:12px; border:1px solid #000; background:#fff; overflow:visible; }
+    .diagram svg { display:block; width:92%; max-width:100%; height:auto; margin:0 auto; font-family:Arial,sans-serif; }
+    .caption { margin:7px 0 22px; color:#000; font-size:12pt; text-align:center; }
+    .uml { fill:#fff; stroke:#2d566d; stroke-width:1.5; }
+    .uml-head { fill:#dcebf1; stroke:#2d566d; stroke-width:1.5; }
+    .uml-service { fill:#e8f4f0; stroke:#28716a; stroke-width:1.5; }
+    .uml-controller { fill:#f9f0de; stroke:#9b6b1d; stroke-width:1.5; }
+    .uml-repo { fill:#f4e8ed; stroke:#945064; stroke-width:1.5; }
+    .uml-text { fill:#000; font-size:12px; }
+    .uml-small { fill:#000; font-size:12px; }
+    .arrow { stroke:#516674; stroke-width:1.5; fill:none; marker-end:url(#arrow); }
+    .inherit { stroke:#516674; stroke-width:1.5; fill:none; marker-end:url(#triangle); }
+    .legend { display:flex; flex-wrap:wrap; gap:10px 18px; margin:10px 0 0; font-size:12pt; color:#000; }
+    .legend i { display:inline-block; width:11px; height:11px; margin-right:5px; border:1px solid #777; vertical-align:-1px; }
+    footer { padding:20px 10%; border-top:1px solid #000; color:#000; font-size:12pt; }
+    svg text { font-size:12px !important; }
+    @media print { body { background:#fff; } main { width:auto; margin:0; } .toc { break-inside:avoid; } section { break-inside:avoid; } }
+    @media (max-width:700px) { main { width:100%; margin:0; } header,.content { padding-left:7%; padding-right:7%; } .toc ol { columns:1; } .meta { display:block; } .meta div { margin:9px 0; } }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="institution">Universidade Federal de Alagoas - Instituto de Computação<br>Projeto de Programação 2</p>
+    <h1>Relatório do Milestone 2<span>Jackut - User Stories US5.1 a US9.2</span></h1>
+    <p class="subtitle">Descrição arquitetural, refatoramentos e decisões de implementação para comunidades, mensagens, relacionamentos e remoção de usuários.</p>
+    <div class="meta"><div>Documento técnico de implementação</div><div>Escopo: US5.1 - US9.2</div></div>
+  </header>
+
+  <div class="content">
+    <nav class="toc" aria-label="Sumário">
+      <h2>Sumário</h2>
+      <ol>
+        <li><a href="#escopo">Escopo do milestone</a></li>
+        <li><a href="#avaliacao">Avaliação e critérios arquiteturais</a></li>
+        <li><a href="#visao">Visão arquitetural da etapa</a></li>
+        <li><a href="#us5">US5.1 e US5.2 - Comunidades</a></li>
+        <li><a href="#us6">US6.1 e US6.2 - Lista de comunidades</a></li>
+        <li><a href="#us7">US7.1 e US7.2 - Mensagens de comunidade</a></li>
+        <li><a href="#us8">US8.1 e US8.2 - Relacionamentos</a></li>
+        <li><a href="#us9">US9.1 e US9.2 - Remoção de conta</a></li>
+        <li><a href="#persistencia">Persistência e consistência</a></li>
+        <li><a href="#padroes">Padrões e princípios aplicados</a></li>
+        <li><a href="#conclusao">Conclusão</a></li>
+      </ol>
+    </nav>
+
+    <section id="escopo">
+      <h2>1. Escopo do Milestone</h2>
+      <p>Este relatório registra exclusivamente o conjunto de alterações realizadas a partir das User Stories US5.1 até US9.2. Não é uma descrição integral do Jackut. Os componentes anteriores de cadastro, perfil, autenticação e recados privados são mencionados somente quando constituem dependências diretas das funcionalidades implementadas neste recorte.</p>
+      <p>A etapa introduziu quatro eixos de evolução: comunidades e suas consultas; lista de comunidades por usuário; mensagens de comunidade sobre uma infraestrutura de chat extensível; e um modelo genérico de relacionamentos que abrange amizade, fã, paquera e inimizade. Por fim, a remoção de conta passou a coordenar a eliminação dos dados associados ao usuário, incluindo seus vínculos, comunidades, chats, notificações e perfil.</p>
+      <table>
+        <thead><tr><th>User Story</th><th>Entrega principal</th><th>Impacto arquitetural</th></tr></thead>
+        <tbody>
+          <tr><td>US5.1 - US5.2</td><td>Criação e consulta de comunidades.</td><td>Novo agregado de comunidade, repositório indexado por nome e controlador próprio.</td></tr>
+          <tr><td>US6.1 - US6.2</td><td>Vínculo e consulta rápida de comunidades por usuário.</td><td>Modelo <code>CommunityList</code> e índice por identificador de usuário.</td></tr>
+          <tr><td>US7.1 - US7.2</td><td>Mensagens destinadas a comunidades.</td><td>Generalização do chat para vários participantes, filas separadas e integrador de mensagens.</td></tr>
+          <tr><td>US8.1 - US8.2</td><td>Amizade, fã, paquera e inimizade.</td><td>Hierarquia polimórfica <code>Relationship</code>, enumeração de tipos e State para amizade.</td></tr>
+          <tr><td>US9.1 - US9.2</td><td>Remoção de usuário e persistência da remoção.</td><td>Controlador orquestrador e integradores responsáveis pela limpeza de cada domínio.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="avaliacao">
+      <h2>2. Avaliação e Critérios Arquiteturais</h2>
+      <p>A evolução foi conduzida com uma preocupação central: ampliar o domínio sem transformar a fachada em depósito de regras de negócio. A fachada pública deve expor a operação requerida pelos testes de aceitação e encaminhá-la a um controlador. Controladores coordenam casos de uso; serviços tratam regras próprias do domínio; repositórios preservam e recuperam entidades; integradores fazem a ponte entre domínios quando uma operação não pertence a um único agregado.</p>
+      <p>O principal risco técnico desta etapa era a duplicação de fluxos: chats privados e chats de comunidade partilham a entidade de chat, mas não possuem a mesma semântica de notificação e leitura. Outro risco era fazer com que as novas formas de relacionamento fossem implementadas por condicionais repetidas. As decisões adotadas privilegiam extensibilidade por composição e polimorfismo.</p>
+      <div class="callout"><strong>Critério de responsabilidade:</strong> uma classe que possui dados e operações necessárias para uma regra deve ser responsável por ela. Assim, <code>ChatUserState</code> controla suas filas de leitura, <code>Community</code> controla membros, <code>Relationship</code> controla estados e os repositórios mantêm índices consistentes com a persistência.</div>
+      <div class="callout warning"><strong>Limite deliberado:</strong> o mecanismo de remoção usa as filas de não lidas como fonte de verdade para mensagens ainda entregáveis. O modelo <code>Message</code> não armazena remetente, portanto a remoção específica de histórico já lido por autor não é inferível sem ampliar a entidade e o contrato de persistência.</div>
+    </section>
+
+    <section id="visao">
+      <h2>3. Visão Arquitetural da Etapa</h2>
+      <p>O arranjo geral mantém uma arquitetura em camadas. <code>Facade</code> é o ponto de entrada externo. <code>CommunityController</code>, <code>UserController</code>, <code>ChatMessengerController</code> e <code>UserDeletionController</code> representam os casos de uso. Serviços implementam regras e repositórios persistem mapas de entidades em XML. Os integradores evitam que um controlador acesse repositórios de outro domínio diretamente.</p>
+      <p>Dois integradores são especialmente relevantes. <code>MessageBoxIntegrator</code> coordena caixas de mensagem, chat e mensagens: ele cria chats de comunidade, inclui participantes, envia notificações e remove dados de mensagem de um usuário. <code>InteractionIntegrator</code> centraliza a regra que bloqueia interação com quem marcou o remetente como inimigo, preservando a mensagem de erro baseada no nome exibido do perfil.</p>
+    </section>
+
+    <section id="us5">
+      <h2>4. US5.1 e US5.2 - Comunidades</h2>
+      <h3>4.1 Estrutura criada</h3>
+      <p>A entidade <code>Community</code> representa uma comunidade por meio de identificador, nome único, descrição, dono, lista de membros e identificador do chat associado. O dono é incluído como primeiro membro no construtor. A presença simultânea de IDs e logins de membros permite persistência por identificador e construção do formato textual requerido pelos testes.</p>
+      <p><code>CommunityRepository</code> estende <code>AbstractRepository&lt;Community&gt;</code>. Além do mapa principal por ID, mantém <code>communityByName</code>, um <code>HashMap&lt;String, String&gt;</code> que conecta nome ao ID. Esse índice evita percorrer todas as comunidades em consultas por nome, operação recorrente em descrição, dono, membros, entrada e envio de mensagens.</p>
+      <h3>4.2 Fluxo de criação</h3>
+      <ol>
+        <li><code>CommunityController.createCommunity</code> valida o usuário dono por <code>UserIntegrator</code>.</li>
+        <li><code>CommunityService</code> verifica a disponibilidade do nome.</li>
+        <li><code>MessageBoxIntegrator</code> constrói o chat inicial com o dono como participante.</li>
+        <li><code>CommunityService</code> cria e persiste a entidade, recebendo o ID do chat.</li>
+        <li><code>CommunityListService</code> vincula a comunidade à lista pessoal do dono.</li>
+      </ol>
+      <p>O chat é criado antes da comunidade porque seu identificador é um dado obrigatório da entidade. Caso a validação de nome falhe, nenhum chat é criado. Essa ordenação reduz a possibilidade de chats órfãos.</p>
+      <h3>4.3 Entrada de membros e consultas</h3>
+      <p>Em <code>addCommunity</code>, o controlador resolve o login, pede ao serviço que inclua o membro na comunidade e usa o ID do chat retornado para adicionar o participante ao chat. A mesma operação inclui o nome da comunidade na <code>CommunityList</code> do usuário. Consultas de descrição, dono e membros permanecem em <code>CommunityService</code>, evitando que a fachada navegue pelo repositório.</p>
+      <h3>4.4 Diagrama de classes da US5</h3>
+      <div class="diagram">
+        <svg viewBox="0 0 980 420" role="img" aria-label="Diagrama de classes da US5, criação e consulta de comunidades">
+          <defs><marker id="us5-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#516674"/></marker></defs>
+          <path class="arrow" d="M245 108 L322 108" marker-end="url(#us5-arrow)"/><path class="arrow" d="M570 108 L645 108" marker-end="url(#us5-arrow)"/><path class="arrow" d="M446 175 L446 252" marker-end="url(#us5-arrow)"/><path class="arrow" d="M790 178 L790 252" marker-end="url(#us5-arrow)"/>
+          <rect class="uml-controller" x="25" y="45" width="220" height="125"/><rect class="uml-service" x="322" y="45" width="248" height="130"/><rect class="uml" x="645" y="38" width="285" height="142"/><rect class="uml-repo" x="322" y="252" width="248" height="116"/><rect class="uml" x="645" y="252" width="285" height="116"/>
+          <g class="uml-text"><text x="135" y="72" text-anchor="middle" font-weight="bold">CommunityController</text><text class="uml-small" x="43" y="104">+ createCommunity()</text><text class="uml-small" x="43" y="124">+ addCommunity()</text><text class="uml-small" x="43" y="144">+ getCommunityDescription()</text></g>
+          <g class="uml-text"><text x="446" y="72" text-anchor="middle" font-weight="bold">CommunityService</text><text class="uml-small" x="340" y="105">+ validateCommunityNameAvailable()</text><text class="uml-small" x="340" y="125">+ createCommunity()</text><text class="uml-small" x="340" y="145">+ addMember()</text></g>
+          <g class="uml-text"><text x="787" y="67" text-anchor="middle" font-weight="bold">Community</text><text class="uml-small" x="663" y="98">- id, name, description</text><text class="uml-small" x="663" y="118">- ownerUserId, ownerUserName</text><text class="uml-small" x="663" y="138">- chatMessengerId</text><text class="uml-small" x="663" y="158">- membersUserIds / Names</text></g>
+          <g class="uml-text"><text x="446" y="281" text-anchor="middle" font-weight="bold">CommunityRepository</text><text class="uml-small" x="340" y="312">- communityByName : Map</text><text class="uml-small" x="340" y="332">+ saveCommunity()</text><text class="uml-small" x="340" y="352">+ getCommunityByName()</text></g>
+          <g class="uml-text"><text x="787" y="281" text-anchor="middle" font-weight="bold">AbstractRepository&lt;Community&gt;</text><text class="uml-small" x="663" y="312">- entityMap : Map&lt;String, Community&gt;</text><text class="uml-small" x="663" y="332">+ addObject() / getObject()</text><text class="uml-small" x="663" y="352">+ saveData()</text></g>
+        </svg>
+      </div>
+      <p class="caption">Figura 1 - Diagrama de classes da US5: criação, manutenção e consulta de comunidades. Fonte: elaborado pelo autor.</p>
+    </section>
+
+    <section id="us6">
+      <h2>5. US6.1 e US6.2 - Lista de Comunidades por Usuário</h2>
+      <p>A lista de comunidades foi modelada como entidade própria, e não como uma coleção colocada diretamente em <code>User</code>. A decisão separa as responsabilidades de autenticação e dados de conta das associações com comunidades, além de permitir persistência independente em <code>communityList.xml</code>.</p>
+      <p><code>CommunityListRepository</code> mantém o mapa principal e o índice <code>communityListByUserId</code>. Com isso, <code>getCommunities</code> resolve a lista de um usuário em acesso direto. O método <code>buildCommunityList</code> concentra a formatação esperada pelo contrato de aceitação, retornando valores como <code>{UFCG,Computacao}</code>.</p>
+      <table>
+        <thead><tr><th>Componente</th><th>Responsabilidade</th><th>Razão da separação</th></tr></thead>
+        <tbody>
+          <tr><td><code>CommunityList</code></td><td>Guardar e formatar nomes de comunidades do usuário.</td><td>Entidade coesa para uma associação de muitos valores.</td></tr>
+          <tr><td><code>CommunityListService</code></td><td>Criar lista, adicionar comunidade e consultar nomes.</td><td>Centraliza validação contra duplicação de vínculo.</td></tr>
+          <tr><td><code>CommunityListRepository</code></td><td>Persistir lista e consultar por usuário.</td><td>Índice dedicado elimina buscas lineares.</td></tr>
+        </tbody>
+      </table>
+      <h3>5.1 Diagrama de classes da US6</h3>
+      <div class="diagram">
+        <svg viewBox="0 0 980 360" role="img" aria-label="Diagrama de classes da US6, lista de comunidades por usuário">
+          <defs><marker id="us6-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#516674"/></marker></defs>
+          <path class="arrow" d="M245 105 L322 105" marker-end="url(#us6-arrow)"/><path class="arrow" d="M570 105 L645 105" marker-end="url(#us6-arrow)"/><path class="arrow" d="M446 178 L446 240" marker-end="url(#us6-arrow)"/><path class="arrow" d="M787 178 L787 240" marker-end="url(#us6-arrow)"/>
+          <rect class="uml-controller" x="25" y="48" width="220" height="120"/><rect class="uml-service" x="322" y="48" width="248" height="120"/><rect class="uml" x="645" y="48" width="285" height="120"/><rect class="uml-repo" x="322" y="240" width="248" height="86"/><rect class="uml" x="645" y="240" width="285" height="86"/>
+          <g class="uml-text"><text x="135" y="77" text-anchor="middle" font-weight="bold">UserController</text><text class="uml-small" x="43" y="109">+ CreateUser()</text><text class="uml-small" x="43" y="129">+ getCommunities()</text><text class="uml-small" x="43" y="149">coordena a lista por usuario</text></g>
+          <g class="uml-text"><text x="446" y="77" text-anchor="middle" font-weight="bold">CommunityListService</text><text class="uml-small" x="340" y="109">+ buildCommunityListObject()</text><text class="uml-small" x="340" y="129">+ addCommunity()</text><text class="uml-small" x="340" y="149">+ getCommunities()</text></g>
+          <g class="uml-text"><text x="787" y="77" text-anchor="middle" font-weight="bold">CommunityList</text><text class="uml-small" x="663" y="109">- id, userId</text><text class="uml-small" x="663" y="129">- communityNames : List&lt;String&gt;</text><text class="uml-small" x="663" y="149">+ buildCommunityList()</text></g>
+          <g class="uml-text"><text x="446" y="269" text-anchor="middle" font-weight="bold">CommunityListRepository</text><text class="uml-small" x="340" y="300">- communityListByUserId : Map</text><text class="uml-small" x="340" y="320">+ getCommunityListByUserId()</text></g>
+          <g class="uml-text"><text x="787" y="269" text-anchor="middle" font-weight="bold">User</text><text class="uml-small" x="663" y="300">possui uma CommunityList</text><text class="uml-small" x="663" y="320">por identificador</text></g>
+        </svg>
+      </div>
+      <p class="caption">Figura 2 - Diagrama de classes da US6: associação e consulta de comunidades por usuário. Fonte: elaborado pelo autor.</p>
+    </section>
+
+    <section id="us7">
+      <h2>6. US7.1 e US7.2 - Mensagens de Comunidade</h2>
+      <h3>6.1 Chat preparado para múltiplos participantes</h3>
+      <p>Embora o chat privado original trabalhasse com dois participantes, <code>ChatMessenger</code> foi refatorado para conter <code>Map&lt;String, ChatUserState&gt; messengerStates</code>. Cada chave corresponde a um participante e cada valor controla as mensagens lidas e não lidas daquele usuário. O método <code>addParticipant</code> inclui incrementalmente um membro e cria seu estado de leitura sem alterar os estados existentes.</p>
+      <p><code>sendMessenger</code> entrega a mensagem a todos exceto ao remetente, comportamento de recado privado. Já <code>sendMessengerToAll</code> registra a mensagem para todos os participantes, incluindo o autor, comportamento adotado para o feed de comunidade. Essa distinção foi mantida na entidade de chat, evitando duplicação de estruturas de conversa.</p>
+      <h3>6.2 Filas de notificação separadas</h3>
+      <p><code>MessengerBox</code> passou a manter duas filas: <code>messengerNotifications</code> para recados privados e <code>communityMessageNotifications</code> para mensagens de comunidades. Assim, <code>lerRecado</code> e <code>lerMensagem</code> preservam contratos diferentes, embora ambos usem o ID da mensagem como notificação.</p>
+      <p>No envio de uma mensagem de comunidade, <code>MessageBoxIntegrator.sendCommunityMessage</code> cria <code>Message</code>, solicita que <code>ChatMessengerService</code> a distribua aos participantes e alimenta a fila de comunidade de cada caixa. Na leitura, a notificação aponta para a mensagem, a mensagem aponta para o chat e o <code>ChatUserState</code confirma e consome a próxima mensagem não lida daquele usuário.</p>
+      <div class="callout"><strong>Escalabilidade conceitual:</strong> a comunidade usa o mesmo mecanismo preparado para múltiplos usuários. Adicionar novos membros não requer criar outro chat, nem replicar mensagens por par de usuários; basta inserir outro <code>ChatUserState</code> no mapa do chat.</div>
+      <h3>6.3 Diagrama de classes da US7</h3>
+      <div class="diagram">
+        <svg viewBox="0 0 980 460" role="img" aria-label="Diagrama de classes da US7, mensagens de comunidade">
+          <defs><marker id="us7-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#516674"/></marker></defs>
+          <path class="arrow" d="M230 95 L300 95" marker-end="url(#us7-arrow)"/><path class="arrow" d="M515 95 L585 95" marker-end="url(#us7-arrow)"/><path class="arrow" d="M515 135 L585 270" marker-end="url(#us7-arrow)"/><path class="arrow" d="M230 286 L300 286" marker-end="url(#us7-arrow)"/><path class="arrow" d="M740 175 L740 232" marker-end="url(#us7-arrow)"/>
+          <rect class="uml-controller" x="25" y="42" width="205" height="120"/><rect class="uml-service" x="300" y="42" width="215" height="140"/><rect class="uml-service" x="585" y="42" width="310" height="140"/><rect class="uml" x="585" y="232" width="310" height="140"/><rect class="uml-repo" x="300" y="250" width="215" height="100"/>
+          <g class="uml-text"><text x="127" y="70" text-anchor="middle" font-weight="bold">CommunityController</text><text class="uml-small" x="43" y="102">+ sendCommunityMessage()</text><text class="uml-small" x="43" y="122">+ readCommunityMessage()</text><text class="uml-small" x="43" y="142">usa chat por comunidade</text></g>
+          <g class="uml-text"><text x="407" y="70" text-anchor="middle" font-weight="bold">MessageBoxIntegrator</text><text class="uml-small" x="318" y="102">+ sendCommunityMessage()</text><text class="uml-small" x="318" y="122">+ readCommunityMessage()</text><text class="uml-small" x="318" y="142">+ sendPrivateMessage()</text><text class="uml-small" x="318" y="162">coordena notificacoes</text></g>
+          <g class="uml-text"><text x="740" y="70" text-anchor="middle" font-weight="bold">Servicos de Mensagem</text><text class="uml-small" x="603" y="102">ChatMessengerService</text><text class="uml-small" x="603" y="122">MessageService</text><text class="uml-small" x="603" y="142">MessageBoxService</text><text class="uml-small" x="603" y="162">criam, distribuem e leem</text></g>
+          <g class="uml-text"><text x="740" y="260" text-anchor="middle" font-weight="bold">Modelos de Chat</text><text class="uml-small" x="603" y="292">ChatMessenger: Map&lt;String, ChatUserState&gt;</text><text class="uml-small" x="603" y="312">ChatUserState: filas lidas e nao lidas</text><text class="uml-small" x="603" y="332">MessengerBox: filas privada e comunidade</text><text class="uml-small" x="603" y="352">Message: conteudo e chat associado</text></g>
+          <g class="uml-text"><text x="407" y="278" text-anchor="middle" font-weight="bold">Repositorios</text><text class="uml-small" x="318" y="308">ChatMessengerRepository</text><text class="uml-small" x="318" y="328">MessageRepository / MessengerBoxRepository</text></g>
+        </svg>
+      </div>
+      <p class="caption">Figura 3 - Diagrama de classes da US7: distribuição, notificação e leitura de mensagens em comunidades. Fonte: elaborado pelo autor.</p>
+    </section>
+
+    <section id="us8">
+      <h2>7. US8.1 e US8.2 - Relacionamentos</h2>
+      <h3>7.1 Generalização por polimorfismo</h3>
+      <p>O modelo anterior de amizade foi generalizado em <code>Relationship</code>, uma superclasse abstrata. As classes <code>FriendshipRelationship</code>, <code>FanRelationship</code>, <code>CrushRelationship</code> e <code>EnemyRelationship</code> especializam apenas o tipo sem replicar armazenamento e manipulação de estados. A enumeração <code>RelationshipType</code> contém <code>FRIENDSHIP</code>, <code>FAN</code>, <code>CRUSH</code> e <code>ENEMY</code>, além de termos usados na composição de mensagens de exceção.</p>
+      <p>O repositório armazena todas as instâncias pelo tipo abstrato <code>Relationship</code>. Com isso, não há dependência de <code>instanceof</code> para executar o fluxo principal. O tipo é um dado explícito e permite que serviços e repositórios localizem relações por <code>userId</code> e <code>RelationshipType</code>.</p>
+      <h3>7.2 State para amizade</h3>
+      <p>Amizade possui um ciclo que não existe nos outros tipos: ausência de relação, solicitação enviada, solicitação recebida e relação atual. Para não concentrar todas as transições em condicionais no serviço, foram criados <code>RelationshipStateHandle</code> e os manipuladores <code>NoRelationshipState</code>, <code>SentRequestRelationshipState</code>, <code>ReceivedRequestRelationshipState</code> e <code>CurrentRelationshipState</code>.</p>
+      <p><code>RelationshipService</code> seleciona o manipulador pela situação do usuário e delega a transição. Em uma amizade comum, a primeira chamada cria solicitação; a chamada recíproca confirma a amizade; chamadas incompatíveis produzem as exceções específicas do domínio. Fã, paquera e inimigo usam o estado <code>CURRENT</code> sem ciclo de confirmação.</p>
+      <h3>7.3 Paquera recíproca e bloqueio</h3>
+      <p>A fachada não contém a regra de paquera recíproca. <code>UserController.addCrush</code> cria a relação, consulta a relação inversa e, se ambas existirem, delega os recados automáticos a <code>MessageBoxIntegrator</code>. A regra de bloqueio por inimizade foi extraída para <code>InteractionIntegrator</code>. Esse integrador consulta relacionamento, usuário e perfil para produzir <code>FuncaoInvalida</code> com o nome exibido correto. Ele é reutilizado por amizade, fã, paquera e envio de recado.</p>
+      <h3>7.4 Diagrama de classes da US8</h3>
+      <div class="diagram">
+        <svg viewBox="0 0 980 480" role="img" aria-label="Diagrama de classes da US8, relacionamentos">
+          <defs><marker id="us8-triangle" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#fff" stroke="#516674"/></marker><marker id="us8-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#516674"/></marker></defs>
+          <rect class="uml" x="360" y="22" width="260" height="118"/><text class="uml-text" x="490" y="49" text-anchor="middle" font-weight="bold" font-style="italic">Relationship (abstract)</text><text class="uml-small" x="378" y="80">- userId, id, type</text><text class="uml-small" x="378" y="100">- relationshipStates : Map</text><text class="uml-small" x="378" y="120">+ addState() / removeState()</text>
+          <path class="inherit" d="M210 208 L400 140" marker-end="url(#us8-triangle)"/><path class="inherit" d="M400 208 L450 140" marker-end="url(#us8-triangle)"/><path class="inherit" d="M590 208 L530 140" marker-end="url(#us8-triangle)"/><path class="inherit" d="M780 208 L580 140" marker-end="url(#us8-triangle)"/>
+          <rect class="uml" x="95" y="208" width="190" height="62"/><rect class="uml" x="300" y="208" width="190" height="62"/><rect class="uml" x="505" y="208" width="190" height="62"/><rect class="uml" x="710" y="208" width="190" height="62"/>
+          <text class="uml-text" x="190" y="236" text-anchor="middle" font-weight="bold">FriendshipRelationship</text><text class="uml-text" x="395" y="236" text-anchor="middle" font-weight="bold">FanRelationship</text><text class="uml-text" x="600" y="236" text-anchor="middle" font-weight="bold">CrushRelationship</text><text class="uml-text" x="805" y="236" text-anchor="middle" font-weight="bold">EnemyRelationship</text>
+          <rect class="uml-service" x="48" y="345" width="300" height="106"/><text class="uml-text" x="198" y="373" text-anchor="middle" font-weight="bold">RelationshipService</text><text class="uml-small" x="66" y="402">+ addRelationship()</text><text class="uml-small" x="66" y="422">+ hasRelationship()</text><text class="uml-small" x="66" y="442">+ isBlockedByEnemy()</text>
+          <rect class="uml-service" x="565" y="345" width="320" height="106"/><text class="uml-text" x="725" y="373" text-anchor="middle" font-weight="bold">RelationshipStateHandle</text><text class="uml-small" x="583" y="402">NoRelationshipState | SentRequestState</text><text class="uml-small" x="583" y="422">ReceivedRequestState | CurrentState</text><text class="uml-small" x="583" y="442">+ addRelationship(user, relatedUser)</text><path class="arrow" d="M348 398 L565 398" marker-end="url(#us8-arrow)"/>
+        </svg>
+      </div>
+      <p class="caption">Figura 4 - Diagrama de classes da US8: tipos polimórficos de relacionamento e ciclo de estados da amizade. Fonte: elaborado pelo autor.</p>
+    </section>
+
+    <section id="us9">
+      <h2>8. US9.1 e US9.2 - Remoção de Conta</h2>
+      <h3>8.1 Orquestração sem acoplamento indevido</h3>
+      <p><code>UserDeletionController</code> concentra a ordem do caso de uso <code>removerUsuario</code>, mas não conhece detalhes internos de persistência. Ele valida a existência do usuário e aciona integradores responsáveis por seus próprios conjuntos de dados: <code>RelationshipIntegrator</code>, <code>CommunityIntegrator</code>, <code>MessageBoxIntegrator</code>, <code>ProfileIntegrator</code> e <code>UserIntegrator</code>.</p>
+      <p>A ordem importa. Relações, comunidades e mensagens são limpas enquanto o usuário ainda pode ser resolvido pelos índices. Perfil e cadastro principal são removidos por último. Isso mantém as referências disponíveis durante a limpeza e faz com que uma segunda remoção falhe corretamente com <code>UsuarioNaoCadastrado</code>.</p>
+      <h3>8.2 Comunidades e listas</h3>
+      <p><code>CommunityIntegrator.deleteUserCommunities</code> percorre comunidades por uma cópia de sua coleção. Quando o usuário é dono, a comunidade é removida do repositório e de todas as <code>CommunityList</code>. Quando é apenas membro, seu ID e login são removidos da comunidade e o chat é marcado para preservação, com remoção apenas do participante. A lista de comunidades do usuário removido é então excluída.</p>
+      <h3>8.3 Chats, estados e mensagens não lidas</h3>
+      <p>Para chats que deixam de existir, <code>ChatMessengerRepository.deleteChatsAndCollectUnreadMessages</code> coleta os IDs presentes nas filas <code>UnreadMessengers</code> de todos os <code>ChatUserState</code>. Esses IDs representam mensagens que ainda poderiam ser entregues. <code>MessageService</code> remove essas mensagens e <code>MessengerBoxRepository</code> remove as notificações correspondentes de todas as caixas. Por fim, a caixa do usuário removido é excluída.</p>
+      <p>Em chats de comunidades preservadas, o usuário é removido do conjunto de participantes e de seu respectivo <code>ChatUserState</code>; os demais participantes continuam com seus estados. Isso garante que a saída de um membro não destrua a conversa da comunidade.</p>
+      <h3>8.4 Diagrama de classes da US9</h3>
+      <div class="diagram">
+        <svg viewBox="0 0 980 430" role="img" aria-label="Diagrama de classes da US9, remoção de usuário">
+          <defs><marker id="us9-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#516674"/></marker></defs>
+          <rect class="uml-controller" x="350" y="35" width="280" height="82"/><text class="uml-text" x="490" y="66" text-anchor="middle" font-weight="bold">UserDeletionController</text><text class="uml-small" x="368" y="95">+ deleteUser(userId)</text>
+          <rect class="uml-service" x="35" y="200" width="190" height="86"/><rect class="uml-service" x="275" y="200" width="190" height="86"/><rect class="uml-service" x="515" y="200" width="190" height="86"/><rect class="uml-service" x="755" y="200" width="190" height="86"/>
+          <text class="uml-text" x="130" y="229" text-anchor="middle" font-weight="bold">RelationshipIntegrator</text><text class="uml-small" x="52" y="257">deleteUserRelationships()</text><text class="uml-text" x="370" y="229" text-anchor="middle" font-weight="bold">CommunityIntegrator</text><text class="uml-small" x="292" y="257">deleteUserCommunities()</text><text class="uml-text" x="610" y="229" text-anchor="middle" font-weight="bold">MessageBoxIntegrator</text><text class="uml-small" x="532" y="257">deleteUserMessages()</text><text class="uml-text" x="850" y="229" text-anchor="middle" font-weight="bold">Profile / User Integrators</text><text class="uml-small" x="772" y="257">deleteProfile() / deleteUser()</text>
+          <path class="arrow" d="M405 117 L150 200" marker-end="url(#us9-arrow)"/><path class="arrow" d="M455 117 L385 200" marker-end="url(#us9-arrow)"/><path class="arrow" d="M525 117 L605 200" marker-end="url(#us9-arrow)"/><path class="arrow" d="M575 117 L835 200" marker-end="url(#us9-arrow)"/>
+          <rect class="uml-repo" x="265" y="335" width="450" height="54"/><text class="uml-text" x="490" y="359" text-anchor="middle" font-weight="bold">Repositórios e XMLController</text><text class="uml-small" x="490" y="378" text-anchor="middle">remoção de índices, entidades, notificações e persistência no encerramento</text>
+          <path class="arrow" d="M130 286 L340 335" marker-end="url(#us9-arrow)"/><path class="arrow" d="M370 286 L430 335" marker-end="url(#us9-arrow)"/><path class="arrow" d="M610 286 L550 335" marker-end="url(#us9-arrow)"/><path class="arrow" d="M850 286 L640 335" marker-end="url(#us9-arrow)"/>
+        </svg>
+      </div>
+      <p class="caption">Figura 5 - Diagrama de classes da US9: orquestração da remoção de conta e limpeza de dependências. Fonte: elaborado pelo autor.</p>
+    </section>
+
+    <section id="persistencia">
+      <h2>9. Persistência e Consistência</h2>
+      <p>As novas entidades seguem o mecanismo de repositórios baseado em <code>AbstractRepository</code> e <code>XMLController</code>. Cada repositório mantém seu mapa principal em memória e o persiste no arquivo XML correspondente. O método <code>encerrarSistema</code> delega a persistência aos controladores existentes: usuário persiste usuários, perfis, relacionamentos, caixas e listas; chat persiste chats e mensagens; comunidade persiste comunidades.</p>
+      <table>
+        <thead><tr><th>Dados</th><th>Repositório</th><th>Índice auxiliar</th><th>Finalidade</th></tr></thead>
+        <tbody>
+          <tr><td>Comunidades</td><td><code>CommunityRepository</code></td><td><code>communityByName</code></td><td>Consulta direta por nome.</td></tr>
+          <tr><td>Listas de comunidade</td><td><code>CommunityListRepository</code></td><td><code>communityListByUserId</code></td><td>Consulta direta por usuário.</td></tr>
+          <tr><td>Caixas de mensagem</td><td><code>MessengerBoxRepository</code></td><td><code>messengerBoxByUserId</code></td><td>Notificação e leitura por usuário.</td></tr>
+          <tr><td>Chats</td><td><code>ChatMessengerRepository</code></td><td><code>chatMessengerList</code></td><td>Reuso de chat por participantes.</td></tr>
+          <tr><td>Relacionamentos</td><td><code>RelationshipRepository</code></td><td>Por usuário e por tipo</td><td>Busca polimórfica e remoção consistente.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="padroes">
+      <h2>10. Padrões e Princípios Aplicados</h2>
+      <table>
+        <thead><tr><th>Padrão ou princípio</th><th>Aplicação no milestone</th><th>Justificativa</th></tr></thead>
+        <tbody>
+          <tr><td>Facade</td><td><code>Facade</code> expõe a API usada pelos testes.</td><td>Oferece uma entrada estável e evita que testes dependam da organização interna.</td></tr>
+          <tr><td>Repository</td><td>Repositórios de comunidade, lista, chat, mensagem e relacionamento.</td><td>Separa persistência e índices das regras de negócio.</td></tr>
+          <tr><td>Service Layer</td><td><code>CommunityService</code>, <code>RelationshipService</code>, <code>ChatMessengerService</code>.</td><td>Concentra regras de domínio e reduz lógica nos controladores.</td></tr>
+          <tr><td>Integrator</td><td>Mensagens, interação, perfil, relacionamento e comunidade.</td><td>Coordena domínios sem expor repositórios entre controladores.</td></tr>
+          <tr><td>State</td><td>Manipuladores de estado da amizade.</td><td>Modela transições de solicitação e confirmação sem encadear condicionais no serviço.</td></tr>
+          <tr><td>Polimorfismo</td><td>Hierarquia <code>Relationship</code>.</td><td>Amplia tipos de relacionamento sem duplicar estado e sem <code>instanceof</code>.</td></tr>
+          <tr><td>Singleton</td><td>Instâncias compartilhadas de repositórios e alguns integradores.</td><td>Garante um ponto de acesso aos mapas em memória e aos índices persistidos.</td></tr>
+          <tr><td>Information Expert</td><td><code>ChatUserState</code>, <code>Community</code>, <code>Relationship</code>.</td><td>Atribui comportamento a quem possui os dados necessários para executá-lo.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="conclusao">
+      <h2>11. Conclusão</h2>
+      <p>O milestone amplia o Jackut sem alterar o papel da fachada: novas operações continuam expostas por uma API simples, enquanto as regras permanecem distribuídas entre controladores, serviços, modelos, repositórios e integradores. Comunidades foram implementadas como entidades persistentes e preparadas para um chat com vários participantes. Relacionamentos passaram de um caso específico de amizade para uma família polimórfica de tipos, com State reservado ao ciclo que realmente exige transições.</p>
+      <p>A remoção de usuário consolidou a preocupação com consistência entre agregados. A operação não se limita a excluir o cadastro principal: limpa relações, listas, comunidades, participantes de chat, notificações pendentes, perfil e índices auxiliares. O resultado é uma base mais modular para futuras User Stories, especialmente as que expandirem mensagens, comunidade e histórico de conversa.</p>
+    </section>
+  </div>
+  <footer>Relatório do Milestone 2 - Jackut. Escopo documentado: US5.1 a US9.2.</footer>
+</main>
+</body>
+</html>
