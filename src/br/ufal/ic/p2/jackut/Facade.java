@@ -3,6 +3,7 @@ package br.ufal.ic.p2.jackut;
 import br.ufal.ic.p2.jackut.controllers.ChatMessengerController;
 import br.ufal.ic.p2.jackut.controllers.CommunityController;
 import br.ufal.ic.p2.jackut.controllers.UserController;
+import br.ufal.ic.p2.jackut.enums.RelationshipType;
 import br.ufal.ic.p2.jackut.exceptions.*;
 
 /**
@@ -112,15 +113,17 @@ public class Facade {
      * @param userId identificador do usuário que executa a ação.
      * @param friendUserName login do usuário a ser adicionado como amigo.
      * @throws UsuarioNaoCadastrado se algum usuário envolvido não estiver cadastrado.
-     * @throws AdicionarASiMesmoAmigo se o usuário tentar adicionar a si mesmo.
-     * @throws UsuarioJaAdicionadoAmigo se os usuários já forem amigos.
-     * @throws EsperandoAceitacaoAmigo se já existir solicitação pendente de aceite.
+     * @throws AdicionarASiMesmoRelationship se o usuário tentar adicionar a si mesmo.
+     * @throws UsuarioJaAdicionadoRelationship se os usuários já forem amigos.
+     * @throws EsperandoAceitacaoRelationship se já existir solicitação pendente de aceite.
+     * @throws FuncaoInvalida se o destinatário tiver marcado o usuário como inimigo.
      */
     public void adicionarAmigo(String userId, String friendUserName)
-            throws UsuarioNaoCadastrado, AdicionarASiMesmoAmigo,
-            UsuarioJaAdicionadoAmigo, EsperandoAceitacaoAmigo{
+            throws UsuarioNaoCadastrado, AdicionarASiMesmoRelationship,
+            UsuarioJaAdicionadoRelationship, EsperandoAceitacaoRelationship,
+            FuncaoInvalida {
 
-        userController.addFriendship(userId,friendUserName);
+        userController.addRelationship(userId, friendUserName, RelationshipType.FRIENDSHIP);
     }
 
     /**
@@ -146,6 +149,58 @@ public class Facade {
      */
     public String getAmigos(String userName) throws UsuarioNaoCadastrado{
         return userController.getFriends(userName);
+    }
+
+    public void adicionarIdolo(String userId, String idolUserName)
+            throws UsuarioNaoCadastrado, AdicionarASiMesmoRelationship,
+            UsuarioJaAdicionadoRelationship, EsperandoAceitacaoRelationship,
+            FuncaoInvalida {
+        userController.addIdol(userId, idolUserName);
+    }
+
+    public boolean ehFa(String userName, String idolUserName) throws UsuarioNaoCadastrado {
+        return userController.isFan(userName, idolUserName);
+    }
+
+    public String getFas(String userName) throws UsuarioNaoCadastrado {
+        return userController.getFans(userName);
+    }
+
+    public void adicionarPaquera(String userId, String crushUserName)
+            throws UsuarioNaoCadastrado, AdicionarASiMesmoRelationship,
+            UsuarioJaAdicionadoRelationship, EsperandoAceitacaoRelationship,
+            FuncaoInvalida, EnviarRecadoParaSiMesmo {
+        userController.addCrush(userId, crushUserName);
+
+        if (userController.hasReciprocalCrush(userId, crushUserName)) {
+            String crushUserId = userController.getUserIdByName(crushUserName);
+            String userLogin = userController.getUserNameById(userId);
+            String userDisplayName = userController.getUserDisplayNameById(userId);
+            String crushDisplayName = userController.getUserDisplayNameById(crushUserId);
+
+            chatMessengerController.SendMessenger(
+                    crushDisplayName + " \u00e9 seu paquera - Recado do Jackut.",
+                    crushUserId,
+                    userLogin);
+            chatMessengerController.SendMessenger(
+                    userDisplayName + " \u00e9 seu paquera - Recado do Jackut.",
+                    userId,
+                    crushUserName);
+        }
+    }
+
+    public boolean ehPaquera(String userId, String crushUserName) throws UsuarioNaoCadastrado {
+        return userController.isCrush(userId, crushUserName);
+    }
+
+    public String getPaqueras(String userId) throws UsuarioNaoCadastrado {
+        return userController.getCrushes(userId);
+    }
+
+    public void adicionarInimigo(String userId, String enemyUserName)
+            throws UsuarioNaoCadastrado, AdicionarASiMesmoRelationship,
+            UsuarioJaAdicionadoRelationship, EsperandoAceitacaoRelationship {
+        userController.addEnemy(userId, enemyUserName);
     }
 
     /**
@@ -259,7 +314,8 @@ public class Facade {
      * @throws EnviarRecadoParaSiMesmo se o remetente tentar enviar recado para si mesmo.
      */
     public void enviarRecado(String senderId, String receiverUserName, String messenger) throws
-            UsuarioNaoCadastrado,EnviarRecadoParaSiMesmo {
+            UsuarioNaoCadastrado, EnviarRecadoParaSiMesmo, FuncaoInvalida {
+        userController.assertCanInteract(senderId, receiverUserName);
         chatMessengerController.SendMessenger(messenger,senderId,receiverUserName);
     }
 
