@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * Reposit√≥rio respons√°vel por persistir listas de comunidades por usu√°rio.
+ * RepositÛrio respons·vel por persistir listas de comunidades por usu·rio.
  */
 public class CommunityListRepository extends AbstractRepository<CommunityList> {
 
@@ -20,10 +20,10 @@ public class CommunityListRepository extends AbstractRepository<CommunityList> {
     private Map<String, String> communityListByUserId;
 
     /**
-     * Cria o reposit√≥rio e reconstr√≥i o √≠ndice por usu√°rio.
+     * Cria o repositÛrio e reconstrÛi o Ìndice por usu·rio.
      *
      * @throws FileError se ocorrer falha ao carregar listas persistidas.
-     * @throws SaveError se a infraestrutura de persist√™ncia n√£o puder ser preparada.
+     * @throws SaveError se a infraestrutura de persistÍncia n„o puder ser preparada.
      */
     private CommunityListRepository() throws FileError, SaveError {
         super(XMLController.getInstance(), "communityList.xml");
@@ -37,10 +37,10 @@ public class CommunityListRepository extends AbstractRepository<CommunityList> {
     }
 
     /**
-     * Retorna a inst√¢ncia √∫nica do reposit√≥rio.
+     * Retorna a inst‚ncia ˙nica do repositÛrio.
      *
-     * @return inst√¢ncia compartilhada do reposit√≥rio.
-     * @throws SaveError se a infraestrutura de persist√™ncia n√£o puder ser preparada.
+     * @return inst‚ncia compartilhada do repositÛrio.
+     * @throws SaveError se a infraestrutura de persistÍncia n„o puder ser preparada.
      * @throws FileError se ocorrer falha ao carregar listas persistidas.
      */
     public static CommunityListRepository getInstance() throws SaveError, FileError {
@@ -51,7 +51,7 @@ public class CommunityListRepository extends AbstractRepository<CommunityList> {
     }
 
     /**
-     * Salva uma lista de comunidades e atualiza o √≠ndice por usu√°rio.
+     * Salva uma lista de comunidades e atualiza o Ìndice por usu·rio.
      *
      * @param communityList lista de comunidades salva.
      */
@@ -61,11 +61,11 @@ public class CommunityListRepository extends AbstractRepository<CommunityList> {
     }
 
     /**
-     * Recupera uma lista pelo identificador do usu√°rio.
+     * Recupera uma lista pelo identificador do usu·rio.
      *
-     * @param userId identificador do usu√°rio.
-     * @return lista de comunidades do usu√°rio.
-     * @throws UsuarioNaoCadastrado se a lista do usu√°rio n√£o for encontrada.
+     * @param userId identificador do usu·rio.
+     * @return lista de comunidades do usu·rio.
+     * @throws UsuarioNaoCadastrado se a lista do usu·rio n„o for encontrada.
      */
     public CommunityList getCommunityListByUserId(String userId) throws UsuarioNaoCadastrado {
         String communityListId = communityListByUserId.get(userId);
@@ -74,7 +74,29 @@ public class CommunityListRepository extends AbstractRepository<CommunityList> {
     }
 
     /**
-     * Limpa listas e √≠ndice por usu√°rio.
+     * Remove a lista de comunidades vinculada ao usu·rio informado.
+     *
+     * @param userId identificador do usu·rio removido.
+     */
+    public void deleteCommunityListByUserId(String userId) {
+        String communityListId = communityListByUserId.remove(userId);
+
+        if (communityListId != null) {
+            entityMap.remove(communityListId);
+        }
+    }
+
+    /**
+     * Remove uma comunidade das listas de todos os usu·rios.
+     *
+     * @param communityName nome da comunidade removida.
+     */
+    public void removeCommunityFromAllLists(String communityName) {
+        entityMap.values().forEach(list -> list.removeCommunity(communityName));
+    }
+
+    /**
+     * Limpa listas e Ìndice por usu·rio.
      */
     @Override
     public void resetData() {

@@ -8,10 +8,12 @@ import br.ufal.ic.p2.jackut.repositories.AbstractRepository;
 import br.ufal.ic.p2.jackut.repositories.XMLController;
 
 import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Map;
 
 /**
- * Reposit√≥rio respons√°vel por persistir e recuperar comunidades.
+ * RepositÛrio respons·vel por persistir e recuperar comunidades.
  */
 public class CommunityRepository extends AbstractRepository<Community> {
 
@@ -19,10 +21,10 @@ public class CommunityRepository extends AbstractRepository<Community> {
     private Map<String, String> communityByName;
 
     /**
-     * Cria o reposit√≥rio de comunidades e reconstr√≥i o √≠ndice por nome.
+     * Cria o repositÛrio de comunidades e reconstrÛi o Ìndice por nome.
      *
      * @throws FileError se ocorrer falha ao carregar comunidades persistidas.
-     * @throws SaveError se a infraestrutura de persist√™ncia n√£o puder ser preparada.
+     * @throws SaveError se a infraestrutura de persistÍncia n„o puder ser preparada.
      */
     private CommunityRepository() throws FileError, SaveError {
         super(XMLController.getInstance(), "community.xml");
@@ -36,10 +38,10 @@ public class CommunityRepository extends AbstractRepository<Community> {
     }
 
     /**
-     * Retorna a inst√¢ncia √∫nica do reposit√≥rio de comunidades.
+     * Retorna a inst‚ncia ˙nica do repositÛrio de comunidades.
      *
-     * @return inst√¢ncia compartilhada do reposit√≥rio.
-     * @throws SaveError se a infraestrutura de persist√™ncia n√£o puder ser preparada.
+     * @return inst‚ncia compartilhada do repositÛrio.
+     * @throws SaveError se a infraestrutura de persistÍncia n„o puder ser preparada.
      * @throws FileError se ocorrer falha ao carregar comunidades persistidas.
      */
     public static CommunityRepository getInstance() throws SaveError, FileError {
@@ -50,7 +52,7 @@ public class CommunityRepository extends AbstractRepository<Community> {
     }
 
     /**
-     * Salva uma comunidade e atualiza o √≠ndice por nome.
+     * Salva uma comunidade e atualiza o Ìndice por nome.
      *
      * @param community comunidade a ser salva.
      */
@@ -60,10 +62,10 @@ public class CommunityRepository extends AbstractRepository<Community> {
     }
 
     /**
-     * Verifica se j√° existe comunidade com determinado nome.
+     * Verifica se j· existe comunidade com determinado nome.
      *
      * @param name nome da comunidade.
-     * @return {@code true} se o nome j√° estiver cadastrado.
+     * @return {@code true} se o nome j· estiver cadastrado.
      */
     public boolean communityNameExists(String name) {
         return communityByName.containsKey(name);
@@ -74,7 +76,7 @@ public class CommunityRepository extends AbstractRepository<Community> {
      *
      * @param name nome da comunidade.
      * @return comunidade encontrada.
-     * @throws ComunidadeNaoExiste se a comunidade n√£o existir.
+     * @throws ComunidadeNaoExiste se a comunidade n„o existir.
      */
     public Community getCommunityByName(String name) throws ComunidadeNaoExiste {
         String communityId = communityByName.get(name);
@@ -82,7 +84,26 @@ public class CommunityRepository extends AbstractRepository<Community> {
     }
 
     /**
-     * Limpa comunidades e √≠ndice por nome.
+     * Retorna as comunidades cadastradas para processamento administrativo.
+     *
+     * @return cÛpia das comunidades cadastradas.
+     */
+    public Collection<Community> getCommunities() {
+        return new ArrayList<>(entityMap.values());
+    }
+
+    /**
+     * Remove uma comunidade e o Ìndice associado ao seu nome.
+     *
+     * @param community comunidade removida.
+     */
+    public void deleteCommunity(Community community) {
+        entityMap.remove(community.getId());
+        communityByName.remove(community.getName());
+    }
+
+    /**
+     * Limpa comunidades e Ìndice por nome.
      */
     @Override
     public void resetData() {

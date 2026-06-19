@@ -3,7 +3,7 @@ package br.ufal.ic.p2.jackut.models.user.relationship;
 import br.ufal.ic.p2.jackut.enums.RelationshipType;
 
 /**
- * Relacionamento de amizade entre usu√°rios.
+ * Relacionamento de amizade entre usu·rios.
  */
 public class FriendshipRelationship extends Relationship {
 

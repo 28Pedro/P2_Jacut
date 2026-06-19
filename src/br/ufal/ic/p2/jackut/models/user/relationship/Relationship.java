@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Superclasse dos relacionamentos de um usu√°rio.
+ * Superclasse dos relacionamentos de um usu·rio.
  */
 public abstract class Relationship {
 

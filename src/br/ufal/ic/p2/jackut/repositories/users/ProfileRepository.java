@@ -49,9 +49,9 @@ public class ProfileRepository extends AbstractRepository<Profile>{
     }
 
     /**
-     * Retorna a instância única do repositório de perfis.
+     * Retorna a instência única do repositório de perfis.
      *
-     * @return instância compartilhada do repositório.
+     * @return inst?ncia compartilhada do repositório.
      * @throws SaveError se a infraestrutura de persistência não puder ser preparada.
      * @throws FileError se ocorrer falha ao carregar perfis persistidos.
      */
@@ -75,6 +75,12 @@ public class ProfileRepository extends AbstractRepository<Profile>{
         ));
 
         return profileO.orElseThrow(UsuarioNaoCadastrado::new);
+    }
+
+    public void deleteProfileByUserId(String userId) throws UsuarioNaoCadastrado {
+        Profile profile = profileById(userId);
+        entityMap.remove(profile.getId());
+        profileByUserId.remove(userId);
     }
 
     /**

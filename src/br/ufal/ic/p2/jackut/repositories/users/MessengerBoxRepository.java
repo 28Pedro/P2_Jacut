@@ -8,11 +8,12 @@ import br.ufal.ic.p2.jackut.repositories.AbstractRepository;
 import br.ufal.ic.p2.jackut.repositories.XMLController;
 
 import java.util.HashMap;
+import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
 
 /**
- * Repositï¿½rio responsï¿½vel por persistir e recuperar caixas de mensagem.
+ * Repositório responsável por persistir e recuperar caixas de mensagem.
  */
 public class MessengerBoxRepository extends AbstractRepository<MessengerBox> {
 
@@ -20,9 +21,9 @@ public class MessengerBoxRepository extends AbstractRepository<MessengerBox> {
     private static MessengerBoxRepository instance;
 
     /**
-     * Cria o repositï¿½rio de caixas de mensagem e reconstrï¿½i o ï¿½ndice por usuï¿½rio.
+     * Cria o reposit?rio de caixas de mensagem e reconstrói o índice por usuário.
      *
-     * @throws SaveError se a infraestrutura de persistï¿½ncia nï¿½o puder ser preparada.
+     * @throws SaveError se a infraestrutura de persistência não puder ser preparada.
      * @throws FileError se ocorrer falha ao carregar caixas persistidas.
      */
     private MessengerBoxRepository() throws SaveError, FileError {
@@ -38,10 +39,10 @@ public class MessengerBoxRepository extends AbstractRepository<MessengerBox> {
     }
 
     /**
-     * Retorna a instï¿½ncia ï¿½nica do repositï¿½rio de caixas de mensagem.
+     * Retorna a instância única do repositório de caixas de mensagem.
      *
-     * @return instï¿½ncia compartilhada do repositï¿½rio.
-     * @throws SaveError se a infraestrutura de persistï¿½ncia nï¿½o puder ser preparada.
+     * @return instância compartilhada do repositório.
+     * @throws SaveError se a infraestrutura de persistência não puder ser preparada.
      * @throws FileError se ocorrer falha ao carregar caixas persistidas.
      */
     public static MessengerBoxRepository getInstance() throws SaveError, FileError{
@@ -52,7 +53,7 @@ public class MessengerBoxRepository extends AbstractRepository<MessengerBox> {
     }
 
     /**
-     * Salva uma caixa de mensagem e atualiza o ï¿½ndice por usuï¿½rio.
+     * Salva uma caixa de mensagem e atualiza o índice por usuário.
      *
      * @param messengerBox caixa de mensagem salva.
      */
@@ -69,7 +70,7 @@ public class MessengerBoxRepository extends AbstractRepository<MessengerBox> {
      *
      * @param messageBoxId identificador da caixa de mensagem.
      * @return caixa de mensagem encontrada.
-     * @throws UsuarioNaoCadastrado se a caixa nï¿½o for encontrada.
+     * @throws UsuarioNaoCadastrado se a caixa não for encontrada.
      */
     public MessengerBox getMessengerBoxById(String messageBoxId) throws
             UsuarioNaoCadastrado {
@@ -80,11 +81,11 @@ public class MessengerBoxRepository extends AbstractRepository<MessengerBox> {
     }
 
     /**
-     * Recupera a caixa de mensagem associada a um usuï¿½rio.
+     * Recupera a caixa de mensagem associada a um usuário.
      *
-     * @param userId identificador do usuï¿½rio dono da caixa.
+     * @param userId identificador do usuário dono da caixa.
      * @return caixa de mensagem encontrada.
-     * @throws UsuarioNaoCadastrado se a caixa nï¿½o for encontrada.
+     * @throws UsuarioNaoCadastrado se a caixa não for encontrada.
      */
     public MessengerBox getMessengerBoxByUserId(String userId) throws
             UsuarioNaoCadastrado{
@@ -92,7 +93,29 @@ public class MessengerBoxRepository extends AbstractRepository<MessengerBox> {
     }
 
     /**
-     * Limpa caixas de mensagem e ï¿½ndice por usuï¿½rio.
+     * Remove notificações das mensagens excluídas em todas as caixas.
+     *
+     * @param messageIds identificadores das mensagens excluídas.
+     */
+    public void removeNotifications(Collection<String> messageIds) {
+        entityMap.values().forEach(messageBox -> messageBox.removeNotifications(messageIds));
+    }
+
+    /**
+     * Remove a caixa de mensagem vinculada a um usuário.
+     *
+     * @param userId identificador do usuário removido.
+     */
+    public void deleteMessengerBoxByUserId(String userId) {
+        String messengerBoxId = messengerBoxByUserId.remove(userId);
+
+        if (messengerBoxId != null) {
+            entityMap.remove(messengerBoxId);
+        }
+    }
+
+    /**
+     * Limpa caixas de mensagem e índice por usuário.
      */
     @Override
     public void resetData(){
@@ -100,4 +123,3 @@ public class MessengerBoxRepository extends AbstractRepository<MessengerBox> {
         messengerBoxByUserId.clear();
     }
 }
-

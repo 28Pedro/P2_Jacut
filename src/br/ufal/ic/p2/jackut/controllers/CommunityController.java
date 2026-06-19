@@ -7,7 +7,7 @@ import br.ufal.ic.p2.jackut.services.user.MessageBoxIntegrator;
 import br.ufal.ic.p2.jackut.services.user.UserIntegrator;
 
 /**
- * Controlador respons√°vel pelos casos de uso de comunidades.
+ * Controlador respons·vel pelos casos de uso de comunidades.
  */
 public class CommunityController {
 
@@ -19,7 +19,7 @@ public class CommunityController {
     /**
      * Cria o controlador de comunidades.
      *
-     * @throws SaveError se a infraestrutura de persist√™ncia n√£o puder ser preparada.
+     * @throws SaveError se a infraestrutura de persistÍncia n„o puder ser preparada.
      * @throws FileError se ocorrer falha ao carregar dados persistidos.
      */
     public CommunityController() throws SaveError, FileError {
@@ -30,14 +30,14 @@ public class CommunityController {
     }
 
     /**
-     * Cria uma comunidade para o usu√°rio informado.
+     * Cria uma comunidade para o usu·rio informado.
      *
-     * @param userId identificador do usu√°rio dono da comunidade.
-     * @param name nome √∫nico da comunidade.
-     * @param description descri√ß√£o da comunidade.
-     * @throws UsuarioNaoCadastrado se o usu√°rio dono n√£o estiver cadastrado.
-     * @throws ComunidadeComEsseNomeJaExiste se j√° existir comunidade com o nome informado.
-     * @throws UsuarioJaFazParteDessaComunidade se a comunidade j√° estiver na lista do usu√°rio.
+     * @param userId identificador do usu·rio dono da comunidade.
+     * @param name nome ˙nico da comunidade.
+     * @param description descriÁ„o da comunidade.
+     * @throws UsuarioNaoCadastrado se o usu·rio dono n„o estiver cadastrado.
+     * @throws ComunidadeComEsseNomeJaExiste se j· existir comunidade com o nome informado.
+     * @throws UsuarioJaFazParteDessaComunidade se a comunidade j· estiver na lista do usu·rio.
      */
     public void createCommunity(String userId, String name, String description)
             throws UsuarioNaoCadastrado, ComunidadeComEsseNomeJaExiste,
@@ -50,13 +50,13 @@ public class CommunityController {
     }
 
     /**
-     * Adiciona um usu√°rio a uma comunidade existente.
+     * Adiciona um usu·rio a uma comunidade existente.
      *
-     * @param userId identificador do usu√°rio.
+     * @param userId identificador do usu·rio.
      * @param name nome da comunidade.
-     * @throws UsuarioNaoCadastrado se o usu√°rio n√£o estiver cadastrado.
-     * @throws ComunidadeNaoExiste se a comunidade n√£o existir.
-     * @throws UsuarioJaFazParteDessaComunidade se o usu√°rio j√° participar da comunidade.
+     * @throws UsuarioNaoCadastrado se o usu·rio n„o estiver cadastrado.
+     * @throws ComunidadeNaoExiste se a comunidade n„o existir.
+     * @throws UsuarioJaFazParteDessaComunidade se o usu·rio j· participar da comunidade.
      */
     public void addCommunity(String userId, String name)
             throws UsuarioNaoCadastrado, ComunidadeNaoExiste,
@@ -70,11 +70,11 @@ public class CommunityController {
     /**
      * Envia uma mensagem para uma comunidade.
      *
-     * @param userId identificador do usu√°rio remetente.
+     * @param userId identificador do usu·rio remetente.
      * @param communityName nome da comunidade.
-     * @param message conte√∫do textual da mensagem.
-     * @throws UsuarioNaoCadastrado se o usu√°rio remetente n√£o estiver cadastrado.
-     * @throws ComunidadeNaoExiste se a comunidade n√£o existir.
+     * @param message conte˙do textual da mensagem.
+     * @throws UsuarioNaoCadastrado se o usu·rio remetente n„o estiver cadastrado.
+     * @throws ComunidadeNaoExiste se a comunidade n„o existir.
      */
     public void sendCommunityMessage(String userId, String communityName, String message)
             throws UsuarioNaoCadastrado, ComunidadeNaoExiste {
@@ -84,12 +84,12 @@ public class CommunityController {
     }
 
     /**
-     * L√™ a pr√≥xima mensagem de comunidade pendente para um usu√°rio.
+     * LÍ a prÛxima mensagem de comunidade pendente para um usu·rio.
      *
-     * @param userId identificador do usu√°rio leitor.
-     * @return conte√∫do textual da mensagem.
-     * @throws UsuarioNaoCadastrado se o usu√°rio n√£o estiver cadastrado.
-     * @throws NaoHaMensagens se n√£o houver mensagens pendentes.
+     * @param userId identificador do usu·rio leitor.
+     * @return conte˙do textual da mensagem.
+     * @throws UsuarioNaoCadastrado se o usu·rio n„o estiver cadastrado.
+     * @throws NaoHaMensagens se n„o houver mensagens pendentes.
      */
     public String readCommunityMessage(String userId)
             throws UsuarioNaoCadastrado, NaoHaMensagens {
@@ -97,11 +97,11 @@ public class CommunityController {
     }
 
     /**
-     * Recupera a descri√ß√£o de uma comunidade.
+     * Recupera a descriÁ„o de uma comunidade.
      *
      * @param name nome da comunidade.
-     * @return descri√ß√£o da comunidade.
-     * @throws ComunidadeNaoExiste se a comunidade n√£o existir.
+     * @return descriÁ„o da comunidade.
+     * @throws ComunidadeNaoExiste se a comunidade n„o existir.
      */
     public String getCommunityDescription(String name) throws ComunidadeNaoExiste {
         return communityService.getDescription(name);
@@ -111,8 +111,8 @@ public class CommunityController {
      * Recupera o dono de uma comunidade.
      *
      * @param name nome da comunidade.
-     * @return login do usu√°rio dono.
-     * @throws ComunidadeNaoExiste se a comunidade n√£o existir.
+     * @return login do usu·rio dono.
+     * @throws ComunidadeNaoExiste se a comunidade n„o existir.
      */
     public String getCommunityOwner(String name) throws ComunidadeNaoExiste {
         return communityService.getOwner(name);
@@ -123,7 +123,7 @@ public class CommunityController {
      *
      * @param name nome da comunidade.
      * @return membros da comunidade em formato textual.
-     * @throws ComunidadeNaoExiste se a comunidade n√£o existir.
+     * @throws ComunidadeNaoExiste se a comunidade n„o existir.
      */
     public String getCommunityMembers(String name) throws ComunidadeNaoExiste {
         return communityService.getMembers(name);
@@ -132,7 +132,7 @@ public class CommunityController {
     /**
      * Salva os dados de comunidades.
      *
-     * @throws SaveError se ocorrer falha durante a persist√™ncia.
+     * @throws SaveError se ocorrer falha durante a persistÍncia.
      */
     public void saveData() throws SaveError {
         communityService.saveData();

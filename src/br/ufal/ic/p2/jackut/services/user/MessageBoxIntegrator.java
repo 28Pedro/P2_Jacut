@@ -6,9 +6,11 @@ import br.ufal.ic.p2.jackut.services.chatMessenger.MessageService;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Collection;
+import java.util.Set;
 
 /**
- * Integrador respons√°vel por coordenar caixas de mensagem, chats e mensagens.
+ * Integrador respons·vel por coordenar caixas de mensagem, chats e mensagens.
  */
 public class MessageBoxIntegrator {
 
@@ -20,7 +22,7 @@ public class MessageBoxIntegrator {
      * Cria o integrador de caixas de mensagem.
      *
      * @throws FileError se ocorrer falha ao carregar dados persistidos.
-     * @throws SaveError se a infraestrutura de persist√™ncia n√£o puder ser preparada.
+     * @throws SaveError se a infraestrutura de persistÍncia n„o puder ser preparada.
      */
     public MessageBoxIntegrator() throws FileError, SaveError {
         this.chatMessengerService = new ChatMessengerService();
@@ -39,10 +41,10 @@ public class MessageBoxIntegrator {
     }
 
     /**
-     * Adiciona um usu√°rio ao chat de uma comunidade.
+     * Adiciona um usu·rio ao chat de uma comunidade.
      *
      * @param chatMessengerId identificador do chat da comunidade.
-     * @param userId identificador do usu√°rio adicionado.
+     * @param userId identificador do usu·rio adicionado.
      */
     public void addParticipantToCommunityChat(String chatMessengerId, String userId) {
         chatMessengerService.addParticipant(chatMessengerId, userId);
@@ -52,8 +54,8 @@ public class MessageBoxIntegrator {
      * Envia uma mensagem para todos os participantes de um chat de comunidade.
      *
      * @param chatMessengerId identificador do chat da comunidade.
-     * @param messageContent conte√∫do textual da mensagem.
-     * @throws UsuarioNaoCadastrado se algum participante n√£o possuir caixa de mensagem.
+     * @param messageContent conte˙do textual da mensagem.
+     * @throws UsuarioNaoCadastrado se algum participante n„o possuir caixa de mensagem.
      */
     public void sendCommunityMessage(String chatMessengerId, String messageContent)
             throws UsuarioNaoCadastrado {
@@ -66,12 +68,12 @@ public class MessageBoxIntegrator {
     }
 
     /**
-     * L√™ a pr√≥xima mensagem de comunidade pendente de um usu√°rio.
+     * LÍ a prÛxima mensagem de comunidade pendente de um usu·rio.
      *
-     * @param userId identificador do usu√°rio leitor.
-     * @return conte√∫do textual da mensagem.
-     * @throws UsuarioNaoCadastrado se o usu√°rio n√£o possuir caixa de mensagem.
-     * @throws NaoHaMensagens se n√£o houver mensagens de comunidade pendentes.
+     * @param userId identificador do usu·rio leitor.
+     * @return conte˙do textual da mensagem.
+     * @throws UsuarioNaoCadastrado se o usu·rio n„o possuir caixa de mensagem.
+     * @throws NaoHaMensagens se n„o houver mensagens de comunidade pendentes.
      */
     public String readCommunityMessage(String userId)
             throws UsuarioNaoCadastrado, NaoHaMensagens {
@@ -81,5 +83,19 @@ public class MessageBoxIntegrator {
         String unreadMessageId = chatMessengerService.receiveCommunityMessenger(chatId, userId);
 
         return messageService.showCommunityMessage(unreadMessageId);
+    }
+
+    /**
+     * Exclui mensagens pendentes, notificaÁıes e a caixa vinculada a um usu·rio removido.
+     *
+     * @param userId identificador do usu·rio removido.
+     * @param communityChatsToKeep chats de comunidades preservadas dos quais o usu·rio saiu.
+     */
+    public void deleteUserMessages(String userId, Collection<String> communityChatsToKeep) {
+        Set<String> unreadMessageIds =
+                chatMessengerService.deleteUserChats(userId, communityChatsToKeep);
+        messageService.deleteMessages(unreadMessageIds);
+        messageBoxService.removeNotifications(unreadMessageIds);
+        messageBoxService.deleteMessengerBox(userId);
     }
 }

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Representa a lista de comunidades das quais um usu√°rio participa.
+ * Representa a lista de comunidades das quais um usu·rio participa.
  */
 public class CommunityList {
 
@@ -13,17 +13,17 @@ public class CommunityList {
     private List<String> communityNames;
 
     /**
-     * Cria uma lista vazia para uso por mecanismos de serializa√ß√£o.
+     * Cria uma lista vazia para uso por mecanismos de serializaÁ„o.
      */
     public CommunityList() {
         this.communityNames = new ArrayList<>();
     }
 
     /**
-     * Cria uma lista de comunidades associada a um usu√°rio.
+     * Cria uma lista de comunidades associada a um usu·rio.
      *
-     * @param userId identificador do usu√°rio dono da lista.
-     * @param id identificador √∫nico da lista.
+     * @param userId identificador do usu·rio dono da lista.
+     * @param id identificador ˙nico da lista.
      */
     public CommunityList(String userId, String id) {
         this();
@@ -32,7 +32,7 @@ public class CommunityList {
     }
 
     /**
-     * Adiciona uma comunidade √† lista.
+     * Adiciona uma comunidade ‡ lista.
      *
      * @param communityName nome da comunidade.
      */
@@ -41,7 +41,16 @@ public class CommunityList {
     }
 
     /**
-     * Verifica se a lista cont√©m uma comunidade.
+     * Remove uma comunidade da lista do usu·rio.
+     *
+     * @param communityName nome da comunidade removida.
+     */
+    public void removeCommunity(String communityName) {
+        communityNames.remove(communityName);
+    }
+
+    /**
+     * Verifica se a lista contÈm uma comunidade.
      *
      * @param communityName nome da comunidade.
      * @return {@code true} se a comunidade estiver na lista.
@@ -72,7 +81,7 @@ public class CommunityList {
     }
 
     /**
-     * Retorna o identificador √∫nico da lista.
+     * Retorna o identificador ˙nico da lista.
      *
      * @return identificador da lista.
      */
@@ -81,7 +90,7 @@ public class CommunityList {
     }
 
     /**
-     * Define o identificador √∫nico da lista.
+     * Define o identificador ˙nico da lista.
      *
      * @param id identificador da lista.
      */
@@ -90,18 +99,18 @@ public class CommunityList {
     }
 
     /**
-     * Retorna o identificador do usu√°rio dono da lista.
+     * Retorna o identificador do usu·rio dono da lista.
      *
-     * @return identificador do usu√°rio.
+     * @return identificador do usu·rio.
      */
     public String getUserId() {
         return userId;
     }
 
     /**
-     * Define o identificador do usu√°rio dono da lista.
+     * Define o identificador do usu·rio dono da lista.
      *
-     * @param userId identificador do usu√°rio.
+     * @param userId identificador do usu·rio.
      */
     public void setUserId(String userId) {
         this.userId = userId;

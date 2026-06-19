@@ -10,26 +10,26 @@ import br.ufal.ic.p2.jackut.repositories.users.CommunityListRepository;
 import java.util.UUID;
 
 /**
- * Servi√ßo respons√°vel pela lista de comunidades associada a cada usu√°rio.
+ * ServiÁo respons·vel pela lista de comunidades associada a cada usu·rio.
  */
 public class CommunityListService {
 
     private final CommunityListRepository communityListRepository;
 
     /**
-     * Cria o servi√ßo de listas de comunidades.
+     * Cria o serviÁo de listas de comunidades.
      *
      * @throws FileError se ocorrer falha ao carregar listas persistidas.
-     * @throws SaveError se a infraestrutura de persist√™ncia n√£o puder ser preparada.
+     * @throws SaveError se a infraestrutura de persistÍncia n„o puder ser preparada.
      */
     public CommunityListService() throws FileError, SaveError {
         this.communityListRepository = CommunityListRepository.getInstance();
     }
 
     /**
-     * Cria uma lista de comunidades para um usu√°rio.
+     * Cria uma lista de comunidades para um usu·rio.
      *
-     * @param userId identificador do usu√°rio dono da lista.
+     * @param userId identificador do usu·rio dono da lista.
      */
     public void buildCommunityListObject(String userId) {
         CommunityList communityList = new CommunityList(userId, UUID.randomUUID().toString());
@@ -37,12 +37,12 @@ public class CommunityListService {
     }
 
     /**
-     * Adiciona uma comunidade √† lista do usu√°rio.
+     * Adiciona uma comunidade ‡ lista do usu·rio.
      *
-     * @param userId identificador do usu√°rio.
+     * @param userId identificador do usu·rio.
      * @param communityName nome da comunidade.
-     * @throws UsuarioNaoCadastrado se a lista do usu√°rio n√£o for encontrada.
-     * @throws UsuarioJaFazParteDessaComunidade se o usu√°rio j√° estiver na comunidade.
+     * @throws UsuarioNaoCadastrado se a lista do usu·rio n„o for encontrada.
+     * @throws UsuarioJaFazParteDessaComunidade se o usu·rio j· estiver na comunidade.
      */
     public void addCommunity(String userId, String communityName)
             throws UsuarioNaoCadastrado, UsuarioJaFazParteDessaComunidade {
@@ -56,11 +56,11 @@ public class CommunityListService {
     }
 
     /**
-     * Retorna as comunidades de um usu√°rio em formato textual.
+     * Retorna as comunidades de um usu·rio em formato textual.
      *
-     * @param userId identificador do usu√°rio.
-     * @return comunidades do usu√°rio no formato esperado pelos testes.
-     * @throws UsuarioNaoCadastrado se a lista do usu√°rio n√£o for encontrada.
+     * @param userId identificador do usu·rio.
+     * @return comunidades do usu·rio no formato esperado pelos testes.
+     * @throws UsuarioNaoCadastrado se a lista do usu·rio n„o for encontrada.
      */
     public String getCommunities(String userId) throws UsuarioNaoCadastrado {
         return communityListRepository.getCommunityListByUserId(userId).buildCommunityList();
@@ -69,7 +69,7 @@ public class CommunityListService {
     /**
      * Salva as listas de comunidades.
      *
-     * @throws SaveError se ocorrer falha durante a persist√™ncia.
+     * @throws SaveError se ocorrer falha durante a persistÍncia.
      */
     public void saveData() throws SaveError {
         communityListRepository.saveData();

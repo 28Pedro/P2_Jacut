@@ -8,11 +8,14 @@ import br.ufal.ic.p2.jackut.repositories.AbstractRepository;
 import br.ufal.ic.p2.jackut.repositories.XMLController;
 
 import java.util.HashMap;
+import java.util.Collection;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 /**
- * Repositório responsável por persistir e recuperar chats.
+ * Repositï¿½rio responsï¿½vel por persistir e recuperar chats.
  */
 public class ChatMessengerRepository extends AbstractRepository<ChatMessenger> {
 
@@ -20,10 +23,10 @@ public class ChatMessengerRepository extends AbstractRepository<ChatMessenger> {
     private Map<ChatParticipantsKey,String> chatMessengerList;
 
     /**
-     * Cria o repositório de chats e reconstrói o índice por participantes.
+     * Cria o repositï¿½rio de chats e reconstrï¿½i o ï¿½ndice por participantes.
      *
      * @throws FileError se ocorrer falha ao carregar chats persistidos.
-     * @throws SaveError se a infraestrutura de persistência não puder ser preparada.
+     * @throws SaveError se a infraestrutura de persistï¿½ncia nï¿½o puder ser preparada.
      */
     private ChatMessengerRepository() throws FileError, SaveError {
         super(XMLController.getInstance(),"chat.xml");
@@ -41,10 +44,10 @@ public class ChatMessengerRepository extends AbstractRepository<ChatMessenger> {
     }
 
     /**
-     * Retorna a instância única do repositório de chats.
+     * Retorna a instï¿½ncia ï¿½nica do repositï¿½rio de chats.
      *
-     * @return instância compartilhada do repositório.
-     * @throws SaveError se a infraestrutura de persistência não puder ser preparada.
+     * @return instï¿½ncia compartilhada do repositï¿½rio.
+     * @throws SaveError se a infraestrutura de persistï¿½ncia nï¿½o puder ser preparada.
      * @throws FileError se ocorrer falha ao carregar chats persistidos.
      */
     public static ChatMessengerRepository getInstance() throws SaveError,FileError{
@@ -55,7 +58,7 @@ public class ChatMessengerRepository extends AbstractRepository<ChatMessenger> {
     }
 
     /**
-     * Salva um chat e atualiza o índice por participantes.
+     * Salva um chat e atualiza o ï¿½ndice por participantes.
      *
      * @param chatMessenger chat a ser salvo.
      */
@@ -69,7 +72,7 @@ public class ChatMessengerRepository extends AbstractRepository<ChatMessenger> {
      * Recupera um chat pela chave de participantes.
      *
      * @param chatParticipantsKey chave formada pelos participantes do chat.
-     * @return chat encontrado, ou vazio se não existir.
+     * @return chat encontrado, ou vazio se nï¿½o existir.
      */
     public Optional<ChatMessenger> getChatByUserIds(ChatParticipantsKey chatParticipantsKey){
         return Optional.ofNullable(
@@ -80,7 +83,62 @@ public class ChatMessengerRepository extends AbstractRepository<ChatMessenger> {
     }
 
     /**
-     * Limpa chats e índice por participantes.
+     * Remove chats e retorna as mensagens que ainda estavam pendentes neles.
+     *
+     * @param chatIds identificadores dos chats removidos.
+     * @return identificadores das mensagens nÃ£o lidas removidas.
+     */
+    public Set<String> deleteChatsAndCollectUnreadMessages(Collection<String> chatIds) {
+        Set<String> unreadMessageIds = new LinkedHashSet<>();
+
+        for (String chatId : chatIds) {
+            ChatMessenger chatMessenger = entityMap.remove(chatId);
+
+            if (chatMessenger != null) {
+                unreadMessageIds.addAll(chatMessenger.getUnreadMessageIds());
+                chatMessengerList.remove(chatMessenger.getUsersId());
+            }
+        }
+
+        return unreadMessageIds;
+    }
+
+    /**
+     * Remove um participante dos chats que permanecerÃ£o ativos.
+     *
+     * @param userId identificador do participante removido.
+     * @param preservedChatIds chats que devem permanecer e sofrer apenas remoÃ§Ã£o do participante.
+     */
+    public void removeUserFromChats(String userId, Collection<String> preservedChatIds) {
+        for (String chatId : preservedChatIds) {
+            ChatMessenger chatMessenger = entityMap.get(chatId);
+
+            if (chatMessenger != null) {
+                chatMessengerList.remove(chatMessenger.getUsersId());
+                chatMessenger.removeParticipant(userId);
+                chatMessengerList.put(chatMessenger.getUsersId(), chatId);
+            }
+        }
+    }
+
+    /**
+     * Retorna os chats dos quais o usuÃ¡rio participa.
+     *
+     * @param userId identificador do usuÃ¡rio procurado.
+     * @return identificadores dos chats participantes.
+     */
+    public Set<String> getChatIdsByParticipant(String userId) {
+        Set<String> chatIds = new LinkedHashSet<>();
+        entityMap.forEach((chatId, chatMessenger) -> {
+            if (chatMessenger.getUsersId().getUserIds().contains(userId)) {
+                chatIds.add(chatId);
+            }
+        });
+        return chatIds;
+    }
+
+    /**
+     * Limpa chats e ï¿½ndice por participantes.
      */
     @Override
     public void resetData(){

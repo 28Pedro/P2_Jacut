@@ -1,4 +1,4 @@
 /**
- * ContÃ©m os repositÃ³rios relacionados ao domÃ­nio de comunidades.
+ * Contém os repositórios relacionados ao domínio de comunidades.
  */
 package br.ufal.ic.p2.jackut.repositories.community;

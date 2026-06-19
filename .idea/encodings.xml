@@ -4,7 +4,9 @@
     <file url="file://$PROJECT_DIR$/src" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/Facade.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/controllers/ChatMessengerController.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/controllers/CommunityController.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/controllers/UserController.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/controllers/UserDeletionController.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/controllers/package-info.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/enums/package-info.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/exceptions/ComunidadeComEsseNomeJaExiste.java" charset="ISO-8859-1" />
@@ -19,34 +21,59 @@
     <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/models/chatmessenger/ChatUserState.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/models/chatmessenger/Message.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/models/chatmessenger/package-info.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/models/community/Community.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/models/community/package-info.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/models/package-info.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/models/user/CommunityList.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/models/user/Friendship.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/models/user/MessengerBox.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/models/user/Profile.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/models/user/User.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/models/user/package-info.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/models/user/relationship/FanRelationship.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/models/user/relationship/FriendshipRelationship.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/models/user/relationship/Relationship.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/repositories/AbstractRepository.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/repositories/XMLController.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/repositories/chatMessager/ChatMessengerRepository.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/repositories/chatMessager/MessageRepository.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/repositories/chatMessager/package-info.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/repositories/community/CommunityRepository.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/repositories/community/package-info.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/repositories/package-info.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/repositories/users/CommunityListRepository.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/repositories/users/FriendshipRepository.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/repositories/users/MessengerBoxRepository.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/repositories/users/ProfileRepository.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/repositories/users/RelationshipRepository.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/repositories/users/UserRepository.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/repositories/users/package-info.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/services/chatMessenger/ChatMessengerService.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/services/chatMessenger/MessageService.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/services/chatMessenger/package-info.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/services/community/CommunityDeletionData.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/services/community/CommunityIntegrator.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/services/community/CommunityService.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/services/community/package-info.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/services/package-info.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/services/user/CommunityListService.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/services/user/FriendshipService.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/services/user/MessageBoxIntegrator.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/services/user/MessageBoxService.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/services/user/ProfileIntegrator.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/services/user/ProfileService.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/services/user/RelationshipIntegrator.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/services/user/RelationshipService.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/services/user/UserIntegrator.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/services/user/UserService.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/services/user/friendshipStateHandles/package-info.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/services/user/package-info.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/services/user/relationshipStateHandles/CurrentRelationshipState.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/services/user/relationshipStateHandles/NoRelationshipState.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/services/user/relationshipStateHandles/ReceivedRequestRelationshipState.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/services/user/relationshipStateHandles/RelationshipStateHandle.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/services/user/relationshipStateHandles/SentRequestRelationshipState.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/services/user/relationshipStateHandles/package-info.java" charset="ISO-8859-1" />
     <file url="PROJECT" charset="ISO-8859-1" />
   </component>
 </project>

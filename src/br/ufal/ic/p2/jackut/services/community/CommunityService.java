@@ -11,27 +11,27 @@ import br.ufal.ic.p2.jackut.repositories.community.CommunityRepository;
 import java.util.UUID;
 
 /**
- * Servi√ßo respons√°vel pelas regras de neg√≥cio de comunidades.
+ * ServiÁo respons·vel pelas regras de negÛcio de comunidades.
  */
 public class CommunityService {
 
     private final CommunityRepository communityRepository;
 
     /**
-     * Cria o servi√ßo de comunidades.
+     * Cria o serviÁo de comunidades.
      *
      * @throws FileError se ocorrer falha ao carregar comunidades persistidas.
-     * @throws SaveError se a infraestrutura de persist√™ncia n√£o puder ser preparada.
+     * @throws SaveError se a infraestrutura de persistÍncia n„o puder ser preparada.
      */
     public CommunityService() throws FileError, SaveError {
         this.communityRepository = CommunityRepository.getInstance();
     }
 
     /**
-     * Valida se um nome de comunidade est√° dispon√≠vel.
+     * Valida se um nome de comunidade est· disponÌvel.
      *
      * @param name nome da comunidade.
-     * @throws ComunidadeComEsseNomeJaExiste se j√° existir comunidade com o nome informado.
+     * @throws ComunidadeComEsseNomeJaExiste se j· existir comunidade com o nome informado.
      */
     public void validateCommunityNameAvailable(String name)
             throws ComunidadeComEsseNomeJaExiste {
@@ -43,12 +43,12 @@ public class CommunityService {
     /**
      * Cria uma nova comunidade.
      *
-     * @param ownerUserId identificador do usu√°rio dono.
-     * @param ownerUserName login do usu√°rio dono.
-     * @param name nome √∫nico da comunidade.
-     * @param description descri√ß√£o da comunidade.
+     * @param ownerUserId identificador do usu·rio dono.
+     * @param ownerUserName login do usu·rio dono.
+     * @param name nome ˙nico da comunidade.
+     * @param description descriÁ„o da comunidade.
      * @param chatMessengerId identificador do chat da comunidade.
-     * @throws ComunidadeComEsseNomeJaExiste se j√° existir comunidade com o nome informado.
+     * @throws ComunidadeComEsseNomeJaExiste se j· existir comunidade com o nome informado.
      */
     public void createCommunity(String ownerUserId, String ownerUserName, String name,
                                 String description, String chatMessengerId)
@@ -61,11 +61,11 @@ public class CommunityService {
     }
 
     /**
-     * Recupera a descri√ß√£o de uma comunidade.
+     * Recupera a descriÁ„o de uma comunidade.
      *
      * @param name nome da comunidade.
-     * @return descri√ß√£o da comunidade.
-     * @throws ComunidadeNaoExiste se a comunidade n√£o existir.
+     * @return descriÁ„o da comunidade.
+     * @throws ComunidadeNaoExiste se a comunidade n„o existir.
      */
     public String getDescription(String name) throws ComunidadeNaoExiste {
         return communityRepository.getCommunityByName(name).getDescription();
@@ -76,7 +76,7 @@ public class CommunityService {
      *
      * @param name nome da comunidade.
      * @return login do dono da comunidade.
-     * @throws ComunidadeNaoExiste se a comunidade n√£o existir.
+     * @throws ComunidadeNaoExiste se a comunidade n„o existir.
      */
     public String getOwner(String name) throws ComunidadeNaoExiste {
         return communityRepository.getCommunityByName(name).getOwnerUserName();
@@ -87,32 +87,32 @@ public class CommunityService {
      *
      * @param name nome da comunidade.
      * @return membros da comunidade em formato textual.
-     * @throws ComunidadeNaoExiste se a comunidade n√£o existir.
+     * @throws ComunidadeNaoExiste se a comunidade n„o existir.
      */
     public String getMembers(String name) throws ComunidadeNaoExiste {
         return communityRepository.getCommunityByName(name).buildMembersList();
     }
 
     /**
-     * Recupera o identificador do chat associado √† comunidade.
+     * Recupera o identificador do chat associado ‡ comunidade.
      *
      * @param name nome da comunidade.
      * @return identificador do chat da comunidade.
-     * @throws ComunidadeNaoExiste se a comunidade n√£o existir.
+     * @throws ComunidadeNaoExiste se a comunidade n„o existir.
      */
     public String getChatMessengerId(String name) throws ComunidadeNaoExiste {
         return communityRepository.getCommunityByName(name).getChatMessengerId();
     }
 
     /**
-     * Adiciona um usu√°rio como membro de uma comunidade.
+     * Adiciona um usu·rio como membro de uma comunidade.
      *
      * @param communityName nome da comunidade.
-     * @param userId identificador do usu√°rio.
-     * @param userName login do usu√°rio.
+     * @param userId identificador do usu·rio.
+     * @param userName login do usu·rio.
      * @return identificador do chat da comunidade.
-     * @throws ComunidadeNaoExiste se a comunidade n√£o existir.
-     * @throws UsuarioJaFazParteDessaComunidade se o usu√°rio j√° participar da comunidade.
+     * @throws ComunidadeNaoExiste se a comunidade n„o existir.
+     * @throws UsuarioJaFazParteDessaComunidade se o usu·rio j· participar da comunidade.
      */
     public String addMember(String communityName, String userId, String userName)
             throws ComunidadeNaoExiste, UsuarioJaFazParteDessaComunidade {
@@ -129,7 +129,7 @@ public class CommunityService {
     /**
      * Salva os dados de comunidades.
      *
-     * @throws SaveError se ocorrer falha durante a persist√™ncia.
+     * @throws SaveError se ocorrer falha durante a persistÍncia.
      */
     public void saveData() throws SaveError {
         communityRepository.saveData();

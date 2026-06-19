@@ -11,29 +11,29 @@ import br.ufal.ic.p2.jackut.repositories.chatMessager.ChatMessengerRepository;
 import java.util.*;
 
 /**
- * Servi√ßo respons√°vel pelas regras de neg√≥cio de chats e estados de leitura.
+ * ServiÁo respons·vel pelas regras de negÛcio de chats e estados de leitura.
  */
 public class ChatMessengerService {
 
     private final ChatMessengerRepository chatMessengerRepository;
 
     /**
-     * Cria o servi√ßo de chats.
+     * Cria o serviÁo de chats.
      *
      * @throws FileError se ocorrer falha ao carregar chats persistidos.
-     * @throws SaveError se a infraestrutura de persist√™ncia n√£o puder ser preparada.
+     * @throws SaveError se a infraestrutura de persistÍncia n„o puder ser preparada.
      */
     public ChatMessengerService() throws FileError, SaveError {
         this.chatMessengerRepository = ChatMessengerRepository.getInstance();
     }
 
     /**
-     * Registra uma mensagem privada em um chat para todos os destinat√°rios.
+     * Registra uma mensagem privada em um chat para todos os destinat·rios.
      *
      * @param messageId identificador da mensagem enviada.
-     * @param senderId identificador do usu√°rio remetente.
-     * @param chatMessenger chat em que a mensagem ser√° registrada.
-     * @return lista de identificadores dos usu√°rios que devem ser notificados.
+     * @param senderId identificador do usu·rio remetente.
+     * @param chatMessenger chat em que a mensagem ser· registrada.
+     * @return lista de identificadores dos usu·rios que devem ser notificados.
      */
     public List<String> SendMessenger(String messageId, String senderId, ChatMessenger chatMessenger){
 
@@ -50,7 +50,7 @@ public class ChatMessengerService {
      *
      * @param messageId identificador da mensagem enviada.
      * @param chatMessengerId identificador do chat da comunidade.
-     * @return lista de identificadores dos usu√°rios que devem ser notificados.
+     * @return lista de identificadores dos usu·rios que devem ser notificados.
      */
     public List<String> sendCommunityMessenger(String messageId, String chatMessengerId){
         Optional<ChatMessenger> chatMessengerO = chatMessengerRepository.getObject(chatMessengerId);
@@ -66,12 +66,12 @@ public class ChatMessengerService {
     }
 
     /**
-     * L√™ a pr√≥xima mensagem n√£o lida de um usu√°rio em um chat privado.
+     * LÍ a prÛxima mensagem n„o lida de um usu·rio em um chat privado.
      *
      * @param chatMessengerId identificador do chat.
-     * @param receiverId identificador do usu√°rio leitor.
+     * @param receiverId identificador do usu·rio leitor.
      * @return identificador da mensagem lida.
-     * @throws NaoHaRecados se o chat n√£o existir ou n√£o houver mensagens n√£o lidas.
+     * @throws NaoHaRecados se o chat n„o existir ou n„o houver mensagens n„o lidas.
      */
     public String receiveMessenger(String chatMessengerId, String receiverId)
             throws NaoHaRecados{
@@ -84,12 +84,12 @@ public class ChatMessengerService {
     }
 
     /**
-     * L√™ a pr√≥xima mensagem de comunidade n√£o lida de um usu√°rio.
+     * LÍ a prÛxima mensagem de comunidade n„o lida de um usu·rio.
      *
      * @param chatMessengerId identificador do chat da comunidade.
-     * @param receiverId identificador do usu√°rio leitor.
+     * @param receiverId identificador do usu·rio leitor.
      * @return identificador da mensagem lida.
-     * @throws NaoHaMensagens se o chat n√£o existir ou n√£o houver mensagens n√£o lidas.
+     * @throws NaoHaMensagens se o chat n„o existir ou n„o houver mensagens n„o lidas.
      */
     public String receiveCommunityMessenger(String chatMessengerId, String receiverId)
             throws NaoHaMensagens{
@@ -118,7 +118,7 @@ public class ChatMessengerService {
      * Adiciona um participante a um chat existente.
      *
      * @param chatMessengerId identificador do chat.
-     * @param userId identificador do usu√°rio adicionado.
+     * @param userId identificador do usu·rio adicionado.
      */
     public void addParticipant(String chatMessengerId, String userId) {
         Optional<ChatMessenger> chatMessengerO = chatMessengerRepository.getObject(chatMessengerId);
@@ -131,9 +131,27 @@ public class ChatMessengerService {
     }
 
     /**
+     * Remove os chats privados e de comunidades excluÌdas vinculados ao usu·rio,
+     * preservando os chats das comunidades das quais ele apenas deixou de participar.
+     *
+     * @param userId identificador do usu·rio removido.
+     * @param communityChatsToKeep chats de comunidades que permanecem ativos.
+     * @return identificadores de mensagens que ainda estavam n„o lidas nos chats removidos.
+     */
+    public Set<String> deleteUserChats(String userId, Collection<String> communityChatsToKeep) {
+        Set<String> chatIdsToDelete = chatMessengerRepository.getChatIdsByParticipant(userId);
+        chatIdsToDelete.removeAll(communityChatsToKeep);
+
+        Set<String> unreadMessageIds =
+                chatMessengerRepository.deleteChatsAndCollectUnreadMessages(chatIdsToDelete);
+        chatMessengerRepository.removeUserFromChats(userId, communityChatsToKeep);
+        return unreadMessageIds;
+    }
+
+    /**
      * Salva os dados de chats.
      *
-     * @throws SaveError se ocorrer falha durante a persist√™ncia.
+     * @throws SaveError se ocorrer falha durante a persistÍncia.
      */
     public void saveData() throws SaveError{
         chatMessengerRepository.saveData();
@@ -147,11 +165,11 @@ public class ChatMessengerService {
     }
 
     /**
-     * Recupera um chat existente ou cria um novo chat entre dois usu√°rios.
+     * Recupera um chat existente ou cria um novo chat entre dois usu·rios.
      *
-     * @param senderId identificador do usu√°rio remetente.
-     * @param receiverId identificador do usu√°rio destinat√°rio.
-     * @return chat existente ou rec√©m-criado para os participantes.
+     * @param senderId identificador do usu·rio remetente.
+     * @param receiverId identificador do usu·rio destinat·rio.
+     * @return chat existente ou recÈm-criado para os participantes.
      */
     public ChatMessenger getOrBuild(String senderId, String receiverId ){
 

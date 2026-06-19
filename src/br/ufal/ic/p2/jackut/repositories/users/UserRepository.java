@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Repositório responsável por persistir e recuperar usuários.
+ * Reposit?rio responsável por persistir e recuperar usuários.
  */
 public class UserRepository extends AbstractRepository<User> {
 
@@ -19,10 +19,10 @@ public class UserRepository extends AbstractRepository<User> {
     private static UserRepository instance;
 
     /**
-     * Cria o repositório de usuários e reconstrói o índice por login.
+     * Cria o reposit?rio de usuários e reconstrói o índice por login.
      *
-     * @throws FileError se ocorrer falha ao carregar usuários persistidos.
-     * @throws SaveError se a infraestrutura de persistência não puder ser preparada.
+     * @throws FileError se ocorrer falha ao carregar usu?rios persistidos.
+     * @throws SaveError se a infraestrutura de persist~encia não puder ser preparada.
      */
     private UserRepository() throws FileError,SaveError {
         super(XMLController.getInstance(),"user.xml");
@@ -37,9 +37,9 @@ public class UserRepository extends AbstractRepository<User> {
     }
 
     /**
-     * Retorna a instância única do repositório de usuários.
+     * Retorna a instência única do repositório de usuários.
      *
-     * @return instância compartilhada do repositório.
+     * @return instência compartilhada do repositório.
      * @throws SaveError se a infraestrutura de persistência não puder ser preparada.
      * @throws FileError se ocorrer falha ao carregar usuários persistidos.
      */
@@ -53,8 +53,8 @@ public class UserRepository extends AbstractRepository<User> {
     /**
      * Salva um usuário e atualiza o índice por login.
      *
-     * @param user usuário salvo.
-     * @param id identificador do usuário.
+     * @param user usu?rio salvo.
+     * @param id identificador do usu?rio.
      */
     public void saveUser(User user, String id){
         userByUserName.put(user.getUserName(), user.getId());
@@ -62,10 +62,10 @@ public class UserRepository extends AbstractRepository<User> {
     }
 
     /**
-     * Recupera um usuário por ID ou lança exceção.
+     * Recupera um usuário por ID ou lan?a exce??o.
      *
-     * @param userId identificador do usuário.
-     * @return usuário encontrado.
+     * @param userId identificador do usu?rio.
+     * @return usu?rio encontrado.
      * @throws UsuarioNaoCadastrado se o usuário não existir.
      */
     public User findUserOrThrow(String userId) throws UsuarioNaoCadastrado {
@@ -93,6 +93,12 @@ public class UserRepository extends AbstractRepository<User> {
     public User getUserByName(String userName) throws UsuarioNaoCadastrado{
 
         return findUserOrThrow(userByUserName.get(userName));
+    }
+
+    public void deleteUser(String userId) throws UsuarioNaoCadastrado {
+        User user = findUserOrThrow(userId);
+        entityMap.remove(userId);
+        userByUserName.remove(user.getUserName());
     }
 
     /**

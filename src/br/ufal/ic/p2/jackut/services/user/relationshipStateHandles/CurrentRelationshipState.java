@@ -5,7 +5,7 @@ import br.ufal.ic.p2.jackut.exceptions.UsuarioJaAdicionadoRelationship;
 import br.ufal.ic.p2.jackut.models.user.relationship.Relationship;
 
 /**
- * Estado usado quando a rela√ß√£o j√° est√° confirmada.
+ * Estado usado quando a relaÁ„o j· est· confirmada.
  */
 public class CurrentRelationshipState implements RelationshipStateHandle {
 

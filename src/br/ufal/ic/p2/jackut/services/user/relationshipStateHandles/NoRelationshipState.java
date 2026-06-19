@@ -4,7 +4,7 @@ import br.ufal.ic.p2.jackut.enums.RelationshipState;
 import br.ufal.ic.p2.jackut.models.user.relationship.Relationship;
 
 /**
- * Estado usado quando ainda n√£o existe v√≠nculo entre os usu√°rios.
+ * Estado usado quando ainda n„o existe vÌnculo entre os usu·rios.
  */
 public class NoRelationshipState implements RelationshipStateHandle {
 

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Representa uma comunidade criada por um usuÃ¡rio do Jackut.
+ * Representa uma comunidade criada por um usuário do Jackut.
  */
 public class Community {
 
@@ -18,7 +18,7 @@ public class Community {
     private List<String> membersUserNames;
 
     /**
-     * Cria uma comunidade vazia para uso por mecanismos de serializaÃ§Ã£o.
+     * Cria uma comunidade vazia para uso por mecanismos de serialização.
      */
     public Community() {
         this.membersUserIds = new ArrayList<>();
@@ -26,13 +26,13 @@ public class Community {
     }
 
     /**
-     * Cria uma comunidade com dono, descriÃ§Ã£o e chat associado.
+     * Cria uma comunidade com dono, descrição e chat associado.
      *
-     * @param id identificador Ãºnico da comunidade.
-     * @param name nome Ãºnico da comunidade.
-     * @param description descriÃ§Ã£o textual da comunidade.
-     * @param ownerUserId identificador do usuÃ¡rio dono da comunidade.
-     * @param ownerUserName login do usuÃ¡rio dono da comunidade.
+     * @param id identificador único da comunidade.
+     * @param name nome único da comunidade.
+     * @param description descrição textual da comunidade.
+     * @param ownerUserId identificador do usuário dono da comunidade.
+     * @param ownerUserName login do usuário dono da comunidade.
      * @param chatMessengerId identificador do chat usado para mensagens da comunidade.
      */
     public Community(String id, String name, String description, String ownerUserId,
@@ -49,10 +49,10 @@ public class Community {
     }
 
     /**
-     * Adiciona um membro Ã  comunidade.
+     * Adiciona um membro à comunidade.
      *
-     * @param userId identificador do usuÃ¡rio adicionado.
-     * @param userName login do usuÃ¡rio adicionado.
+     * @param userId identificador do usuário adicionado.
+     * @param userName login do usuário adicionado.
      */
     public void addMember(String userId, String userName) {
         membersUserIds.add(userId);
@@ -60,10 +60,24 @@ public class Community {
     }
 
     /**
-     * Verifica se um usuÃ¡rio jÃ¡ participa da comunidade.
+     * Remove um membro da comunidade mantendo as listas de ID e login alinhadas.
      *
-     * @param userName login do usuÃ¡rio consultado.
-     * @return {@code true} se o usuÃ¡rio jÃ¡ for membro.
+     * @param userId identificador do membro removido.
+     */
+    public void removeMember(String userId) {
+        int memberIndex = membersUserIds.indexOf(userId);
+
+        if (memberIndex >= 0) {
+            membersUserIds.remove(memberIndex);
+            membersUserNames.remove(memberIndex);
+        }
+    }
+
+    /**
+     * Verifica se um usuário já participa da comunidade.
+     *
+     * @param userName login do usuário consultado.
+     * @return {@code true} se o usuário já for membro.
      */
     public boolean containsMember(String userName) {
         return membersUserNames.contains(userName);
@@ -91,7 +105,7 @@ public class Community {
     }
 
     /**
-     * Retorna o identificador Ãºnico da comunidade.
+     * Retorna o identificador único da comunidade.
      *
      * @return identificador da comunidade.
      */
@@ -100,7 +114,7 @@ public class Community {
     }
 
     /**
-     * Define o identificador Ãºnico da comunidade.
+     * Define o identificador único da comunidade.
      *
      * @param id identificador da comunidade.
      */
@@ -127,18 +141,18 @@ public class Community {
     }
 
     /**
-     * Retorna a descriÃ§Ã£o da comunidade.
+     * Retorna a descrição da comunidade.
      *
-     * @return descriÃ§Ã£o da comunidade.
+     * @return descrição da comunidade.
      */
     public String getDescription() {
         return description;
     }
 
     /**
-     * Define a descriÃ§Ã£o da comunidade.
+     * Define a descrição da comunidade.
      *
-     * @param description descriÃ§Ã£o da comunidade.
+     * @param description descrição da comunidade.
      */
     public void setDescription(String description) {
         this.description = description;

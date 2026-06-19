@@ -1,6 +1,7 @@
 package br.ufal.ic.p2.jackut.models.chatmessenger;
 
 import java.util.ArrayDeque;
+import java.util.Collection;
 import java.util.Optional;
 import java.util.Queue;
 
@@ -43,6 +44,15 @@ public class ChatUserState {
         ReadMessengers.add(messengerO.get());
 
         return messengerO;
+    }
+
+    /**
+     * Remove as mensagens ainda não lidas que foram invalidadas.
+     *
+     * @param messageIds identificadores das mensagens a remover.
+     */
+    public void removeUnreadMessages(Collection<String> messageIds) {
+        UnreadMessengers.removeIf(messageIds::contains);
     }
 
     /**

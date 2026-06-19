@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Servi√ßo respons√°vel pelas regras dos relacionamentos de usu√°rios.
+ * ServiÁo respons·vel pelas regras dos relacionamentos de usu·rios.
  */
 public class RelationshipService {
 

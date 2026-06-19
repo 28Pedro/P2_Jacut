@@ -3,37 +3,40 @@ package br.ufal.ic.p2.jackut;
 import br.ufal.ic.p2.jackut.controllers.ChatMessengerController;
 import br.ufal.ic.p2.jackut.controllers.CommunityController;
 import br.ufal.ic.p2.jackut.controllers.UserController;
+import br.ufal.ic.p2.jackut.controllers.UserDeletionController;
 import br.ufal.ic.p2.jackut.enums.RelationshipType;
 import br.ufal.ic.p2.jackut.exceptions.*;
 
 /**
- * Fachada p√∫blica da aplica√ß√£o Jackut.
+ * Fachada p˙blica da aplicaÁ„o Jackut.
  *
- * <p>Esta classe concentra os m√©todos utilizados pelos testes de aceita√ß√£o e
- * delega a execu√ß√£o para os controladores respons√°veis. O objetivo √© oferecer
- * uma API simples e est√°vel, ocultando a organiza√ß√£o interna em servi√ßos,
- * modelos e reposit√≥rios.</p>
+ * <p>Esta classe concentra os mÈtodos utilizados pelos testes de aceitaÁ„o e
+ * delega a execuÁ„o para os controladores respons·veis. O objetivo È oferecer
+ * uma API simples e est·vel, ocultando a organizaÁ„o interna em serviÁos,
+ * modelos e repositÛrios.</p>
  */
 public class Facade {
 
     UserController userController;
     ChatMessengerController chatMessengerController;
     CommunityController communityController;
+    UserDeletionController userDeletionController;
 
     /**
      * Cria uma nova fachada e inicializa os controladores principais.
      *
-     * @throws SaveError se a infraestrutura de persist√™ncia n√£o puder ser preparada.
+     * @throws SaveError se a infraestrutura de persistÍncia n„o puder ser preparada.
      * @throws FileError se ocorrer falha ao carregar dados persistidos.
      */
     public Facade() throws SaveError, FileError {
         this.userController = new UserController();
         this.chatMessengerController = new ChatMessengerController();
         this.communityController = new CommunityController();
+        this.userDeletionController = new UserDeletionController();
     }
 
     /**
-     * Remove os dados persistidos e reinicia as estruturas em mem√≥ria.
+     * Remove os dados persistidos e reinicia as estruturas em memÛria.
      */
     public void zerarSistema(){
         userController.resetData();
@@ -42,9 +45,9 @@ public class Facade {
     }
 
     /**
-     * Persiste os dados atuais da aplica√ß√£o.
+     * Persiste os dados atuais da aplicaÁ„o.
      *
-     * @throws SaveError se ocorrer falha durante a grava√ß√£o dos dados.
+     * @throws SaveError se ocorrer falha durante a gravaÁ„o dos dados.
      */
     public void encerrarSistema() throws SaveError{
         userController.saveData();
@@ -53,15 +56,15 @@ public class Facade {
     }
 
     /**
-     * Cria uma nova conta de usu√°rio.
+     * Cria uma nova conta de usu·rio.
      *
-     * @param userName login √∫nico usado para identificar o usu√°rio.
-     * @param passWorld senha usada para autentica√ß√£o do usu√°rio.
-     * @param name nome inicial armazenado no perfil do usu√°rio.
-     * @return identificador √∫nico do usu√°rio criado.
-     * @throws SenhaInvalida se a senha informada for vazia ou inv√°lida.
-     * @throws LoginInvalido se o login informado for vazio ou inv√°lido.
-     * @throws ContaComEsseNomeJaExiste se j√° existir uma conta com o login informado.
+     * @param userName login ˙nico usado para identificar o usu·rio.
+     * @param passWorld senha usada para autenticaÁ„o do usu·rio.
+     * @param name nome inicial armazenado no perfil do usu·rio.
+     * @return identificador ˙nico do usu·rio criado.
+     * @throws SenhaInvalida se a senha informada for vazia ou inv·lida.
+     * @throws LoginInvalido se o login informado for vazio ou inv·lido.
+     * @throws ContaComEsseNomeJaExiste se j· existir uma conta com o login informado.
      */
      public String criarUsuario(String userName, String passWorld, String name)
      throws SenhaInvalida, LoginInvalido, ContaComEsseNomeJaExiste {
@@ -69,13 +72,13 @@ public class Facade {
      }
 
     /**
-     * Recupera um atributo do perfil de um usu√°rio.
+     * Recupera um atributo do perfil de um usu·rio.
      *
-     * @param username login do usu√°rio cujo atributo ser√° consultado.
+     * @param username login do usu·rio cujo atributo ser· consultado.
      * @param attributeName nome do atributo solicitado.
      * @return valor textual do atributo solicitado.
-     * @throws UsuarioNaoCadastrado se n√£o existir usu√°rio com o login informado.
-     * @throws AtributoNaoPreenchido se o atributo solicitado n√£o estiver preenchido.
+     * @throws UsuarioNaoCadastrado se n„o existir usu·rio com o login informado.
+     * @throws AtributoNaoPreenchido se o atributo solicitado n„o estiver preenchido.
      */
      public String getAtributoUsuario(String username, String attributeName)
      throws UsuarioNaoCadastrado,AtributoNaoPreenchido{
@@ -83,40 +86,44 @@ public class Facade {
      }
 
     /**
-     * Abre uma sess√£o para o usu√°rio informado.
+     * Abre uma sess„o para o usu·rio informado.
      *
-     * @param userName login do usu√°rio.
-     * @param password senha do usu√°rio.
-     * @return identificador da sess√£o, representado pelo ID do usu√°rio autenticado.
-     * @throws LoginOuSenhaInvalidos se o login ou a senha forem inv√°lidos.
+     * @param userName login do usu·rio.
+     * @param password senha do usu·rio.
+     * @return identificador da sess„o, representado pelo ID do usu·rio autenticado.
+     * @throws LoginOuSenhaInvalidos se o login ou a senha forem inv·lidos.
      */
      public String abrirSessao(String userName, String password) throws LoginOuSenhaInvalidos{
         return userController.openSession(userName,password);
      }
 
     /**
-     * Edita um atributo do perfil do usu√°rio autenticado.
+     * Edita um atributo do perfil do usu·rio autenticado.
      *
-     * @param userId identificador do usu√°rio.
+     * @param userId identificador do usu·rio.
      * @param attribute nome do atributo a ser editado.
      * @param attributeValue novo valor do atributo.
-     * @throws UsuarioNaoCadastrado se n√£o existir usu√°rio para o identificador informado.
+     * @throws UsuarioNaoCadastrado se n„o existir usu·rio para o identificador informado.
      */
      public void editarPerfil (String userId, String attribute, String attributeValue)
      throws UsuarioNaoCadastrado{
         userController.editProfile(userId,attribute, attributeValue);
      }
 
+    public void removerUsuario(String userId) throws UsuarioNaoCadastrado {
+        userDeletionController.deleteUser(userId);
+    }
+
     /**
-     * Solicita ou confirma amizade entre dois usu√°rios.
+     * Solicita ou confirma amizade entre dois usu·rios.
      *
-     * @param userId identificador do usu√°rio que executa a a√ß√£o.
-     * @param friendUserName login do usu√°rio a ser adicionado como amigo.
-     * @throws UsuarioNaoCadastrado se algum usu√°rio envolvido n√£o estiver cadastrado.
-     * @throws AdicionarASiMesmoRelationship se o usu√°rio tentar adicionar a si mesmo.
-     * @throws UsuarioJaAdicionadoRelationship se os usu√°rios j√° forem amigos.
-     * @throws EsperandoAceitacaoRelationship se j√° existir solicita√ß√£o pendente de aceite.
-     * @throws FuncaoInvalida se o destinat√°rio tiver marcado o usu√°rio como inimigo.
+     * @param userId identificador do usu·rio que executa a aÁ„o.
+     * @param friendUserName login do usu·rio a ser adicionado como amigo.
+     * @throws UsuarioNaoCadastrado se algum usu·rio envolvido n„o estiver cadastrado.
+     * @throws AdicionarASiMesmoRelationship se o usu·rio tentar adicionar a si mesmo.
+     * @throws UsuarioJaAdicionadoRelationship se os usu·rios j· forem amigos.
+     * @throws EsperandoAceitacaoRelationship se j· existir solicitaÁ„o pendente de aceite.
+     * @throws FuncaoInvalida se o destinat·rio tiver marcado o usu·rio como inimigo.
      */
     public void adicionarAmigo(String userId, String friendUserName)
             throws UsuarioNaoCadastrado, AdicionarASiMesmoRelationship,
@@ -127,12 +134,12 @@ public class Facade {
     }
 
     /**
-     * Verifica se dois usu√°rios s√£o amigos.
+     * Verifica se dois usu·rios s„o amigos.
      *
-     * @param userName login do primeiro usu√°rio.
-     * @param friendUsername login do segundo usu√°rio.
-     * @return {@code true} se os usu√°rios forem amigos; {@code false} caso contr√°rio.
-     * @throws UsuarioNaoCadastrado se algum dos usu√°rios n√£o estiver cadastrado.
+     * @param userName login do primeiro usu·rio.
+     * @param friendUsername login do segundo usu·rio.
+     * @return {@code true} se os usu·rios forem amigos; {@code false} caso contr·rio.
+     * @throws UsuarioNaoCadastrado se algum dos usu·rios n„o estiver cadastrado.
      */
     public boolean ehAmigo(String userName, String friendUsername) throws
             UsuarioNaoCadastrado{
@@ -141,11 +148,11 @@ public class Facade {
     }
 
     /**
-     * Retorna a lista de amigos de um usu√°rio.
+     * Retorna a lista de amigos de um usu·rio.
      *
-     * @param userName login do usu√°rio consultado.
-     * @return representa√ß√£o textual da lista de amigos do usu√°rio.
-     * @throws UsuarioNaoCadastrado se o usu√°rio informado n√£o estiver cadastrado.
+     * @param userName login do usu·rio consultado.
+     * @return representaÁ„o textual da lista de amigos do usu·rio.
+     * @throws UsuarioNaoCadastrado se o usu·rio informado n„o estiver cadastrado.
      */
     public String getAmigos(String userName) throws UsuarioNaoCadastrado{
         return userController.getFriends(userName);
@@ -206,12 +213,12 @@ public class Facade {
     /**
      * Cria uma comunidade.
      *
-     * @param userId identificador do usu√°rio dono da comunidade.
-     * @param name nome √∫nico da comunidade.
-     * @param description descri√ß√£o da comunidade.
-     * @throws UsuarioNaoCadastrado se o usu√°rio dono n√£o estiver cadastrado.
-     * @throws ComunidadeComEsseNomeJaExiste se j√° existir comunidade com o nome informado.
-     * @throws UsuarioJaFazParteDessaComunidade se a comunidade j√° estiver vinculada ao usu√°rio.
+     * @param userId identificador do usu·rio dono da comunidade.
+     * @param name nome ˙nico da comunidade.
+     * @param description descriÁ„o da comunidade.
+     * @throws UsuarioNaoCadastrado se o usu·rio dono n„o estiver cadastrado.
+     * @throws ComunidadeComEsseNomeJaExiste se j· existir comunidade com o nome informado.
+     * @throws UsuarioJaFazParteDessaComunidade se a comunidade j· estiver vinculada ao usu·rio.
      */
     public void criarComunidade(String userId, String name, String description)
             throws UsuarioNaoCadastrado, ComunidadeComEsseNomeJaExiste,
@@ -220,13 +227,13 @@ public class Facade {
     }
 
     /**
-     * Adiciona um usu√°rio a uma comunidade existente.
+     * Adiciona um usu·rio a uma comunidade existente.
      *
-     * @param userId identificador do usu√°rio.
+     * @param userId identificador do usu·rio.
      * @param name nome da comunidade.
-     * @throws UsuarioNaoCadastrado se o usu√°rio n√£o estiver cadastrado.
-     * @throws ComunidadeNaoExiste se a comunidade n√£o existir.
-     * @throws UsuarioJaFazParteDessaComunidade se o usu√°rio j√° participar da comunidade.
+     * @throws UsuarioNaoCadastrado se o usu·rio n„o estiver cadastrado.
+     * @throws ComunidadeNaoExiste se a comunidade n„o existir.
+     * @throws UsuarioJaFazParteDessaComunidade se o usu·rio j· participar da comunidade.
      */
     public void adicionarComunidade(String userId, String name)
             throws UsuarioNaoCadastrado, ComunidadeNaoExiste,
@@ -235,11 +242,11 @@ public class Facade {
     }
 
     /**
-     * Recupera a descri√ß√£o de uma comunidade.
+     * Recupera a descriÁ„o de uma comunidade.
      *
      * @param name nome da comunidade.
-     * @return descri√ß√£o da comunidade.
-     * @throws ComunidadeNaoExiste se a comunidade n√£o existir.
+     * @return descriÁ„o da comunidade.
+     * @throws ComunidadeNaoExiste se a comunidade n„o existir.
      */
     public String getDescricaoComunidade(String name) throws ComunidadeNaoExiste {
         return communityController.getCommunityDescription(name);
@@ -250,7 +257,7 @@ public class Facade {
      *
      * @param name nome da comunidade.
      * @return login do dono da comunidade.
-     * @throws ComunidadeNaoExiste se a comunidade n√£o existir.
+     * @throws ComunidadeNaoExiste se a comunidade n„o existir.
      */
     public String getDonoComunidade(String name) throws ComunidadeNaoExiste {
         return communityController.getCommunityOwner(name);
@@ -261,18 +268,18 @@ public class Facade {
      *
      * @param name nome da comunidade.
      * @return membros da comunidade em formato textual.
-     * @throws ComunidadeNaoExiste se a comunidade n√£o existir.
+     * @throws ComunidadeNaoExiste se a comunidade n„o existir.
      */
     public String getMembrosComunidade(String name) throws ComunidadeNaoExiste {
         return communityController.getCommunityMembers(name);
     }
 
     /**
-     * Recupera as comunidades das quais um usu√°rio participa.
+     * Recupera as comunidades das quais um usu·rio participa.
      *
-     * @param userName login do usu√°rio.
-     * @return comunidades do usu√°rio em formato textual.
-     * @throws UsuarioNaoCadastrado se o usu√°rio n√£o estiver cadastrado.
+     * @param userName login do usu·rio.
+     * @return comunidades do usu·rio em formato textual.
+     * @throws UsuarioNaoCadastrado se o usu·rio n„o estiver cadastrado.
      */
     public String getComunidades(String userName) throws UsuarioNaoCadastrado {
         return userController.getCommunities(userName);
@@ -281,11 +288,11 @@ public class Facade {
     /**
      * Envia uma mensagem para uma comunidade.
      *
-     * @param userId identificador do usu√°rio remetente.
+     * @param userId identificador do usu·rio remetente.
      * @param communityName nome da comunidade.
-     * @param message conte√∫do textual da mensagem.
-     * @throws UsuarioNaoCadastrado se o usu√°rio remetente n√£o estiver cadastrado.
-     * @throws ComunidadeNaoExiste se a comunidade n√£o existir.
+     * @param message conte˙do textual da mensagem.
+     * @throws UsuarioNaoCadastrado se o usu·rio remetente n„o estiver cadastrado.
+     * @throws ComunidadeNaoExiste se a comunidade n„o existir.
      */
     public void enviarMensagem(String userId, String communityName, String message)
             throws UsuarioNaoCadastrado, ComunidadeNaoExiste {
@@ -293,24 +300,24 @@ public class Facade {
     }
 
     /**
-     * L√™ a pr√≥xima mensagem de comunidade pendente para o usu√°rio.
+     * LÍ a prÛxima mensagem de comunidade pendente para o usu·rio.
      *
-     * @param userId identificador do usu√°rio leitor.
-     * @return conte√∫do textual da pr√≥xima mensagem de comunidade.
-     * @throws UsuarioNaoCadastrado se o usu√°rio n√£o estiver cadastrado.
-     * @throws NaoHaMensagens se o usu√°rio n√£o possuir mensagens pendentes.
+     * @param userId identificador do usu·rio leitor.
+     * @return conte˙do textual da prÛxima mensagem de comunidade.
+     * @throws UsuarioNaoCadastrado se o usu·rio n„o estiver cadastrado.
+     * @throws NaoHaMensagens se o usu·rio n„o possuir mensagens pendentes.
      */
     public String lerMensagem(String userId) throws UsuarioNaoCadastrado, NaoHaMensagens {
         return communityController.readCommunityMessage(userId);
     }
 
     /**
-     * Envia um recado de um usu√°rio para outro.
+     * Envia um recado de um usu·rio para outro.
      *
-     * @param senderId identificador do usu√°rio remetente.
-     * @param receiverUserName login do usu√°rio destinat√°rio.
-     * @param messenger conte√∫do textual do recado.
-     * @throws UsuarioNaoCadastrado se o destinat√°rio n√£o estiver cadastrado.
+     * @param senderId identificador do usu·rio remetente.
+     * @param receiverUserName login do usu·rio destinat·rio.
+     * @param messenger conte˙do textual do recado.
+     * @throws UsuarioNaoCadastrado se o destinat·rio n„o estiver cadastrado.
      * @throws EnviarRecadoParaSiMesmo se o remetente tentar enviar recado para si mesmo.
      */
     public void enviarRecado(String senderId, String receiverUserName, String messenger) throws
@@ -320,12 +327,12 @@ public class Facade {
     }
 
     /**
-     * L√™ o pr√≥ximo recado dispon√≠vel para o usu√°rio.
+     * LÍ o prÛximo recado disponÌvel para o usu·rio.
      *
-     * @param userId identificador do usu√°rio que deseja ler o recado.
-     * @return conte√∫do textual do pr√≥ximo recado n√£o lido.
-     * @throws UsuarioNaoCadastrado se o usu√°rio informado n√£o estiver cadastrado.
-     * @throws NaoHaRecados se o usu√°rio n√£o possuir recados pendentes.
+     * @param userId identificador do usu·rio que deseja ler o recado.
+     * @return conte˙do textual do prÛximo recado n„o lido.
+     * @throws UsuarioNaoCadastrado se o usu·rio informado n„o estiver cadastrado.
+     * @throws NaoHaRecados se o usu·rio n„o possuir recados pendentes.
      */
     public String lerRecado(String userId)
             throws UsuarioNaoCadastrado,NaoHaRecados{

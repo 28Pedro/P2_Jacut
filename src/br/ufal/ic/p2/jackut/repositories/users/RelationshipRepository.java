@@ -1,5 +1,6 @@
 package br.ufal.ic.p2.jackut.repositories.users;
 
+import br.ufal.ic.p2.jackut.enums.RelationshipState;
 import br.ufal.ic.p2.jackut.enums.RelationshipType;
 import br.ufal.ic.p2.jackut.exceptions.FileError;
 import br.ufal.ic.p2.jackut.exceptions.SaveError;
@@ -16,7 +17,7 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * Reposit√≥rio dos relacionamentos dos usu√°rios.
+ * RepositÛrio dos relacionamentos dos usu·rios.
  */
 public class RelationshipRepository extends AbstractRepository<Relationship> {
 
@@ -82,6 +83,29 @@ public class RelationshipRepository extends AbstractRepository<Relationship> {
         return relationships;
     }
 
+    public void deleteRelationshipsByUserId(String userId) throws UsuarioNaoCadastrado {
+        Map<RelationshipType, String> userRelationships = relationshipByUserId.get(userId);
+
+        if (userRelationships == null) {
+            throw new UsuarioNaoCadastrado();
+        }
+
+        for (Map.Entry<RelationshipType, String> entry : userRelationships.entrySet()) {
+            entityMap.remove(entry.getValue());
+            removeTypeIndex(entry.getKey(), entry.getValue());
+        }
+
+        relationshipByUserId.remove(userId);
+    }
+
+    public void removeUserFromAllRelationships(String userId) {
+        for (Relationship relationship : entityMap.values()) {
+            for (RelationshipState state : RelationshipState.values()) {
+                relationship.removeState(state, userId);
+            }
+        }
+    }
+
     @Override
     public void resetData() {
         super.resetData();
@@ -96,5 +120,13 @@ public class RelationshipRepository extends AbstractRepository<Relationship> {
         relationshipIdsByType
                 .computeIfAbsent(relationship.getType(), type -> new ArrayList<>())
                 .add(relationship.getId());
+    }
+
+    private void removeTypeIndex(RelationshipType type, String relationshipId) {
+        List<String> relationshipIds = relationshipIdsByType.get(type);
+
+        if (relationshipIds != null) {
+            relationshipIds.remove(relationshipId);
+        }
     }
 }
