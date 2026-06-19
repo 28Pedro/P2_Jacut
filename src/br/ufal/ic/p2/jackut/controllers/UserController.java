@@ -19,6 +19,7 @@ public class UserController {
     UserIntegrator userIntegrator;
     MessageBoxService messageBoxService;
     MessageBoxIntegrator messageBoxIntegrator;
+    InteractionIntegrator interactionIntegrator;
     CommunityListService communityListService;
 
     /**
@@ -34,6 +35,7 @@ public class UserController {
         this.userIntegrator = UserIntegrator.getInstance();
         this.messageBoxService = MessageBoxService.getInstance();
         this.messageBoxIntegrator = new MessageBoxIntegrator();
+        this.interactionIntegrator = new InteractionIntegrator();
         this.communityListService = new CommunityListService();
     }
 
@@ -107,7 +109,6 @@ public class UserController {
      * Solicita ou confirma amizade com outro usuário.
      *
      * @param userId identificador do usuário que executa a ação.
-     * @param friendUserName login do usuário a ser adicionado.
      * @throws UsuarioNaoCadastrado se algum usuário não estiver cadastrado.
      * @throws AdicionarASiMesmoRelationship se o usuário tentar adicionar a si mesmo.
      * @throws UsuarioJaAdicionadoRelationship se os usuários já forem amigos.
@@ -120,7 +121,7 @@ public class UserController {
             FuncaoInvalida {
 
         String relatedUserId = userIntegrator.getUserByName(relatedUserName);
-        assertCanInteract(userId, relatedUserName);
+        interactionIntegrator.assertCanInteract(userId, relatedUserName);
         relationshipService.addRelationship(userId, relatedUserId, type);
     }
 
@@ -163,7 +164,7 @@ public class UserController {
             UsuarioJaAdicionadoRelationship, EsperandoAceitacaoRelationship,
             FuncaoInvalida {
         String idolUserId = userIntegrator.getUserByName(idolUserName);
-        assertCanInteract(userId, idolUserName);
+        interactionIntegrator.assertCanInteract(userId, idolUserName);
         relationshipService.addRelationship(userId, idolUserId, RelationshipType.FAN);
     }
 
@@ -195,7 +196,7 @@ public class UserController {
             UsuarioJaAdicionadoRelationship, EsperandoAceitacaoRelationship,
             FuncaoInvalida {
         String crushUserId = userIntegrator.getUserByName(crushUserName);
-        assertCanInteract(userId, crushUserName);
+        interactionIntegrator.assertCanInteract(userId, crushUserName);
         relationshipService.addRelationship(userId, crushUserId, RelationshipType.CRUSH);
 
         if (relationshipService.hasRelationship(crushUserId, userId, RelationshipType.CRUSH)) {
@@ -235,15 +236,6 @@ public class UserController {
             return profileService.getUserAttribute(userId, "nome");
         } catch (AtributoNaoPreenchido e) {
             return userIntegrator.getUserNameById(userId);
-        }
-    }
-
-    public void assertCanInteract(String userId, String targetUserName)
-            throws UsuarioNaoCadastrado, FuncaoInvalida {
-        String targetUserId = userIntegrator.getUserByName(targetUserName);
-
-        if (relationshipService.isBlockedByEnemy(userId, targetUserId)) {
-            throw new FuncaoInvalida(getUserDisplayNameById(targetUserId));
         }
     }
 

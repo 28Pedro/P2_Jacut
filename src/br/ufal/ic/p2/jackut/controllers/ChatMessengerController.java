@@ -5,6 +5,8 @@ import br.ufal.ic.p2.jackut.models.chatmessenger.ChatMessenger;
 import br.ufal.ic.p2.jackut.services.chatMessenger.ChatMessengerService;
 import br.ufal.ic.p2.jackut.services.chatMessenger.MessageService;
 import br.ufal.ic.p2.jackut.services.user.MessageBoxService;
+import br.ufal.ic.p2.jackut.services.user.MessageBoxIntegrator;
+import br.ufal.ic.p2.jackut.services.user.InteractionIntegrator;
 import br.ufal.ic.p2.jackut.services.user.UserIntegrator;
 
 import java.util.List;
@@ -20,6 +22,8 @@ public class ChatMessengerController {
 
     private final UserIntegrator userIntegrator;
     private final MessageBoxService messageBoxService;
+    private final MessageBoxIntegrator messageBoxIntegrator;
+    private final InteractionIntegrator interactionIntegrator;
     private final ChatMessengerService chatMessengerService;
     private final MessageService messageService;
 
@@ -33,6 +37,8 @@ public class ChatMessengerController {
         this.userIntegrator = UserIntegrator.getInstance();
         this.chatMessengerService = new ChatMessengerService();
         this.messageBoxService = MessageBoxService.getInstance();
+        this.messageBoxIntegrator = new MessageBoxIntegrator();
+        this.interactionIntegrator = new InteractionIntegrator();
         this.messageService = new MessageService();
     }
 
@@ -44,9 +50,10 @@ public class ChatMessengerController {
      * @param receiverUserName login do usuário destinatário.
      * @throws UsuarioNaoCadastrado se o destinatário não estiver cadastrado.
      * @throws EnviarRecadoParaSiMesmo se o remetente tentar enviar mensagem para si mesmo.
+     * @throws FuncaoInvalida se o destinatario tiver marcado o remetente como inimigo.
      */
     public void SendMessenger(String messengerContent, String senderId, String receiverUserName) throws
-            UsuarioNaoCadastrado,EnviarRecadoParaSiMesmo {
+            UsuarioNaoCadastrado, EnviarRecadoParaSiMesmo, FuncaoInvalida {
 
         String receiverId = userIntegrator.getUserByName(receiverUserName);
 
@@ -54,18 +61,8 @@ public class ChatMessengerController {
             throw new EnviarRecadoParaSiMesmo();
         }
 
-        ChatMessenger chatMessenger = chatMessengerService.getOrBuild(senderId,receiverId);
-
-        String messageId = messageService.
-                createMessage(chatMessenger.getId(),messengerContent);
-
-        List<String> receiversList = chatMessengerService.
-                SendMessenger(messageId,senderId,chatMessenger);
-
-        for(String userId : receiversList){
-                messageBoxService.notifyUser(userId, messageId);
-        }
-
+        interactionIntegrator.assertCanInteract(senderId, receiverUserName);
+        messageBoxIntegrator.sendPrivateMessage(messengerContent, senderId, receiverId);
     }
 
     /**
